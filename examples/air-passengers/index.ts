@@ -36,8 +36,8 @@ console.log(
 // trains on it.
 const rolling = ml.walkForward({
   validationFrom: '1955-01-01',
-  validation: { years: 1 },
   train: { years: 3 },
+  validation: { years: 1 },
   gap: { months: 1 }
 })
 console.log(rolling.folds(train))
