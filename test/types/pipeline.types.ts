@@ -225,6 +225,36 @@ encoded.encode({ condition: 'one-hot' })
 // @ts-expect-error — no ordered category is left to encode
 encoded.encode({ size: 'one-hot' }).encode({ size: 'one-hot' })
 
+// A reference leaves its column out, for a category or an ordered category
+const referenced = ml
+  .pipeline(reviewSchema)
+  .encode({ color: { reference: 'red' }, size: { reference: 'small' } })
+const referencedMatrix = referenced
+  .fit(reviewTrain)
+  .transform(reviewTrain)
+  .matrix()
+type _referencedColumns = Expect<
+  Equal<
+    (typeof referencedMatrix.columns)[number],
+    'condition' | 'size=large' | 'color=blue'
+  >
+>
+
+// @ts-expect-error — the reference has to be a declared category
+ml.pipeline(reviewSchema).encode({ color: { reference: 'green' } })
+
+// @ts-expect-error — 'color' already has a reference
+referenced.encode({ color: { reference: 'blue' } })
+
+// @ts-expect-error — 'size' is already one-hot
+referenced.encode({ size: { reference: 'large' } })
+
+// @ts-expect-error — a number has no categories
+ml.pipeline(reviewSchema).encode({ rating: { reference: 'red' } })
+
+// @ts-expect-error — not a field of the schema
+ml.pipeline(reviewSchema).encode({ shape: 'one-hot' })
+
 // ── scale ────────────────────────────────────────────────────────────────────
 
 const scaled = ml
@@ -281,6 +311,13 @@ ml.pipeline(birdSchema)
       using: ['billLengthMm', 'condition', 'island', 'isAdult', 'sex']
     }
   })
+
+// A reference only changes the matrix, so it can come after a KNN used the
+// field: the distances still see every category
+ml.pipeline(birdSchema)
+  .missing({ sex: 'mode' })
+  .missing({ bodyMassG: { knn: 3, using: ['island', 'sex'] } })
+  .encode({ island: { reference: 'Biscoe' }, sex: { reference: 'female' } })
 
 // One-hot categories are comparable without scale
 ml.pipeline(birdSchema)
