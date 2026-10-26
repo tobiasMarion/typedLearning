@@ -4,13 +4,17 @@
 
 ## 1. Intuition
 
-Fit the hyperplane that minimizes the squared error between predictions and actual values.
+Predict a number as a weighted sum of the columns plus a base value, choosing the weights that minimize the squared error on the training block.
 
 ## 2. Model
 
 $$\hat y = Xw + b$$
 
+$X$ is the prepared matrix (one row per record, one column per matrix column), $w$ holds one weight per column, and $b$ is the **intercept**: the base value every prediction starts from. M4 always fits an intercept.
+
 ## 3. Loss
+
+The mean squared error (MSE):
 
 $$L(w, b) = \frac{1}{n} \sum_{i=1}^{n} (\hat y_i - y_i)^2$$
 
@@ -20,24 +24,57 @@ $$\frac{\partial L}{\partial w} = \frac{2}{n} X^\top (\hat y - y) \qquad \frac{\
 
 ## 4. Training
 
-- **`gradient-descent`:** $w \leftarrow w - \eta \, \nabla_w L$ for `epochs` iterations, or until the change in loss falls below a tolerance.
-- **`normal-equation`:** $w = (X^\top X)^{-1} X^\top y$, no training hyperparameters.
+Both solvers solve the same problem, and both start with the same check (see [Linearly dependent columns](#linearly-dependent-columns)).
+- **`normal-equation`:** the closed-form solution. With a column of ones for the intercept, $X_1 = [\mathbf{1} \mid X]$, the weights solve the linear system $X_1^\top X_1 \, \beta = X_1^\top y$, where $\beta = (b, w)$. The system is solved directly, without computing the inverse $(X_1^\top X_1)^{-1}$.
+- **`gradient-descent`:** weights and intercept start at zero, and each epoch takes one step over the whole training block: $w \leftarrow w - \eta \, \nabla_w L$ and $b \leftarrow b - \eta \, \partial L / \partial b$. It stops after `epochs` steps. A loss that becomes `Infinity` or `NaN` is an error that names `learningRate`: the steps are too large and the weights diverged.
+
+Starting at zero makes gradient descent deterministic, so it needs no seed.
 
 ## 5. Hyperparameters
+
+There is no default solver, and gradient descent has no default step or number of epochs: they change the result, so they are required.
+
+```ts
+ml.linearRegression({ solver: 'normal-equation' })
+ml.linearRegression({
+  solver: 'gradient-descent',
+  learningRate: 0.01,
+  epochs: 1000
+})
+```
 
 | Parameter      | Solver           | Effect                                                  |
 | -------------- | ---------------- | ------------------------------------------------------- |
 | `learningRate` | gradient-descent | Step size. Too high diverges; too low converges slowly. |
-| `epochs`       | gradient-descent | Maximum number of iterations.                           |
+| `epochs`       | gradient-descent | Number of steps.                                        |
 
 ## 6. Pitfalls
 
 - Without standardization, features on different scales make gradient descent slow or unstable.
-- A singular $X^\top X$, for example with collinear features, breaks the normal equation.
+- Linearly dependent columns make the weights ambiguous; see below.
+
+### Linearly dependent columns
+
+When a column of $X_1$ is a combination of the others, infinitely many weights give the same predictions. With `island` one-hot, every row has exactly one 1 among `island=Biscoe`, `island=Dream` and `island=Torgersen`, so the three columns add up to the column of ones of the intercept. Adding any value $c$ to $b$ and subtracting it from the three island weights changes nothing.
+
+The consequences:
+- the weights can't be read: "living on Biscoe adds 4700 g" and "adds 3700 g" are both answers;
+- $X_1^\top X_1$ is singular, so the normal equation has no single solution;
+- gradient descent still stops somewhere, but where depends on the starting point, so comparing it with the normal equation means nothing.
+
+TL doesn't pick one of the answers silently. `fit` checks the columns before either solver runs, and dependent columns are an error that names them. The dependence comes from one of two places:
+- **The encoding.** A one-hot field with a column for every category, next to the intercept, is dependent whatever the data. This is known from the types, so `fit` doesn't compile; the error names the field and asks for a reference category: `.encode({ island: { reference: 'Biscoe' } })` (see [Encoding](../preprocessing.md#encoding)). With a reference, the reference has no column, and each weight reads against it: "Dream penguins weigh 1000 g less than Biscoe penguins".
+- **The training data.** A column can only be found dependent by looking at the block:
+  - a category absent from the training block has an all-zero column, so its weight could be anything. A record of that category would be predicted by a guess, so it is an error, not a dropped column. The error names the field and the category and suggests fewer folds, a stratified split, or merging rare categories in the schema;
+  - when the reference category itself is absent, the other columns of the field add up to the intercept again;
+  - a constant column repeats the intercept, and two columns can be proportional.
+
+  These are runtime errors at `fit`, checked within a numerical tolerance.
 
 ## 7. Oracle
 
-Compare gradient descent against the normal equation on synthetic data generated by `y = Xw* + noise`, checking that the result approaches `w*`.
+- Compare gradient descent against the normal equation on synthetic data generated by `y = Xw* + noise`: both approach `w*`, and they agree with each other within a tolerance once gradient descent has run enough epochs.
+- Compare the weights on the penguins with scikit-learn's `LinearRegression` on the same matrix (`examples/scikit-learn`).
 
 ## 8. Learning notes
 

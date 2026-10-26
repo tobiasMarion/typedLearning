@@ -126,11 +126,20 @@ Categories get a numeric encoding from the schema, with no step needed:
 .encode({ bodyCondition: 'one-hot' }) // an orderedCategory as one-hot
 ```
 
-`'one-hot'` is the only override: `'position'` is already the default of an ordered category, and an `ml.category` has no order, so it can't have one. A field's encoding can change only while nothing has used it: once it is scaled or in a KNN's `using`, `encode` no longer accepts it. The default shows in the hover of `ml.category` and `ml.orderedCategory` and in the printed fitted state.
+`'one-hot'` turns an ordered category into one-hot columns: `'position'` is already its default, and an `ml.category` has no order, so it can't have one. A field's encoding can change only while nothing has used it: once it is scaled or in a KNN's `using`, `encode` no longer accepts it. The default shows in the hover of `ml.category` and `ml.orderedCategory` and in the printed fitted state.
+
+**A reference category** is one-hot without the reference's column: a record of the reference has 0 in every column of the field.
+
+```ts
+.encode({ island: { reference: 'Biscoe' } }) // columns island=Dream, island=Torgersen
+.encode({ bodyCondition: { reference: 'poor' } }) // an orderedCategory as one-hot without 'poor'
+```
+
+The reference has to be a declared category, so its type is the literal union of the field. Linear models need it: one-hot with every category, next to an intercept, makes the columns [linearly dependent](algorithms/linear-regression.md#linearly-dependent-columns), and `fit` of a linear regression doesn't compile until each one-hot field has a reference. The reference only changes which columns reach the matrix. A KNN still measures distances with every category, because without the reference's column the reference would be closer to every other category than they are to each other. So `encode` accepts a reference for an `ml.category` even after a KNN used it. The fitted state prints the reference: `island: one-hot (Dream, Torgersen; reference Biscoe)`.
 
 **Columns come from the schema, not from `fit`.** One-hot columns are the declared categories, so every block, every fold and every production record gets the same columns in the same order, whatever categories a training block happened to hold. There is no policy for unknown categories: `parse` and `ml.dataset` reject a value the schema doesn't declare, so it can't reach `transform`. A category that is declared but absent from the training block, common in small cross-validation folds, is not an error: its column is all zero in training, and the fitted state reports it.
 
-Full one-hot next to an intercept makes the columns linearly dependent. That is the estimator's problem, not the encoder's: [M4](../README.md#milestones) deals with it in the solver.
+The encoder doesn't reject an absent category, because only the estimator knows whether it can learn without it: a linear regression can't (see [Linearly dependent columns](algorithms/linear-regression.md#linearly-dependent-columns)), so its `fit` names the field and the category.
 
 ## Scaling
 
@@ -225,7 +234,6 @@ Lag and rolling features, the target horizon and the warm-up of the first rows o
 ## Open questions
 
 - Features derived from timestamps (year, month, day of the week), instead of leaving them out.
-- Dropping one one-hot column (a reference category) as an `encode` option, if the solver needs it.
 - KNN over incomplete `using` fields, with distances that skip missing values.
 - Custom user-defined transformers.
 - Whether series `horizon` and the target transform also belong in the schema.
