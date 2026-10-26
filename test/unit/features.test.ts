@@ -67,6 +67,43 @@ describe('ml.features', () => {
   })
 })
 
+describe('target', () => {
+  test('returns a new schema with the same fields', () => {
+    const targeted = penguinSchema.target('species')
+    assert.equal(targeted.targetKey, 'species')
+    assert.equal(targeted.fields, penguinSchema.fields)
+    assert.deepEqual(targeted.keys, penguinSchema.keys)
+    assert.deepEqual(targeted.parse(valid), parsed)
+    assert.equal('targetKey' in penguinSchema, false)
+    assert.ok(Object.isFrozen(targeted))
+  })
+
+  test('keeps infer type-only', () => {
+    assert.throws(() => penguinSchema.target('species').infer, /type-only/)
+  })
+
+  test('rejects a field that is not in the schema', () => {
+    assert.throws(
+      () => penguinSchema.target('weight' as never),
+      /'weight' is not a field\. Expected one of 'species' \| 'billLengthMm'/
+    )
+  })
+
+  test('rejects an optional field', () => {
+    assert.throws(
+      () => penguinSchema.target('billLengthMm' as never),
+      /'billLengthMm' is optional, and a target must be required/
+    )
+  })
+
+  test('rejects a timestamp', () => {
+    assert.throws(
+      () => penguinSchema.target('observedAt' as never),
+      /'observedAt' is a timestamp/
+    )
+  })
+})
+
 describe('parse', () => {
   test('returns the record', () => {
     assert.deepEqual(penguinSchema.parse(valid), parsed)

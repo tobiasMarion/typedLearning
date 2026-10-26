@@ -10,7 +10,15 @@ export {
   type KFoldOptions,
   kFold
 } from './k-fold.ts'
-export type { Fold, Origin, Test, Train, Validation } from './roles.ts'
+export type {
+  Fold,
+  Origin,
+  Role,
+  RoleBrand,
+  Test,
+  Train,
+  Validation
+} from './roles.ts'
 export { type Series, type SeriesOptions, series } from './series.ts'
 export type {
   RandomSplitOptions,

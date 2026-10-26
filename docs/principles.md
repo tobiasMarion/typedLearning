@@ -5,7 +5,6 @@
 When a decision changes the model's result, the user has to make it. The library has no silent defaults for:
 
 - missing values;
-- unknown categories in `predict`;
 - solver and regularization;
 - split strategy.
 

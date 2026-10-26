@@ -4,9 +4,8 @@ The pipeline is a guided builder: each method returns a new type, and that type 
 
 ```ts
 const model = ml
-  .pipeline(schema)
+  .pipeline(schema) // a schema with a target, see Preprocessing
   .missing({ age: 'median' })
-  .encode('employment', { unknown: 'error' })
   .scale(['age', 'income'])
   .estimator(ml.linearRegression({ solver: 'normal-equation' }))
 
@@ -26,11 +25,13 @@ schema ─► pipeline ─► missing / encode / scale ─► estimator ─► f
 3. fits the estimator;
 4. stores the learned states.
 
-`predict` takes a record that is already typed, reapplies the same transformations, and only then predicts. It doesn't validate the record again: external data is validated at the boundary, with `parse` or with the project's own schema (Zod, for example), and from then on the type carries the guarantee. Unknown categories and missing values aren't schema checks; they follow the policies chosen in the pipeline.
+M3 ships the builder without `.estimator()`: `pipeline.fit(train)` returns the fitted transformers, and their `transform` gives the prepared rows and the matrix (see [Preprocessing](preprocessing.md)).
+
+`predict` takes a record that is already typed, without the target, reapplies the same transformations, and only then predicts. It doesn't validate the record again: external data is validated at the boundary, with `parse` or with the project's own schema (Zod, for example), and from then on the type carries the guarantee. A category the schema doesn't declare can't get past that boundary; missing values follow the policies chosen in the pipeline.
 
 ## Pending decisions
 
-The pipeline carries in its type the set of fields that still lack a decision (for example, optional fields without a missing-value policy). `.estimator()` only exists when that set is `never`:
+The pipeline carries in its type the set of fields that still lack a decision (for example, optional fields without a missing-value policy). `.estimator()` only exists when that set is `never`, the same condition as `matrix()` in [Preprocessing](preprocessing.md#pending-decisions):
 
 ```ts
 interface Pipeline<F, Pending extends keyof F> {
@@ -62,7 +63,7 @@ The result reports metrics per fold and aggregated, along with the out-of-sample
 
 ## Incompatible composition
 
-If a step references a field that doesn't exist or has the wrong type (for example, `scale` applied to a category), the composition fails at compile time. The same goes for temporal steps (`lag`, `rolling`, `target` with a `horizon`) on a pipeline built from a `Dataset<F>` instead of a `Series<F>`.
+If a step references a field that doesn't exist or has the wrong type (for example, `scale` applied to a category, or any step applied to the target), the composition fails at compile time. A pipeline is built from a schema, not from data, so temporal steps (`lag`, `rolling`, a target `horizon`) are checked at `fit`: it only accepts a `Train` that came from a `Series<F>`.
 
 ## Open questions
 
