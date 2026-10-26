@@ -82,6 +82,8 @@ export type Columns<
   Reference
 >
 
+// Exclude<…, never> changes nothing but keeps editors from printing the union
+// as FullOneHot<{ …the whole schema… }>.
 /**
  * The one-hot fields with a column for every category: no reference. Next to
  * an intercept, their columns add up to it.
@@ -91,20 +93,23 @@ export type FullOneHot<
   T extends keyof S,
   OneHot extends keyof S,
   Reference extends string
-> = {
-  [K in keyof S]: K extends T
-    ? never
-    : S[K] extends { readonly kind: 'category' }
-      ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
-        ? K
-        : never
-      : K extends OneHot
+> = Exclude<
+  {
+    [K in keyof S]: K extends T
+      ? never
+      : S[K] extends { readonly kind: 'category' }
         ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
           ? K
           : never
-        : never
-}[keyof S] &
-  string
+        : K extends OneHot
+          ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
+            ? K
+            : never
+          : never
+  }[keyof S] &
+    string,
+  never
+>
 
 /**
  * The numbers an estimator consumes, with the target apart. It keeps the role

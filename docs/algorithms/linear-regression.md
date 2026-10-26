@@ -1,6 +1,6 @@
 # Linear regression
 
-> Status: planned (M4)
+> Status: `normal-equation` implemented; `gradient-descent` planned (M4)
 
 ## 1. Intuition
 
