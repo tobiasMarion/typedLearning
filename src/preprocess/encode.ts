@@ -5,6 +5,8 @@ import type { Row, Step } from './step.ts'
 export type Column = {
   readonly name: string
   readonly field: string
+  /** The category of a one-hot column. */
+  readonly category?: string
   readonly value: (row: Row) => number
 }
 
@@ -55,6 +57,7 @@ export const columnsOf = (
         .map(category => ({
           name: `${key}=${category}`,
           field: key,
+          category,
           value: row => (row[key] === category ? 1 : 0)
         }))
     }

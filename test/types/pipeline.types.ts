@@ -1,4 +1,4 @@
-import { ml, type Prepared } from '../../src/index.ts'
+import { type Matrix, ml, type Prepared } from '../../src/index.ts'
 import type { Equal, Expect } from './helpers.ts'
 
 const penguinSchema = ml
@@ -128,6 +128,32 @@ type _y = Expect<
   Equal<typeof matrix.y, readonly ('Adelie' | 'Chinstrap' | 'Gentoo')[]>
 >
 
+// The matrix keeps the role of its block, and names the one-hot fields
+// without a reference
+type _matrixRole = Expect<
+  Equal<
+    typeof matrix,
+    Matrix<
+      | 'island=Biscoe'
+      | 'island=Dream'
+      | 'billLengthMm'
+      | 'bodyCondition'
+      | 'isAdult',
+      readonly ('Adelie' | 'Chinstrap' | 'Gentoo')[],
+      'train',
+      'island'
+    >
+  >
+>
+const completeTest = ml.dataset(complete, []).split({ test: 0.5, seed: 1 }).test
+const testMatrix = ml
+  .pipeline(complete)
+  .fit(completeTrain)
+  .transform(completeTest)
+  .matrix()
+// @ts-expect-error — a test matrix isn't a training matrix
+export const testMatrixAsTrain: typeof matrix = testMatrix
+
 // Without a target, there is no y
 const pointSchema = ml.features({ x: ml.number() })
 const points = ml.dataset(pointSchema, []).split({ test: 0.5, seed: 1 }).train
@@ -238,6 +264,12 @@ type _referencedColumns = Expect<
     (typeof referencedMatrix.columns)[number],
     'condition' | 'size=large' | 'color=blue'
   >
+>
+type _referencedFull = Expect<
+  Equal<(typeof referencedMatrix.fullOneHot)[number], never>
+>
+type _encodedFull = Expect<
+  Equal<(typeof encodedMatrix.fullOneHot)[number], 'condition' | 'color'>
 >
 
 // @ts-expect-error — the reference has to be a declared category

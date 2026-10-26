@@ -22,6 +22,7 @@ import {
   columnsOf,
   describeEncoding,
   encodeStep,
+  encodingOf,
   type Override
 } from '../preprocess/encode.ts'
 import { type MissingPolicy, missingStep } from '../preprocess/missing.ts'
@@ -81,15 +82,72 @@ export type Columns<
   Reference
 >
 
-/** The numbers an estimator consumes, with the target apart. */
-export type Matrix<C extends string, Y> = {
+/**
+ * The one-hot fields with a column for every category: no reference. Next to
+ * an intercept, their columns add up to it.
+ */
+export type FullOneHot<
+  S extends Shape,
+  T extends keyof S,
+  OneHot extends keyof S,
+  Reference extends string
+> = {
+  [K in keyof S]: K extends T
+    ? never
+    : S[K] extends { readonly kind: 'category' }
+      ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
+        ? K
+        : never
+      : K extends OneHot
+        ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
+          ? K
+          : never
+        : never
+}[keyof S] &
+  string
+
+/**
+ * The numbers an estimator consumes, with the target apart. It keeps the role
+ * of the block it came from: `R`.
+ */
+export type Matrix<
+  C extends string,
+  Y,
+  R extends Role = Role,
+  F extends string = string
+> = RoleBrand<R> & {
   /** Column names, in the order of each row of `values`. */
   readonly columns: readonly C[]
   /** One row of numbers per record. */
   readonly values: readonly (readonly number[])[]
   /** The target of each record, or undefined for a schema without one. */
   readonly y: Y
+  /**
+   * One-hot fields with a column for every category. Next to an intercept,
+   * their columns are linearly dependent; a reference in `encode` fixes it.
+   */
+  readonly fullOneHot: readonly F[]
 }
+
+/** Where each column of a matrix comes from, for the errors of estimators. */
+export type Layout = {
+  readonly columns: readonly {
+    readonly name: string
+    readonly field: string
+    /** The category of a one-hot column. */
+    readonly category?: string
+  }[]
+  /** The reference category of each field that has one. */
+  readonly references: ReadonlyMap<string, string>
+}
+
+const layouts = new WeakMap<object, Layout>()
+
+/** The layout of a matrix from `matrix()`, or undefined for any other value. */
+export const layoutOf = (matrix: unknown): Layout | undefined =>
+  typeof matrix === 'object' && matrix !== null
+    ? layouts.get(matrix)
+    : undefined
 
 /** A block after preprocessing. It keeps the role of the block it came from. */
 export type Prepared<
@@ -107,7 +165,9 @@ export type Prepared<
   /** The matrix an estimator would get, once no field is pending. */
   matrix(this: { readonly pending: readonly never[] }): Matrix<
     Columns<S, T, OneHot, Reference>,
-    [T] extends [never] ? undefined : readonly FieldValue<S[T]>[]
+    [T] extends [never] ? undefined : readonly FieldValue<S[T]>[],
+    R,
+    FullOneHot<S, T, OneHot, Reference>
   >
 }
 
@@ -314,7 +374,11 @@ const describeMatrix = (
   role: Role,
   config: Config,
   rows: readonly Row[],
-  matrix: Matrix<string, readonly unknown[] | undefined>
+  matrix: {
+    readonly columns: readonly string[]
+    readonly values: readonly (readonly number[])[]
+    readonly y: readonly unknown[] | undefined
+  }
 ) => {
   const fields: Record<string, { readonly kind: string }> = {}
   for (const column of matrix.columns) fields[column] = { kind: 'number' }
@@ -379,7 +443,7 @@ const prepare = (
       config.references
     )
     const { target } = config
-    const value: Matrix<string, readonly unknown[] | undefined> = {
+    const value = {
       columns: Object.freeze(columns.map(column => column.name)),
       values: Object.freeze(
         rows.map(row => Object.freeze(columns.map(column => column.value(row))))
@@ -387,9 +451,31 @@ const prepare = (
       y:
         target === undefined
           ? undefined
-          : Object.freeze(rows.map(row => row[target]))
+          : Object.freeze(rows.map(row => row[target])),
+      fullOneHot: Object.freeze(
+        Object.entries(config.fields)
+          .filter(
+            ([key, field]) =>
+              key !== config.target &&
+              encodingOf(field, config.oneHot.has(key)) === 'one-hot' &&
+              !config.references.has(key)
+          )
+          .map(([key]) => key)
+      )
     }
-    return printable(value, () => describeMatrix(role, config, rows, value))
+    const result = markRole(
+      printable(value, () => describeMatrix(role, config, rows, value)),
+      role
+    )
+    layouts.set(result, {
+      columns: Object.freeze(
+        columns.map(({ name, field, category }) =>
+          category === undefined ? { name, field } : { name, field, category }
+        )
+      ),
+      references: config.references
+    })
+    return result
   }
 
   const prepared = printable(
