@@ -78,6 +78,50 @@ describe('ml.linearRegression', () => {
     }
   })
 
+  test('matches scikit-learn on the same data', () => {
+    // LinearRegression().fit(X, y) in scikit-learn 1.9 on the first ten rows
+    const schema = ml
+      .features({
+        flipper: ml.number(),
+        male: ml.boolean(),
+        dream: ml.boolean(),
+        mass: ml.number()
+      })
+      .target('mass')
+    const rows = [
+      [181, 1, 0, 3750],
+      [186, 0, 0, 3800],
+      [195, 0, 0, 3250],
+      [193, 0, 0, 3450],
+      [192, 0, 1, 3500],
+      [196, 1, 1, 3900],
+      [193, 1, 1, 3650],
+      [188, 0, 1, 3525],
+      [211, 0, 0, 4500],
+      [230, 1, 0, 5700],
+      [200, 0, 0, 4000]
+    ].map(([flipper, male, dream, mass]) => ({
+      flipper,
+      male: male === 1,
+      dream: dream === 1,
+      mass
+    }))
+    const split = (seed: number) =>
+      ml.dataset(schema, rows).split({ test: 0.05, seed })
+    // The last row is held out, so training has the ten rows above it
+    const seed = Array.from({ length: 50 }, (_, s) => s).find(
+      s => split(s).test.rows[0]?.flipper === 200
+    ) as number
+    const { train } = split(seed)
+    const fitted = model.fit(
+      ml.pipeline(schema).fit(train).transform(train).matrix()
+    )
+    close(fitted.intercept, -3994.8475902787313, 1e-6)
+    close(fitted.weights.flipper, 39.84507300105268, 1e-6)
+    close(fitted.weights.male, 382.1891162066915, 1e-6)
+    close(fitted.weights.dream, -212.71225227699196, 1e-6)
+  })
+
   test('reads each one-hot weight against the reference', () => {
     // Biscoe penguins weigh 4700 g, the others 3700 g
     const schema = ml
