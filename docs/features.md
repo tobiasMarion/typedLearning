@@ -35,14 +35,14 @@ Training data doesn't need `parseRows`: `ml.dataset` validates its rows. `parse`
 
 ## Field types
 
-| Constructor        | Inferred type      | Status |
-|--------------------|--------------------|--------|
-| `ml.number()`      | `number`           | done   |
-| `ml.boolean()`     | `boolean`          | done   |
-| `ml.category([…])` | literal union      | done   |
-| `ml.orderedCategory([…])` | literal union, ranked in list order | done |
-| `ml.timestamp()`   | `number`, milliseconds since 1970 (UTC) | done   |
-| `.optional()`      | `T \| undefined`   | done   |
+| Constructor               | Inferred type                           | Status |
+| ------------------------- | --------------------------------------- | ------ |
+| `ml.number()`             | `number`                                | done   |
+| `ml.boolean()`            | `boolean`                               | done   |
+| `ml.category([…])`        | literal union                           | done   |
+| `ml.orderedCategory([…])` | literal union, ranked in list order     | done   |
+| `ml.timestamp()`          | `number`, milliseconds since 1970 (UTC) | done   |
+| `.optional()`             | `T \| undefined`                        | done   |
 
 `ml.category([…])` needs at least one category and rejects duplicates, both at compile time and at runtime. Its declaration order is kept: it is the column order the encoder produces.
 
@@ -110,17 +110,16 @@ The stack trace starts at the `parse`/`parseRows` call, so an uncaught error poi
 **Decision:** the DSL and its validator are our own, with no runtime dependencies. Compatibility with Zod, Valibot, and ArkType goes through [Standard Schema](https://standardschema.dev), the shared interface those libraries implement.
 
 **Why not build on Zod:**
-
-- **Different jobs.** Zod describes the *shape of a value*. The DSL describes the *meaning of a column*: its kind, its category order, and whether it needs a missing-value policy. The pipeline types inspect that meaning. Building them on Zod's internal types would couple the most delicate part of the API to a dependency, and hover types would show `ZodObject<…>` instead of readable records.
+- **Different jobs.** Zod describes the _shape of a value_. The DSL describes the _meaning of a column_: its kind, its category order, and whether it needs a missing-value policy. The pipeline types inspect that meaning. Building them on Zod's internal types would couple the most delicate part of the API to a dependency, and hover types would show `ZodObject<…>` instead of readable records.
 - **Tabular errors.** Zod reports one issue per value. For datasets we want issues grouped per column.
 - **Missing-value semantics.** In ML, `NaN` and `null` usually mean missing. Zod rejects `NaN` in `z.number()`.
 
 **How compatibility works:**
 
-| Direction | Mechanism | Status |
-|-----------|-----------|--------|
-| TL → ecosystem | Features implement `~standard` (Standard Schema V1), so tools that accept Zod/Valibot/ArkType through Standard Schema accept them too | done |
-| Zod → TL | `ml.fromSchema(schema)` reads the types from `StandardSchemaV1.InferOutput` and the categories and required fields from Standard JSON Schema (`~standard.jsonSchema`) | done |
+| Direction      | Mechanism                                                                                                                                                             | Status |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| TL → ecosystem | Features implement `~standard` (Standard Schema V1), so tools that accept Zod/Valibot/ArkType through Standard Schema accept them too                                 | done   |
+| Zod → TL       | `ml.fromSchema(schema)` reads the types from `StandardSchemaV1.InferOutput` and the categories and required fields from Standard JSON Schema (`~standard.jsonSchema`) | done   |
 
 ```ts
 const Penguin = z.object({
@@ -138,20 +137,19 @@ const penguinSchema = ml.fromSchema(Penguin, {
 
 **Mapping rules:**
 
-| Zod | TL |
-|-----|----|
-| `z.number()`, `z.number().int()` | `ml.number()` |
-| `z.boolean()` | `ml.boolean()` |
-| `z.enum([...])`, `z.literal('x')` | `ml.category([...])`, in the same order |
-| `.optional()`, `.nullable()` | `.optional()` |
-| anything else (`z.string()`, `z.date()`, …) | needs an override |
+| Zod                                         | TL                                      |
+| ------------------------------------------- | --------------------------------------- |
+| `z.number()`, `z.number().int()`            | `ml.number()`                           |
+| `z.boolean()`                               | `ml.boolean()`                          |
+| `z.enum([...])`, `z.literal('x')`           | `ml.category([...])`, in the same order |
+| `.optional()`, `.nullable()`                | `.optional()`                           |
+| anything else (`z.string()`, `z.date()`, …) | needs an override                       |
 
 Fields that can't be mapped make the override **required at compile time**: leaving one out is a type error that names the missing field. An override can also replace a mapped field, for example to change the category order. An override for a field the schema doesn't have is a type error too.
 
 The Standard Schema interfaces are copied into `src/standard-schema.ts`, as the spec recommends, so there is no dependency on `@standard-schema/spec`. Zod is a `devDependency` used only in compatibility tests.
 
 **Known limits:**
-
 - A TL schema is not a Zod schema: it works where Standard Schema is accepted, but not inside `z.object({...})`.
 - JSON Schema can't represent `z.date()`, and `z.iso.datetime()` validates strings. Dates always need an `ml.timestamp()` override; the data can hold `Date` instances, milliseconds, or ISO strings, and comes out as milliseconds.
 - Zod's published types declare `~standard` without `jsonSchema`, even though it exists at runtime, so `fromSchema` checks for it at runtime and explains what is missing.
