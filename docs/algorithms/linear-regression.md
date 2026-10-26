@@ -25,10 +25,10 @@ $$\frac{\partial L}{\partial w} = \frac{2}{n} X^\top (\hat y - y) \qquad \frac{\
 
 ## 5. Hyperparameters
 
-| Parameter      | Solver           | Effect |
-|----------------|------------------|--------|
+| Parameter      | Solver           | Effect                                                  |
+| -------------- | ---------------- | ------------------------------------------------------- |
 | `learningRate` | gradient-descent | Step size. Too high diverges; too low converges slowly. |
-| `epochs`       | gradient-descent | Maximum number of iterations. |
+| `epochs`       | gradient-descent | Maximum number of iterations.                           |
 
 ## 6. Pitfalls
 

@@ -19,7 +19,10 @@ const pipeline = ml
   .missing({ sex: 'mode' })
   .scale(['billLengthMm', 'flipperLengthMm', 'bodyMassG'])
   .missing({
-    bodyMassG: { knn: 5, using: ['billLengthMm', 'flipperLengthMm', 'island', 'sex'] }
+    bodyMassG: {
+      knn: 5,
+      using: ['billLengthMm', 'flipperLengthMm', 'island', 'sex']
+    }
   })
 
 const fitted = pipeline.fit(train) // only accepts a Train
@@ -43,7 +46,6 @@ const penguinSchema = ml.features({ ... }).target('species')
 ```
 
 `.target(field)` returns a new schema with the same fields, so one set of fields can serve several questions. The target:
-
 - decides the kind of problem: a `number` is regression; a `boolean`, `category` or `orderedCategory` is classification. A timestamp can't be a target;
 - must be a required field. Rows without a label are a choice about the population, made before `ml.dataset` (see [Missing values](#missing-values));
 - is out of reach of every step: `missing`, `encode` and `scale` don't accept it;
@@ -54,11 +56,11 @@ const penguinSchema = ml.features({ ... }).target('species')
 
 Every column other than the target carries three facts in its type, and each step changes one of them:
 
-| Fact        | From the schema                         | Changed by | Required by |
-|-------------|-----------------------------------------|------------|-------------|
-| complete    | required fields are; optional ones aren't | `missing`  | `matrix()`, and `.estimator()` in M5 |
-| encoding    | the default of its kind, see [Encoding](#encoding) | `encode`   | nothing: every column is numeric by default |
-| scaled      | no                                      | `scale`    | anything that measures distances: KNN imputation, and `ml.knn` in M6 |
+| Fact     | From the schema                                    | Changed by | Required by                                                          |
+| -------- | -------------------------------------------------- | ---------- | -------------------------------------------------------------------- |
+| complete | required fields are; optional ones aren't          | `missing`  | `matrix()`, and `.estimator()` in M5                                 |
+| encoding | the default of its kind, see [Encoding](#encoding) | `encode`   | nothing: every column is numeric by default                          |
+| scaled   | no                                                 | `scale`    | anything that measures distances: KNN imputation, and `ml.knn` in M6 |
 
 Each method only accepts the columns that still lack its fact: `missing` takes incomplete fields, `scale` takes numbers and ordered positions that aren't scaled yet, and `encode` takes categories still on their default. Filling a required field, scaling twice or re-encoding is a type error that says why. Once every column is complete, scaled where it matters and encoded as wanted, the methods have nothing left to accept.
 
@@ -75,14 +77,14 @@ Every optional field needs a policy:
 })
 ```
 
-| Policy             | Fields     | Fills a missing value with                                    |
-|--------------------|------------|---------------------------------------------------------------|
-| `'mean'`           | numbers    | the training mean                                             |
-| `'median'`         | numbers    | the training median                                           |
-| `'mode'`           | categories, booleans | the most frequent training value, ties by declared order (`false` before `true`) |
-| `{ constant: v }`  | any        | `v`, which must be a value the field accepts (milliseconds for a timestamp); after `scale`, it is scaled with the field |
-| `{ knn, using }`   | any        | the nearest training rows, see [KNN imputation](#knn-imputation) |
-| `'error'`          | any        | nothing: `fit` or `transform` throws, naming the field and the row |
+| Policy            | Fields               | Fills a missing value with                                                                                              |
+| ----------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `'mean'`          | numbers              | the training mean                                                                                                       |
+| `'median'`        | numbers              | the training median                                                                                                     |
+| `'mode'`          | categories, booleans | the most frequent training value, ties by declared order (`false` before `true`)                                        |
+| `{ constant: v }` | any                  | `v`, which must be a value the field accepts (milliseconds for a timestamp); after `scale`, it is scaled with the field |
+| `{ knn, using }`  | any                  | the nearest training rows, see [KNN imputation](#knn-imputation)                                                        |
+| `'error'`         | any                  | nothing: `fit` or `transform` throws, naming the field and the row                                                      |
 
 `missing` can be called more than once, so some fields can be filled before `scale` and others after. A policy sees the field as it is at that point: a median after `scale` is the median of the scaled values. It behaves the same in `fit`, in `transform` and, later, in `predict`. Statistics ignore missing values and are computed once, in `fit`. A field whose training values are all missing has no mean, median or mode: `fit` throws and names it.
 
@@ -99,7 +101,6 @@ Every optional field needs a policy:
 ```
 
 A missing value is filled from the `knn` training rows closest to the row being filled:
-
 - **Distance** is euclidean over the columns of the `using` fields, as they are at that point. Each of them must be complete and comparable: numbers and ordered positions must be scaled, and one-hot columns already are 0 or 1. A field that isn't is a type error that lists the fields usable at that point. Timestamps have no encoding, so they can't be in it either. The field being filled and the target can't be in `using`, and `using` has no default: which fields define a neighbor changes the result.
 - **Neighbors** are training rows that have the value. In `fit` and `transform` alike they come from the training block only: a validation row never fills another one. Ties in distance go to the earlier row.
 - **The value** is the neighbors' mean for a number, in the field's current scale, and their most frequent category for a category, ties by declared order.
@@ -111,13 +112,13 @@ If fewer than `knn` training rows have the value, `fit` throws and names the fie
 
 Categories get a numeric encoding from the schema, with no step needed:
 
-| Field                 | Default encoding | Columns                                   |
-|-----------------------|------------------|-------------------------------------------|
-| `ml.category`         | one-hot          | one per declared category, in declared order |
-| `ml.orderedCategory`  | position         | one, with the position in the declared order (`'poor'` → 0, `'fair'` → 1, `'good'` → 2) |
-| `ml.boolean`          | value            | one, with 1 for `true` and 0 for `false` |
-| `ml.number`           | value            | one, with the number |
-| `ml.timestamp`        | none yet         | none: a timestamp is left out of the matrix, and the fitted state says so |
+| Field                | Default encoding | Columns                                                                                 |
+| -------------------- | ---------------- | --------------------------------------------------------------------------------------- |
+| `ml.category`        | one-hot          | one per declared category, in declared order                                            |
+| `ml.orderedCategory` | position         | one, with the position in the declared order (`'poor'` → 0, `'fair'` → 1, `'good'` → 2) |
+| `ml.boolean`         | value            | one, with 1 for `true` and 0 for `false`                                                |
+| `ml.number`          | value            | one, with the number                                                                    |
+| `ml.timestamp`       | none yet         | none: a timestamp is left out of the matrix, and the fitted state says so               |
 
 `encode` only overrides a default:
 
@@ -144,7 +145,6 @@ Standardizes numbers and ordered positions: `(x - mean) / std`, with the mean an
 ## Output
 
 `transform` keeps the block's role: a `Train` stays a `Train`, a `Test` stays a `Test`, so the rest of the workflow still knows what the block may be used for. The result has two views of the same data:
-
 - **`rows`:** prepared records, with missing values filled and numbers scaled. Optional fields with a policy become required. Categories keep their labels, except a scaled ordered category, which is its scaled position; encoding shows in the matrix.
 - **`matrix()`:** the numbers the estimator consumes. `columns` lists the column names in schema order, typed as the union of their literals (`'billLengthMm' | 'island=Biscoe' | …`; TypeScript doesn't keep the order of an object's keys, so it can't be a tuple). `values` is `number[][]`, one row per record, and `y` holds the target of each record, or is `undefined` for a schema without one.
 

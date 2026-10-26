@@ -3,7 +3,6 @@
 ## Explicit decisions
 
 When a decision changes the model's result, the user has to make it. The library has no silent defaults for:
-
 - missing values;
 - solver and regularization;
 - split strategy.
@@ -21,7 +20,6 @@ Each step of the workflow exposes only the methods that make sense there, so aut
 ## Static and runtime validation
 
 TypeScript types don't guarantee that external data is correct. So the library combines:
-
 - **static guarantees** for known contracts (schema, pipeline composition, `Train`/`Test`);
 - **runtime validation** for external inputs (CSV, APIs), only at the entry points (`parse`, `parseRows`, `ml.dataset`);
 - **internal conversion** to numerical representations.

@@ -2,13 +2,13 @@
 
 ## Contracts
 
-| Concept     | Definition |
-|-------------|------------|
+| Concept     | Definition                                                           |
+| ----------- | -------------------------------------------------------------------- |
 | Estimator   | Learns something via `fit`. Doesn't have to predict (e.g., K-means). |
-| Transformer | An estimator that learns a state and transforms data. |
-| Predictor   | An estimator with `predict`. |
-| Regressor   | A predictor of numeric values. |
-| Classifier  | A predictor of classes, possibly with `predictProba`. |
+| Transformer | An estimator that learns a state and transforms data.                |
+| Predictor   | An estimator with `predict`.                                         |
+| Regressor   | A predictor of numeric values.                                       |
+| Classifier  | A predictor of classes, possibly with `predictProba`.                |
 
 These concepts are interfaces and types, not necessarily classes. The contracts live in `src/estimators/contracts.ts`.
 
@@ -28,7 +28,6 @@ ml.linearRegression({ solver: 'normal-equation', learningRate: 0.01 })
 ```
 
 We keep four things separate:
-
 - **Algorithm:** linear regression, logistic regression, KNN…
 - **Implementation:** educational, optimized.
 - **Hyperparameters:** specific to the algorithm.

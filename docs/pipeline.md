@@ -19,7 +19,6 @@ schema ─► pipeline ─► missing / encode / scale ─► estimator ─► f
 ```
 
 `fit` does the following:
-
 1. fits the transformers on the training data;
 2. transforms the training data;
 3. fits the estimator;
@@ -54,7 +53,6 @@ The error message has to name the pending field. The ergonomics of that message 
 ## Backtest
 
 On the training block of a `Series<F>`, `model.backtest(train, cv)` runs the whole pipeline once per walk-forward fold:
-
 1. fits the transformers and the estimator on the fold's `Train<F>`;
 2. predicts the fold's `Validation<F>`;
 3. stores the predictions and metrics for that fold.

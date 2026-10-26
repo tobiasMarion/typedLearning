@@ -3,7 +3,6 @@
 ## Numerical tests
 
 Each algorithm goes through these steps:
-
 1. Derive and understand the math (recorded in [algorithms/](algorithms/README.md)).
 2. Implement the educational version.
 3. Generate synthetic data with known parameters (`test/fixtures/`).
@@ -20,12 +19,10 @@ When the same algorithm has multiple implementations, test the shared contract a
 ## Type tests
 
 They live in `test/types/` and run in CI. Each one covers:
-
 - **positive cases:** the inferred type is the expected one (`expectTypeOf`);
 - **negative cases:** invalid code doesn't compile (`@ts-expect-error`).
 
 Some important negative cases:
-
 - value of the wrong type or undeclared category;
 - `fit(test)` or `evaluate(train)`;
 - `.estimator()` called with pending decisions;

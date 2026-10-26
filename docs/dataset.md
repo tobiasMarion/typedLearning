@@ -15,31 +15,30 @@ The two are distinct types, and each one exposes only the splits that make sense
 
 ## Train, validation, and test
 
-Three *branded* types: they have the same shape, the schema (`features`) and the `rows`, but aren't interchangeable.
+Three _branded_ types: they have the same shape, the schema (`features`) and the `rows`, but aren't interchangeable.
 
-| Type            | Used for                                                       |
-|-----------------|----------------------------------------------------------------|
-| `Train<F>`      | fitting transformers and the estimator                         |
-| `Validation<F>` | comparing models and hyperparameters during development        |
-| `Test<F>`       | the final estimate, after every choice has been made           |
+| Type            | Used for                                                |
+| --------------- | ------------------------------------------------------- |
+| `Train<F>`      | fitting transformers and the estimator                  |
+| `Validation<F>` | comparing models and hyperparameters during development |
+| `Test<F>`       | the final estimate, after every choice has been made    |
 
 Without a validation set, the only way to compare models is to look at the test set, and then the test score stops being an honest estimate: the chosen model is the one that got lucky on it.
 
 **Roles are assigned once; only training data is resampled:**
-
 - `split` is the only operation that separates data. It exists only on the original data, assigns every row a role, once, and its blocks can't be split again;
 - [cross-validation](#cross-validation) (`kFold`, `walkForward`) resamples a `Train<F>` into training and validation pairs, to compare models and estimate how they do on data they haven't seen;
 - a `Validation<F>` or a `Test<F>` can't be split or cross-validated. That is a compile-time error.
 
 So a validation block always comes from training data, and nothing built from a `Train<F>` can reach the `Test<F>`.
 
-| Operation                 | Accepts                                 |
-|---------------------------|-----------------------------------------|
-| `pipeline.fit(...)`       | `Train<F>`                              |
-| `fitted.transform(...)`   | any block; the prepared block keeps its role |
-| `model.fit(...)`          | `Train<F>`                              |
-| `fitted.evaluate(...)`    | `Validation<F>`, `Test<F>`              |
-| `fitted.predict(...)`     | typed record `F`                        |
+| Operation               | Accepts                                      |
+| ----------------------- | -------------------------------------------- |
+| `pipeline.fit(...)`     | `Train<F>`                                   |
+| `fitted.transform(...)` | any block; the prepared block keeps its role |
+| `model.fit(...)`        | `Train<F>`                                   |
+| `fitted.evaluate(...)`  | `Validation<F>`, `Test<F>`                   |
+| `fitted.predict(...)`   | typed record `F`                             |
 
 ## Random split
 
@@ -67,7 +66,10 @@ A random split doesn't exist on `Series<F>`. Shuffling time-ordered data leaks t
 Only on `Series<F>`. Blocks follow time order: train, then validation, then test.
 
 ```ts
-const { train, test } = prices.split({ testFrom: '2025-01-01', gap: { steps: 1 } })
+const { train, test } = prices.split({
+  testFrom: '2025-01-01',
+  gap: { steps: 1 }
+})
 const { train, validation, test } = prices.split({
   validationFrom: '2024-07-01',
   testFrom: '2025-01-01',
@@ -130,7 +132,11 @@ The training block remembers where it came from: a `Train<F, 'dataset'>` accepts
 The training block is shuffled with `seed` and cut into `k` folds; each fold is held out once while the others train.
 
 ```ts
-const { train, test } = penguins.split({ test: 0.2, seed: 42, stratify: 'species' })
+const { train, test } = penguins.split({
+  test: 0.2,
+  seed: 42,
+  stratify: 'species'
+})
 const cv = ml.kFold({ k: 5, seed: 42, stratify: 'species' })
 for (const fold of cv.folds(train)) {
   // fit on fold.train, score on fold.validation
@@ -146,7 +152,6 @@ fold 3  ████████████████████████
 ```
 
 The held-out rows of a fold are spread over the training block; the bars draw them grouped by fold, as if fold 1 held out the first stretch, and the counts are the real ones.
-
 - Every row is held out exactly once. The shuffled rows are dealt to the folds in turn, so fold sizes differ by at most one.
 - **`stratify`:** keeps the proportion of each category in every fold: the shuffled rows are grouped by class before they are dealt, so each fold gets its share of each class, give or take one row. As in the random split, only required `category` and `orderedCategory` fields. `ml.kFold` is created before it meets data, so the field is checked when `folds` gets the training block: a wrong field is a type error there that lists the valid ones.
 - Each fold is a `Train<F, 'dataset'>` and a `Validation<F>`, and both keep the order of the training block. A fold's training block can be cross-validated again.
@@ -158,7 +163,10 @@ The held-out rows of a fold are spread over the training block; the bars draw th
 The time series counterpart of k-fold: each fold validates on a block of time and trains on the history before it. "Train on 3 months, validate on the next one":
 
 ```ts
-const { train, test } = prices.split({ testFrom: '2025-01-01', gap: { days: 5 } })
+const { train, test } = prices.split({
+  testFrom: '2025-01-01',
+  gap: { days: 5 }
+})
 const cv = ml.walkForward({
   validationFrom: '2024-04-01', // start of the first validation block
   validation: { months: 1 }, // then one block a month until the end of train
@@ -181,7 +189,6 @@ fold 6  ████████████████████████
 ```
 
 Each column of the timeline is a stretch of time. A gap shorter than a column still gets one, so a fold with a gap never looks like a fold without one.
-
 - **`validationFrom`:** where the first validation block starts, like `testFrom` in the chronological split. Starting on the first of a month lines the blocks up with the calendar.
 - **`validation`:** the length of each validation block. The blocks follow each other until the end of the training block, without overlapping or leaving rows out; the last one can be shorter. A calendar block where the series has no rows, such as a month without data, is skipped.
 - **`train`:** `'expanding'` trains each fold on all the history before its block; a period such as `{ months: 3 }` trains on that much history only (a rolling window), for when the distant past no longer looks like the present.
@@ -196,7 +203,6 @@ With `group`, all groups share the same time cut, so no ticker sees a period tha
 ### Choosing and estimating
 
 Cross-validation chooses; the test block estimates:
-
 1. `split` holds out the `Test<F>`.
 2. The search runs cross-validation on the `Train<F>` and picks the configuration with the best mean score.
 3. The chosen configuration is refit on the whole `Train<F>`.
@@ -214,7 +220,7 @@ M2 provides `kFold` and `walkForward`, and `folds` to cut a `Train<F>` with them
 
 ## After the MVP
 
-- **Purged and embargoed k-fold** (López de Prado): k-fold on a series, with the held-out block in the middle. *Purge* drops training rows whose label overlaps the held-out period (a 5-day return label computed with prices inside it); *embargo* drops training rows right after the held-out block, whose `lag`/`rolling` features were computed from it. It uses the whole series for testing, which helps with short histories, at the cost of training on data later than the test. It needs each label's horizon and each feature's time footprint.
+- **Purged and embargoed k-fold** (López de Prado): k-fold on a series, with the held-out block in the middle. _Purge_ drops training rows whose label overlaps the held-out period (a 5-day return label computed with prices inside it); _embargo_ drops training rows right after the held-out block, whose `lag`/`rolling` features were computed from it. It uses the whole series for testing, which helps with short histories, at the cost of training on data later than the test. It needs each label's horizon and each feature's time footprint.
 - **Group k-fold:** rows of the same group (for example, the same patient) never appear on both sides of a fold.
 - **Nested cross-validation:** an outer cross-validation over the original data in place of a single test block, for datasets too small to hold one out. Each outer fold runs the whole search on its training part.
 
