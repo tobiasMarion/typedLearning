@@ -27,6 +27,7 @@ Some important negative cases:
 - `fit(test)` or `evaluate(train)`;
 - `.estimator()` called with pending decisions;
 - an implementation option that doesn't apply to the chosen solver;
+- a linear regression on a one-hot field with every category, or on a target that isn't a number;
 - a metric that doesn't match the problem type;
 - a random split of a `Series<F>`, or k-fold on its training block;
 - cross-validation of a `Validation<F>` or a `Test<F>`;
