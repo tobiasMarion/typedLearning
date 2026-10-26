@@ -1,4 +1,5 @@
 import { dataset, kFold, series, walkForward } from './dataset/index.ts'
+import { linearRegression } from './estimators/index.ts'
 import {
   boolean,
   category,
@@ -22,7 +23,8 @@ export const ml = Object.freeze({
   series,
   kFold,
   walkForward,
-  pipeline
+  pipeline,
+  linearRegression
 })
 
 /** The record type described by a `Features` schema. */
@@ -52,6 +54,11 @@ export type {
   WalkForward,
   WalkForwardOptions
 } from './dataset/index.ts'
+export type {
+  FittedLinearRegression,
+  LinearRegression,
+  LinearRegressionOptions
+} from './estimators/index.ts'
 export type {
   AnyField,
   BooleanField,
