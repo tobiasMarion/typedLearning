@@ -71,6 +71,7 @@ export { FeatureValidationError } from './features/index.ts'
 export type {
   Columns,
   Fitted,
+  FullOneHot,
   Matrix,
   Pipeline,
   Prepared,

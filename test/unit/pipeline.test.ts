@@ -135,6 +135,17 @@ describe('matrix', () => {
     assert.match(plain(String(fitted)), /observedAt: left out \(timestamp\)/)
   })
 
+  test('names the one-hot fields with every category', () => {
+    assert.deepEqual(matrix.fullOneHot, ['island'])
+    const referenced = ml
+      .pipeline(penguinSchema)
+      .encode({ island: { reference: 'Dream' } })
+      .fit(train)
+      .transform(train)
+      .matrix()
+    assert.deepEqual(referenced.fullOneHot, [])
+  })
+
   test('prints as a table numbered by position in the data', () => {
     const table = plain(String(matrix)).split('\n')
     assert.equal(table[0], "train matrix: 2 rows, 6 columns, target 'species'")
