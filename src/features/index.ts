@@ -1,4 +1,4 @@
-export { type Features, features } from './features.ts'
+export { type Features, features, type Targeted } from './features.ts'
 export {
   type AnyField,
   type BooleanField,

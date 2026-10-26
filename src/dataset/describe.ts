@@ -162,6 +162,8 @@ const TAIL = 5
 
 export type BlockDescription = {
   readonly role: string
+  /** Replaces `<role>: <n> rows` as the first line. */
+  readonly title?: string
   readonly fields: { readonly [key: string]: { readonly kind: string } }
   readonly rows: readonly Record<string, unknown>[]
   /** Position of a record in the dataset or series it came from. */
@@ -172,7 +174,9 @@ export type BlockDescription = {
 // has the same number in every block and fold it lands in.
 export const describeBlock = (d: BlockDescription): string => {
   const total = d.rows.length
-  const header = bold(`${d.role}: ${total} ${total === 1 ? 'row' : 'rows'}`)
+  const header = bold(
+    d.title ?? `${d.role}: ${total} ${total === 1 ? 'row' : 'rows'}`
+  )
   if (total === 0) return header
   const shown =
     total > HEAD + TAIL + 1

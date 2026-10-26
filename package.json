@@ -49,6 +49,7 @@
     "example": "node examples/penguins/index.ts",
     "example:bad": "node examples/penguins/index.ts --bad",
     "example:air-passengers": "node examples/air-passengers/index.ts",
+    "example:scikit-learn": "uv run --project examples/scikit-learn examples/scikit-learn/penguins.py",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "check": "npm run lint && npm run typecheck && npm test",

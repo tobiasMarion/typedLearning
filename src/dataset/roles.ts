@@ -17,6 +17,9 @@ declare const origin: unique symbol
 /** What a block was cut from: a `Dataset` has no order, a `Series` is ordered by time. */
 export type Origin = 'dataset' | 'series'
 
+/** What a block may be used for. */
+export type Role = 'train' | 'validation' | 'test'
+
 // Type aliases, not interfaces: see Type quality in docs/principles.md.
 /** Rows to fit on. `O` is what it was cut from; `Train<S>` accepts both. */
 export type Train<S extends Shape, O extends Origin = Origin> = {
@@ -26,17 +29,28 @@ export type Train<S extends Shape, O extends Origin = Origin> = {
   readonly [origin]: O
 }
 
+// Held-out blocks carry an origin too, though nothing reads it: without it, a
+// test block passed as a training block reports the missing origin instead of
+// `Type '"test"' is not assignable to type '"train"'`.
 export type Test<S extends Shape> = {
   readonly features: Features<S>
   readonly rows: readonly InferShape<S>[]
   readonly [role]: 'test'
+  readonly [origin]: Origin
 }
 
 export type Validation<S extends Shape> = {
   readonly features: Features<S>
   readonly rows: readonly InferShape<S>[]
   readonly [role]: 'validation'
+  readonly [origin]: Origin
 }
+
+/**
+ * The role brand alone, for values derived from a block, such as a prepared
+ * block: a prepared test block is still a test block.
+ */
+export type RoleBrand<R extends Role> = { readonly [role]: R }
 
 /** One cut of a training block: fit on `train`, score on `validation`. */
 export type Fold<S extends Shape, O extends Origin = Origin> = {
@@ -55,17 +69,21 @@ export const numberRows = (rows: readonly object[]) => {
   })
 }
 
+// The role of every block, which preprocessing needs to keep it. Kept out of
+// the types, where the role is a brand.
+const roles = new WeakMap<object, Role>()
+
 // The roles and origins are type-only brands, so a frozen { features, rows }
 // is all a block needs at runtime, plus how it prints. These casts are the one
 // place where blocks are created; the splits pass in a new array of rows in
 // the order the block should keep.
 const block = <S extends Shape>(
-  role: 'train' | 'validation' | 'test',
+  role: Role,
   features: Features<S>,
   rows: InferShape<S>[]
 ) => {
   const frozen = Object.freeze(rows)
-  return printable({ features, rows: frozen }, () =>
+  const created = printable({ features, rows: frozen }, () =>
     describeBlock({
       role,
       fields: features.fields,
@@ -73,6 +91,28 @@ const block = <S extends Shape>(
       position: record => positions.get(record)
     })
   )
+  roles.set(created, role)
+  return created
+}
+
+/** The role of a block, or undefined for any other value. */
+export const roleOf = (block: unknown): Role | undefined =>
+  typeof block === 'object' && block !== null ? roles.get(block) : undefined
+
+/** Position of a record in the dataset or series it came from. */
+export const positionOf = (record: object): number | undefined =>
+  positions.get(record)
+
+/** Gives `record` the position of `source`, so both print with the same number. */
+export const keepPosition = (source: object, record: object) => {
+  const position = positions.get(source)
+  if (position !== undefined) positions.set(record, position)
+}
+
+/** Records the role of a value derived from a block. */
+export const markRole = <T extends object>(value: T, role: Role): T => {
+  roles.set(value, role)
+  return value
 }
 
 export const trainBlock = <S extends Shape, O extends Origin>(

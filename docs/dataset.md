@@ -33,11 +33,13 @@ Without a validation set, the only way to compare models is to look at the test 
 
 So a validation block always comes from training data, and nothing built from a `Train<F>` can reach the `Test<F>`.
 
-| Operation              | Accepts                    |
-|------------------------|----------------------------|
-| `model.fit(...)`       | `Train<F>`                 |
-| `fitted.evaluate(...)` | `Validation<F>`, `Test<F>` |
-| `fitted.predict(...)`  | typed record `F`           |
+| Operation                 | Accepts                                 |
+|---------------------------|-----------------------------------------|
+| `pipeline.fit(...)`       | `Train<F>`                              |
+| `fitted.transform(...)`   | any block; the prepared block keeps its role |
+| `model.fit(...)`          | `Train<F>`                              |
+| `fitted.evaluate(...)`    | `Validation<F>`, `Test<F>`              |
+| `fitted.predict(...)`     | typed record `F`                        |
 
 ## Random split
 

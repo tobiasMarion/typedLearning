@@ -83,3 +83,24 @@ ml.category([1, 2])
 
 // @ts-expect-error — fields must be built with ml.number(), ml.category(), …
 ml.features({ age: 3 })
+
+// ── target ───────────────────────────────────────────────────────────────────
+
+const targeted = penguinSchema.target('species')
+
+type _targetKey = Expect<Equal<typeof targeted.targetKey, 'species'>>
+type _targetKeepsRecord = Expect<Equal<typeof targeted.infer, Penguin>>
+
+// A schema with a target is still a schema
+ml.dataset(targeted, [])
+
+penguinSchema.target('isAdult')
+
+// @ts-expect-error — a target must be required
+penguinSchema.target('billLengthMm')
+
+// @ts-expect-error — a timestamp can't be a target
+penguinSchema.target('observedAt')
+
+// @ts-expect-error — 'weight' is not a field
+penguinSchema.target('weight')

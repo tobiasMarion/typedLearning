@@ -69,9 +69,19 @@ const reviewSchema = ml.features({
 })
 ```
 
-The value type is the same literal union as `ml.category`, and validation is the same; error messages show the order (`one of 'poor' < 'fair' < 'good'`). The difference is for later steps: the encoder can turn an ordered category into a single ranked column instead of one-hot columns, and a tree can split on `≤ 'fair'`. `ml.fromSchema` maps `z.enum` to `ml.category`; pass an `ml.orderedCategory` override when the order matters.
+The value type is the same literal union as `ml.category`, and validation is the same; error messages show the order (`one of 'poor' < 'fair' < 'good'`). The difference is for later steps: by default the encoder turns an ordered category into a single column with its position instead of one-hot columns (see [Encoding](preprocessing.md#encoding)), and a tree can split on `≤ 'fair'`. `ml.fromSchema` maps `z.enum` to `ml.category`; pass an `ml.orderedCategory` override when the order matters.
 
 See `examples/penguins`, where `bodyCondition` is a graded scale from `'poor'` to `'good'` (`npm run example`).
+
+## Target
+
+`.target(field)` marks the field a model predicts and returns a new schema with the same fields:
+
+```ts
+const penguinSchema = ml.features({ ... }).target('species')
+```
+
+The target has to be a required `number`, `boolean`, `category` or `orderedCategory`, and its kind decides the problem: a number is regression, the others are classification. A wrong field is a type error that lists the valid ones, and the key is kept as `targetKey`. See [Preprocessing](preprocessing.md#target) for what it changes downstream.
 
 ## Runtime validation
 
@@ -149,4 +159,3 @@ The Standard Schema interfaces are copied into `src/standard-schema.ts`, as the 
 ## Open questions
 
 - Distinguish `optional` from `nullable`. Today `null` is accepted at runtime as missing, but the type only says `| undefined`.
-- Define the `target` in the schema or in the pipeline (the README examples use the pipeline).

@@ -36,8 +36,8 @@ console.log(
 // trains on it.
 const rolling = ml.walkForward({
   validationFrom: '1955-01-01',
-  validation: { years: 1 },
   train: { years: 3 },
+  validation: { years: 1 },
   gap: { months: 1 }
 })
 console.log(rolling.folds(train))
@@ -59,7 +59,7 @@ console.log(`\n${rolling.folds(train)[0]}`)
 // ── M5: Pipeline, backtest and metrics ───────────────────────────────────────
 
 // const model = ml
-//   .pipeline(airPassengers)
+//   .pipeline(airPassengerSchema)
 //   .target('passengers', { transform: 'log-return', horizon: 1 })
 //   .lag('passengers', [1, 12]) // last month and the same month last year
 //   .missing({ warmup: 'drop' })
