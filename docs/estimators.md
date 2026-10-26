@@ -66,7 +66,7 @@ fitted.predict(prepared.transform(validation).matrix()) // number[], one per row
 
 - **`fit`** takes the matrix of a `Train` only: the matrix keeps the role of its block, like `transform` does. Its target has to be a number. A one-hot field with every category doesn't compile, since an intercept makes it [linearly dependent](algorithms/linear-regression.md#linearly-dependent-columns).
 - **`predict`** takes the matrix of any block with the same columns and returns one prediction per row, in row order.
-- **The fitted model prints** its solver, the intercept, one weight per column by name, and the MSE on the training block; with gradient descent, also the loss at the first and the last epoch.
+- **The fitted model prints** its solver, the intercept, one weight per column by name, and the MSE on the training block; with gradient descent, also the loss before the first epoch and after the last.
 
 ```ts
 // @ts-expect-error — a test block can't train a model
