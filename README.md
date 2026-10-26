@@ -124,7 +124,7 @@ prices.split({ test: 0.2, seed: 42 })
 | M1  | **Feature DSL** ✅                    | Schema, `timestamp` fields, type inference, categories as literal unions, runtime validation, positive and negative type tests, Standard Schema support and `ml.fromSchema` for Zod/Valibot/ArkType schemas                                                                             |
 | M2  | **Dataset, split, and validation** ✅ | `dataset` and `series`; branded `Train`/`Validation`/`Test`; random split (seed, stratified) and chronological split (gap) into train/validation/test; cross-validation of the training block: k-fold, stratified k-fold, and walk-forward (expanding/rolling window, gap)              |
 | M3  | **Preprocessing** ✅                  | Target in the schema; imputation (mean, median, mode, constant, KNN); one-hot and ordinal encoding with columns from the schema; standardization; learned state kept separate from configuration; the printable matrix the estimators consume                                           |
-| M4  | **Linear regression**                 | `ml.linearRegression` fitted on the prepared matrix: normal equation and gradient descent, compared against each other; MSE as the loss; a reference category in `encode`; linearly dependent columns as an error, at compile time when the encoding causes them                        |
+| M4  | **Linear regression** ✅              | `ml.linearRegression` fitted on the prepared matrix: normal equation and gradient descent, compared against each other; MSE as the loss; a reference category in `encode`; linearly dependent columns as an error, at compile time when the encoding causes them                        |
 | M5  | **Pipeline, backtest, and metrics**   | Typed composition, pending-decision checks, `fit`/`evaluate`/`predict`, lag and rolling features and target horizon, `backtest` with refit per fold, MSE/MAE/R²/directional accuracy                                                                                                    |
 | M6  | **Second algorithm (MVP)**            | Logistic regression or KNN; hyperparameter search with cross-validation; documentation and examples                                                                                                                                                                                     |
 | M7  | **Ship it to production**             | Refit the validated pipeline on all the data (a `Train` with no `Validation` or `Test`, so the final model can't report a score); learned state frozen with the model and never recomputed at `predict`; saving and loading a fitted pipeline; runtime validation of production records |
@@ -168,11 +168,7 @@ Changes reach `main` only through pull requests. CI runs `check`, the build, and
 │   ├── validation/           # cross-validation: k-fold, walk-forward
 │   ├── preprocess/           # steps: missing (incl. KNN), encode, scale
 │   ├── pipeline/             # guided builder, fitted model, backtest
-│   ├── estimators/
-│   │   ├── contracts.ts      # Estimator, Predictor, Fitted
-│   │   └── linear-regression/
-│   │       ├── index.ts      # public API
-│   │       └── educational.ts
+│   ├── estimators/           # linear regression; Gram-Schmidt and Gaussian elimination by hand
 │   ├── metrics/
 │   └── math/                 # hand-written numerical ops (vectors, matrices)
 ├── test/
@@ -180,9 +176,9 @@ Changes reach `main` only through pull requests. CI runs `check`, the build, and
 │   ├── types/                # type tests (expect-type, @ts-expect-error)
 │   └── fixtures/             # synthetic data with known parameters
 ├── examples/                 # complete runnable workflows, one folder each
-│   ├── penguins/             # index.ts (pipeline), data.json, bad-data.json
+│   ├── penguins/             # index.ts (pipeline, regression), data.json, bad-data.json, all.json (344 penguins)
 │   ├── air-passengers/       # monthly time series, walk-forward
-│   └── scikit-learn/         # the penguins workflow in scikit-learn, as a reference (uv)
+│   └── scikit-learn/         # the penguins workflows in scikit-learn, and compare.ts/.py (uv)
 └── docs/
     └── algorithms/
 ```
