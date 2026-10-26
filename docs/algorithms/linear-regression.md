@@ -1,6 +1,6 @@
 # Linear regression
 
-> Status: `normal-equation` implemented; `gradient-descent` planned (M4)
+> Status: implemented (M4)
 
 ## 1. Intuition
 
@@ -26,7 +26,7 @@ $$\frac{\partial L}{\partial w} = \frac{2}{n} X^\top (\hat y - y) \qquad \frac{\
 
 Both solvers solve the same problem, and both start with the same check (see [Linearly dependent columns](#linearly-dependent-columns)).
 - **`normal-equation`:** the closed-form solution. With a column of ones for the intercept, $X_1 = [\mathbf{1} \mid X]$, the weights solve the linear system $X_1^\top X_1 \, \beta = X_1^\top y$, where $\beta = (b, w)$. The system is solved directly, without computing the inverse $(X_1^\top X_1)^{-1}$.
-- **`gradient-descent`:** weights and intercept start at zero, and each epoch takes one step over the whole training block: $w \leftarrow w - \eta \, \nabla_w L$ and $b \leftarrow b - \eta \, \partial L / \partial b$. It stops after `epochs` steps. A loss that becomes `Infinity` or `NaN` is an error that names `learningRate`: the steps are too large and the weights diverged.
+- **`gradient-descent`:** weights and intercept start at zero, and each epoch takes one step over the whole training block: $w \leftarrow w - \eta \, \nabla_w L$ and $b \leftarrow b - \eta \, \partial L / \partial b$. It stops after `epochs` steps. A loss that becomes `Infinity` or `NaN`, or that ends higher than it started, is an error that names `learningRate`: the steps are too large and the weights diverged. With well-chosen steps the loss of a linear regression only goes down, so a loss that grew can't be a model worth keeping.
 
 Starting at zero makes gradient descent deterministic, so it needs no seed.
 
