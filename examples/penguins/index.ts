@@ -95,6 +95,60 @@ const fitted = pipeline.fit(train)
 console.log(fitted)
 console.log(fitted.transform(test).matrix())
 
+// ── M4: Linear regression ────────────────────────────────────────────────────
+
+// Predicting the body mass, a number, so regression. The target has to be
+// present: rows without it can't train or score, so they leave here, at the
+// boundary, before the split.
+const massSchema = ml
+  .features({
+    island: ml.category(['Biscoe', 'Dream', 'Torgersen']),
+    flipperLengthMm: ml.number().optional(),
+    sex: ml.category(['male', 'female']).optional(),
+    bodyMassG: ml.number()
+  })
+  .target('bodyMassG')
+
+const weighed = (rows as { bodyMassG?: unknown }[]).filter(
+  row => row.bodyMassG != null
+)
+const masses = ml.dataset(massSchema, weighed)
+const massSplit = masses.split({ test: 0.25, seed: 42, stratify: 'island' })
+
+// Next to the intercept, a column for every island would add up to it, and
+// the weights would have no single answer: each one-hot field reads against a
+// reference category instead.
+const massPipeline = ml
+  .pipeline(massSchema)
+  .missing({ flipperLengthMm: 'median', sex: 'mode' })
+  .encode({ island: { reference: 'Biscoe' }, sex: { reference: 'female' } })
+  .scale(['flipperLengthMm'])
+const preparedMasses = massPipeline.fit(massSplit.train)
+const trainMatrix = preparedMasses.transform(massSplit.train).matrix()
+console.log(trainMatrix)
+
+// The closed-form solution, and gradient descent from zero: with enough
+// epochs they find the same weights.
+const exact = ml
+  .linearRegression({ solver: 'normal-equation' })
+  .fit(trainMatrix)
+console.log(exact)
+const stepped = ml
+  .linearRegression({
+    solver: 'gradient-descent',
+    learningRate: 0.3,
+    epochs: 5000
+  })
+  .fit(trainMatrix)
+console.log(stepped)
+
+// Predictions for the test block, in row order. Scoring them is evaluate's
+// job, in M5.
+console.log(
+  exact.predict(preparedMasses.transform(massSplit.test).matrix()),
+  massSplit.test.rows.map(row => row.bodyMassG)
+)
+
 // ── M5: Pipeline and metrics ─────────────────────────────────────────────────
 // ── M6: Second algorithm ─────────────────────────────────────────────────────
 

@@ -1,0 +1,3098 @@
+[
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.1,
+    "billDepthMm": 18.7,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 3750.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.5,
+    "billDepthMm": 17.4,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 3800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 40.3,
+    "billDepthMm": 18.0,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3250.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": null,
+    "billDepthMm": null,
+    "flipperLengthMm": null,
+    "bodyMassG": null,
+    "sex": null
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 36.7,
+    "billDepthMm": 19.3,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.3,
+    "billDepthMm": 20.6,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 38.9,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 3625.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.2,
+    "billDepthMm": 19.6,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4675.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 34.1,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3475.0,
+    "sex": null
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 42.0,
+    "billDepthMm": 20.2,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 4250.0,
+    "sex": null
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 37.8,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 3300.0,
+    "sex": null
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 37.8,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 180.0,
+    "bodyMassG": 3700.0,
+    "sex": null
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 41.1,
+    "billDepthMm": 17.6,
+    "flipperLengthMm": 182.0,
+    "bodyMassG": 3200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 38.6,
+    "billDepthMm": 21.2,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 34.6,
+    "billDepthMm": 21.1,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 4400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 36.6,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 38.7,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 42.5,
+    "billDepthMm": 20.7,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 4500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 34.4,
+    "billDepthMm": 18.4,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 3325.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 46.0,
+    "billDepthMm": 21.5,
+    "flipperLengthMm": 194.0,
+    "bodyMassG": 4200.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.8,
+    "billDepthMm": 18.3,
+    "flipperLengthMm": 174.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.7,
+    "billDepthMm": 18.7,
+    "flipperLengthMm": 180.0,
+    "bodyMassG": 3600.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 35.9,
+    "billDepthMm": 19.2,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 38.2,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 38.8,
+    "billDepthMm": 17.2,
+    "flipperLengthMm": 180.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 35.3,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 40.6,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 183.0,
+    "bodyMassG": 3550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 40.5,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.9,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 172.0,
+    "bodyMassG": 3150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 40.5,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 180.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.5,
+    "billDepthMm": 16.7,
+    "flipperLengthMm": 178.0,
+    "bodyMassG": 3250.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.2,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 178.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.5,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 188.0,
+    "bodyMassG": 3300.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.9,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.4,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3325.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.2,
+    "billDepthMm": 21.1,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 4150.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 38.8,
+    "billDepthMm": 20.0,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 42.2,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 180.0,
+    "bodyMassG": 3550.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.6,
+    "billDepthMm": 19.3,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 3300.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.8,
+    "billDepthMm": 19.1,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 4650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.5,
+    "billDepthMm": 18.0,
+    "flipperLengthMm": 182.0,
+    "bodyMassG": 3150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.8,
+    "billDepthMm": 18.4,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.0,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 3100.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 44.1,
+    "billDepthMm": 19.7,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 4400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.0,
+    "billDepthMm": 16.9,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3000.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.6,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 4600.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 41.1,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 182.0,
+    "bodyMassG": 3425.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.5,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 179.0,
+    "bodyMassG": 2975.0,
+    "sex": null
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.0,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 42.3,
+    "billDepthMm": 21.2,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 4150.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 39.6,
+    "billDepthMm": 17.7,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 3500.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 40.1,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 188.0,
+    "bodyMassG": 4300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 35.0,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 42.0,
+    "billDepthMm": 19.5,
+    "flipperLengthMm": 200.0,
+    "bodyMassG": 4050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 34.5,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 2900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 41.4,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 39.0,
+    "billDepthMm": 17.5,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 3550.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 40.6,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 36.5,
+    "billDepthMm": 16.6,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 2850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.6,
+    "billDepthMm": 19.1,
+    "flipperLengthMm": 194.0,
+    "bodyMassG": 3750.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 35.7,
+    "billDepthMm": 16.9,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 41.3,
+    "billDepthMm": 21.1,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.6,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 41.1,
+    "billDepthMm": 18.2,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 4050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 36.4,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 2850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 41.6,
+    "billDepthMm": 18.0,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 35.5,
+    "billDepthMm": 16.2,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3350.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 41.1,
+    "billDepthMm": 19.1,
+    "flipperLengthMm": 188.0,
+    "bodyMassG": 4100.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 35.9,
+    "billDepthMm": 16.6,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3050.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 41.8,
+    "billDepthMm": 19.4,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 4450.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 33.5,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.7,
+    "billDepthMm": 18.4,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.6,
+    "billDepthMm": 17.2,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 3550.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 45.8,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 4150.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 35.5,
+    "billDepthMm": 17.5,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 42.8,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 40.9,
+    "billDepthMm": 16.8,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 37.2,
+    "billDepthMm": 19.4,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 36.2,
+    "billDepthMm": 16.1,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3550.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 42.1,
+    "billDepthMm": 19.1,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 34.6,
+    "billDepthMm": 17.2,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 42.9,
+    "billDepthMm": 17.6,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 4700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 36.7,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 35.1,
+    "billDepthMm": 19.4,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 4200.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.3,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3350.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 41.3,
+    "billDepthMm": 20.3,
+    "flipperLengthMm": 194.0,
+    "bodyMassG": 3550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.3,
+    "billDepthMm": 19.5,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.9,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3500.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 38.3,
+    "billDepthMm": 19.2,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 38.9,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 35.7,
+    "billDepthMm": 18.0,
+    "flipperLengthMm": 202.0,
+    "bodyMassG": 3550.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 41.1,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 205.0,
+    "bodyMassG": 4300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 34.0,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.6,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 4450.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.2,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3300.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.8,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 4300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 38.1,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.3,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 4350.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 33.1,
+    "billDepthMm": 16.1,
+    "flipperLengthMm": 178.0,
+    "bodyMassG": 2900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 43.2,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 4100.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 35.0,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 3725.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 41.0,
+    "billDepthMm": 20.0,
+    "flipperLengthMm": 203.0,
+    "bodyMassG": 4725.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.7,
+    "billDepthMm": 16.0,
+    "flipperLengthMm": 183.0,
+    "bodyMassG": 3075.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.8,
+    "billDepthMm": 20.0,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 4250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 37.9,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 2925.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 39.7,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 3550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 38.6,
+    "billDepthMm": 17.2,
+    "flipperLengthMm": 199.0,
+    "bodyMassG": 3750.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 38.2,
+    "billDepthMm": 20.0,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 38.1,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 3175.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 43.2,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 4775.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 38.1,
+    "billDepthMm": 16.5,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 3825.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 45.6,
+    "billDepthMm": 20.3,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 4600.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 39.7,
+    "billDepthMm": 17.7,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 42.2,
+    "billDepthMm": 19.5,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 4275.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 39.6,
+    "billDepthMm": 20.7,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Biscoe",
+    "billLengthMm": 42.7,
+    "billDepthMm": 18.3,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 4075.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 38.6,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 188.0,
+    "bodyMassG": 2900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 37.3,
+    "billDepthMm": 20.5,
+    "flipperLengthMm": 199.0,
+    "bodyMassG": 3775.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 35.7,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3350.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 41.1,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3325.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 36.2,
+    "billDepthMm": 17.2,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 37.7,
+    "billDepthMm": 19.8,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 3500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 40.2,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 176.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 41.4,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 202.0,
+    "bodyMassG": 3875.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 35.2,
+    "billDepthMm": 15.9,
+    "flipperLengthMm": 186.0,
+    "bodyMassG": 3050.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 40.6,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 199.0,
+    "bodyMassG": 4000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 38.8,
+    "billDepthMm": 17.6,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3275.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 41.5,
+    "billDepthMm": 18.3,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 39.0,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3050.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 44.1,
+    "billDepthMm": 18.0,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 38.5,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3325.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Torgersen",
+    "billLengthMm": 43.1,
+    "billDepthMm": 19.2,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 3500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.8,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3500.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.5,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 199.0,
+    "bodyMassG": 4475.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 38.1,
+    "billDepthMm": 17.6,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3425.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 41.1,
+    "billDepthMm": 17.5,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 35.6,
+    "billDepthMm": 17.5,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3175.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.2,
+    "billDepthMm": 20.1,
+    "flipperLengthMm": 200.0,
+    "bodyMassG": 3975.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.0,
+    "billDepthMm": 16.5,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.7,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 4250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.2,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.6,
+    "billDepthMm": 17.2,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3475.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 32.1,
+    "billDepthMm": 15.5,
+    "flipperLengthMm": 188.0,
+    "bodyMassG": 3050.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 40.7,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3725.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.3,
+    "billDepthMm": 16.8,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 3000.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.0,
+    "billDepthMm": 18.7,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 39.2,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 4250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.6,
+    "billDepthMm": 18.4,
+    "flipperLengthMm": 184.0,
+    "bodyMassG": 3475.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.0,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 37.8,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3750.0,
+    "sex": "male"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 36.0,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Adelie",
+    "island": "Dream",
+    "billLengthMm": 41.5,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 201.0,
+    "bodyMassG": 4000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.5,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 3500.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.0,
+    "billDepthMm": 19.5,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 3900.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.3,
+    "billDepthMm": 19.2,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.4,
+    "billDepthMm": 18.7,
+    "flipperLengthMm": 188.0,
+    "bodyMassG": 3525.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 52.7,
+    "billDepthMm": 19.8,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 3725.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.2,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 3950.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.1,
+    "billDepthMm": 18.2,
+    "flipperLengthMm": 178.0,
+    "bodyMassG": 3250.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.3,
+    "billDepthMm": 18.2,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 3750.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.0,
+    "billDepthMm": 18.9,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.3,
+    "billDepthMm": 19.9,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 3700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.6,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.7,
+    "billDepthMm": 20.3,
+    "flipperLengthMm": 194.0,
+    "bodyMassG": 3775.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 47.0,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 185.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 52.0,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 201.0,
+    "bodyMassG": 4050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.9,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3575.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.5,
+    "billDepthMm": 19.6,
+    "flipperLengthMm": 201.0,
+    "bodyMassG": 4050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.3,
+    "billDepthMm": 20.0,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 3300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 58.0,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.4,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.2,
+    "billDepthMm": 18.2,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 4400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 42.4,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 181.0,
+    "bodyMassG": 3600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 48.5,
+    "billDepthMm": 17.5,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 43.2,
+    "billDepthMm": 16.6,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 2900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.6,
+    "billDepthMm": 19.4,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.7,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3300.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 52.0,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 4150.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.5,
+    "billDepthMm": 18.4,
+    "flipperLengthMm": 200.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.5,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 200.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.4,
+    "billDepthMm": 17.8,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 52.8,
+    "billDepthMm": 20.0,
+    "flipperLengthMm": 205.0,
+    "bodyMassG": 4550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 40.9,
+    "billDepthMm": 16.6,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 54.2,
+    "billDepthMm": 20.8,
+    "flipperLengthMm": 201.0,
+    "bodyMassG": 4300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 42.5,
+    "billDepthMm": 16.7,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3350.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.0,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 203.0,
+    "bodyMassG": 4100.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.7,
+    "billDepthMm": 18.6,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3600.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 47.5,
+    "billDepthMm": 16.8,
+    "flipperLengthMm": 199.0,
+    "bodyMassG": 3900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 47.6,
+    "billDepthMm": 18.3,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 52.0,
+    "billDepthMm": 20.7,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.9,
+    "billDepthMm": 16.6,
+    "flipperLengthMm": 192.0,
+    "bodyMassG": 2700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 53.5,
+    "billDepthMm": 19.9,
+    "flipperLengthMm": 205.0,
+    "bodyMassG": 4500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.0,
+    "billDepthMm": 19.5,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.2,
+    "billDepthMm": 17.5,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3650.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.9,
+    "billDepthMm": 19.1,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 3550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.5,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 3500.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.9,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 196.0,
+    "bodyMassG": 3675.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.8,
+    "billDepthMm": 18.5,
+    "flipperLengthMm": 201.0,
+    "bodyMassG": 4450.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.1,
+    "billDepthMm": 17.9,
+    "flipperLengthMm": 190.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.0,
+    "billDepthMm": 19.6,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 4300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.5,
+    "billDepthMm": 18.7,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.8,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 3675.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 48.1,
+    "billDepthMm": 16.4,
+    "flipperLengthMm": 199.0,
+    "bodyMassG": 3325.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.4,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 201.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.7,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.7,
+    "billDepthMm": 19.7,
+    "flipperLengthMm": 203.0,
+    "bodyMassG": 4050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 42.5,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 187.0,
+    "bodyMassG": 3350.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 52.2,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 197.0,
+    "bodyMassG": 3450.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.2,
+    "billDepthMm": 16.6,
+    "flipperLengthMm": 191.0,
+    "bodyMassG": 3250.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.3,
+    "billDepthMm": 19.9,
+    "flipperLengthMm": 203.0,
+    "bodyMassG": 4050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.2,
+    "billDepthMm": 18.8,
+    "flipperLengthMm": 202.0,
+    "bodyMassG": 3800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.6,
+    "billDepthMm": 19.4,
+    "flipperLengthMm": 194.0,
+    "bodyMassG": 3525.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 51.9,
+    "billDepthMm": 19.5,
+    "flipperLengthMm": 206.0,
+    "bodyMassG": 3950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 46.8,
+    "billDepthMm": 16.5,
+    "flipperLengthMm": 189.0,
+    "bodyMassG": 3650.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 45.7,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 195.0,
+    "bodyMassG": 3650.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 55.8,
+    "billDepthMm": 19.8,
+    "flipperLengthMm": 207.0,
+    "bodyMassG": 4000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 43.5,
+    "billDepthMm": 18.1,
+    "flipperLengthMm": 202.0,
+    "bodyMassG": 3400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 49.6,
+    "billDepthMm": 18.2,
+    "flipperLengthMm": 193.0,
+    "bodyMassG": 3775.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.8,
+    "billDepthMm": 19.0,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4100.0,
+    "sex": "male"
+  },
+  {
+    "species": "Chinstrap",
+    "island": "Dream",
+    "billLengthMm": 50.2,
+    "billDepthMm": 18.7,
+    "flipperLengthMm": 198.0,
+    "bodyMassG": 3775.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.1,
+    "billDepthMm": 13.2,
+    "flipperLengthMm": 211.0,
+    "bodyMassG": 4500.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.0,
+    "billDepthMm": 16.3,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 5700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.7,
+    "billDepthMm": 14.1,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.0,
+    "billDepthMm": 15.2,
+    "flipperLengthMm": 218.0,
+    "bodyMassG": 5700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.6,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.5,
+    "billDepthMm": 13.5,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4550.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.4,
+    "billDepthMm": 14.6,
+    "flipperLengthMm": 211.0,
+    "bodyMassG": 4800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.7,
+    "billDepthMm": 15.3,
+    "flipperLengthMm": 219.0,
+    "bodyMassG": 5200.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.3,
+    "billDepthMm": 13.4,
+    "flipperLengthMm": 209.0,
+    "bodyMassG": 4400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.8,
+    "billDepthMm": 15.4,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5150.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 40.9,
+    "billDepthMm": 13.7,
+    "flipperLengthMm": 214.0,
+    "bodyMassG": 4650.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.0,
+    "billDepthMm": 16.1,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 5550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.5,
+    "billDepthMm": 13.7,
+    "flipperLengthMm": 214.0,
+    "bodyMassG": 4650.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.4,
+    "billDepthMm": 14.6,
+    "flipperLengthMm": 213.0,
+    "bodyMassG": 5850.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.8,
+    "billDepthMm": 14.6,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.3,
+    "billDepthMm": 15.7,
+    "flipperLengthMm": 217.0,
+    "bodyMassG": 5850.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 42.0,
+    "billDepthMm": 13.5,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.2,
+    "billDepthMm": 15.2,
+    "flipperLengthMm": 221.0,
+    "bodyMassG": 6300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.2,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 209.0,
+    "bodyMassG": 4800.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.7,
+    "billDepthMm": 15.1,
+    "flipperLengthMm": 222.0,
+    "bodyMassG": 5350.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.2,
+    "billDepthMm": 14.3,
+    "flipperLengthMm": 218.0,
+    "bodyMassG": 5700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.1,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5000.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.5,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 213.0,
+    "bodyMassG": 4400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.3,
+    "billDepthMm": 15.8,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 42.9,
+    "billDepthMm": 13.1,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5000.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.1,
+    "billDepthMm": 15.1,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5100.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.5,
+    "billDepthMm": 14.3,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 4100.0,
+    "sex": null
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.8,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.2,
+    "billDepthMm": 14.3,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.0,
+    "billDepthMm": 15.3,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 5550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.3,
+    "billDepthMm": 15.3,
+    "flipperLengthMm": 222.0,
+    "bodyMassG": 5250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 42.8,
+    "billDepthMm": 14.2,
+    "flipperLengthMm": 209.0,
+    "bodyMassG": 4700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.1,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 207.0,
+    "bodyMassG": 5050.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 59.6,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 6050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.1,
+    "billDepthMm": 14.8,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 5150.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.4,
+    "billDepthMm": 16.3,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 5400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 42.6,
+    "billDepthMm": 13.7,
+    "flipperLengthMm": 213.0,
+    "bodyMassG": 4950.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.4,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 219.0,
+    "bodyMassG": 5250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.0,
+    "billDepthMm": 13.6,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 4350.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.7,
+    "billDepthMm": 15.7,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 5350.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 42.7,
+    "billDepthMm": 13.7,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 3950.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.6,
+    "billDepthMm": 16.0,
+    "flipperLengthMm": 225.0,
+    "bodyMassG": 5700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.3,
+    "billDepthMm": 13.7,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4300.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.6,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 4750.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.5,
+    "billDepthMm": 15.9,
+    "flipperLengthMm": 222.0,
+    "bodyMassG": 5550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.6,
+    "billDepthMm": 13.9,
+    "flipperLengthMm": 217.0,
+    "bodyMassG": 4900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.5,
+    "billDepthMm": 13.9,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.5,
+    "billDepthMm": 15.9,
+    "flipperLengthMm": 225.0,
+    "bodyMassG": 5400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.9,
+    "billDepthMm": 13.3,
+    "flipperLengthMm": 213.0,
+    "bodyMassG": 5100.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.2,
+    "billDepthMm": 15.8,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.6,
+    "billDepthMm": 14.2,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.5,
+    "billDepthMm": 14.1,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 5300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.1,
+    "billDepthMm": 14.4,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.1,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 225.0,
+    "bodyMassG": 5000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.5,
+    "billDepthMm": 14.4,
+    "flipperLengthMm": 217.0,
+    "bodyMassG": 4900.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.0,
+    "billDepthMm": 15.4,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 5050.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.8,
+    "billDepthMm": 13.9,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 4300.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.5,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 5000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.2,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 4450.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.4,
+    "billDepthMm": 15.3,
+    "flipperLengthMm": 224.0,
+    "bodyMassG": 5550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.3,
+    "billDepthMm": 13.8,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 4200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.2,
+    "billDepthMm": 14.9,
+    "flipperLengthMm": 221.0,
+    "bodyMassG": 5300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.7,
+    "billDepthMm": 13.9,
+    "flipperLengthMm": 214.0,
+    "bodyMassG": 4400.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 54.3,
+    "billDepthMm": 15.7,
+    "flipperLengthMm": 231.0,
+    "bodyMassG": 5650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.8,
+    "billDepthMm": 14.2,
+    "flipperLengthMm": 219.0,
+    "bodyMassG": 4700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.8,
+    "billDepthMm": 16.8,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 5700.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.2,
+    "billDepthMm": 14.4,
+    "flipperLengthMm": 214.0,
+    "bodyMassG": 4650.0,
+    "sex": null
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.5,
+    "billDepthMm": 16.2,
+    "flipperLengthMm": 229.0,
+    "bodyMassG": 5800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.5,
+    "billDepthMm": 14.2,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 4700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.7,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 223.0,
+    "bodyMassG": 5550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.7,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 4750.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.4,
+    "billDepthMm": 15.6,
+    "flipperLengthMm": 221.0,
+    "bodyMassG": 5000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.2,
+    "billDepthMm": 15.6,
+    "flipperLengthMm": 221.0,
+    "bodyMassG": 5100.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.5,
+    "billDepthMm": 14.8,
+    "flipperLengthMm": 217.0,
+    "bodyMassG": 5200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.4,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 4700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.6,
+    "billDepthMm": 16.0,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 5800.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.5,
+    "billDepthMm": 14.2,
+    "flipperLengthMm": 209.0,
+    "bodyMassG": 4600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 51.1,
+    "billDepthMm": 16.3,
+    "flipperLengthMm": 220.0,
+    "bodyMassG": 6000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.2,
+    "billDepthMm": 13.8,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 4750.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.2,
+    "billDepthMm": 16.4,
+    "flipperLengthMm": 223.0,
+    "bodyMassG": 5950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.1,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 4625.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 52.5,
+    "billDepthMm": 15.6,
+    "flipperLengthMm": 221.0,
+    "bodyMassG": 5450.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.4,
+    "billDepthMm": 14.6,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 4725.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.0,
+    "billDepthMm": 15.9,
+    "flipperLengthMm": 224.0,
+    "bodyMassG": 5350.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.9,
+    "billDepthMm": 13.8,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 4750.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.8,
+    "billDepthMm": 17.3,
+    "flipperLengthMm": 228.0,
+    "bodyMassG": 5600.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.4,
+    "billDepthMm": 14.4,
+    "flipperLengthMm": 218.0,
+    "bodyMassG": 4600.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 51.3,
+    "billDepthMm": 14.2,
+    "flipperLengthMm": 218.0,
+    "bodyMassG": 5300.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.5,
+    "billDepthMm": 14.0,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 4875.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 52.1,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 5550.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.5,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 218.0,
+    "bodyMassG": 4950.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 52.2,
+    "billDepthMm": 17.1,
+    "flipperLengthMm": 228.0,
+    "bodyMassG": 5400.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.5,
+    "billDepthMm": 14.5,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 4750.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.5,
+    "billDepthMm": 16.1,
+    "flipperLengthMm": 224.0,
+    "bodyMassG": 5650.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.5,
+    "billDepthMm": 14.7,
+    "flipperLengthMm": 214.0,
+    "bodyMassG": 4850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.8,
+    "billDepthMm": 15.7,
+    "flipperLengthMm": 226.0,
+    "bodyMassG": 5200.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.4,
+    "billDepthMm": 15.8,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 4925.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.9,
+    "billDepthMm": 14.6,
+    "flipperLengthMm": 222.0,
+    "bodyMassG": 4875.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.4,
+    "billDepthMm": 14.4,
+    "flipperLengthMm": 203.0,
+    "bodyMassG": 4625.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 51.1,
+    "billDepthMm": 16.5,
+    "flipperLengthMm": 225.0,
+    "bodyMassG": 5250.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.5,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 219.0,
+    "bodyMassG": 4850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 55.9,
+    "billDepthMm": 17.0,
+    "flipperLengthMm": 228.0,
+    "bodyMassG": 5600.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.2,
+    "billDepthMm": 15.5,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 4975.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.1,
+    "billDepthMm": 15.0,
+    "flipperLengthMm": 228.0,
+    "bodyMassG": 5500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.3,
+    "billDepthMm": 13.8,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 4725.0,
+    "sex": null
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.8,
+    "billDepthMm": 16.1,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 5500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 41.7,
+    "billDepthMm": 14.7,
+    "flipperLengthMm": 210.0,
+    "bodyMassG": 4700.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 53.4,
+    "billDepthMm": 15.8,
+    "flipperLengthMm": 219.0,
+    "bodyMassG": 5500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.3,
+    "billDepthMm": 14.0,
+    "flipperLengthMm": 208.0,
+    "bodyMassG": 4575.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.1,
+    "billDepthMm": 15.1,
+    "flipperLengthMm": 209.0,
+    "bodyMassG": 5500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.5,
+    "billDepthMm": 15.2,
+    "flipperLengthMm": 216.0,
+    "bodyMassG": 5000.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.8,
+    "billDepthMm": 15.9,
+    "flipperLengthMm": 229.0,
+    "bodyMassG": 5950.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 43.5,
+    "billDepthMm": 15.2,
+    "flipperLengthMm": 213.0,
+    "bodyMassG": 4650.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 51.5,
+    "billDepthMm": 16.3,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 5500.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.2,
+    "billDepthMm": 14.1,
+    "flipperLengthMm": 217.0,
+    "bodyMassG": 4375.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 55.1,
+    "billDepthMm": 16.0,
+    "flipperLengthMm": 230.0,
+    "bodyMassG": 5850.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 44.5,
+    "billDepthMm": 15.7,
+    "flipperLengthMm": 217.0,
+    "bodyMassG": 4875.0,
+    "sex": null
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 48.8,
+    "billDepthMm": 16.2,
+    "flipperLengthMm": 222.0,
+    "bodyMassG": 6000.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 47.2,
+    "billDepthMm": 13.7,
+    "flipperLengthMm": 214.0,
+    "bodyMassG": 4925.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": null,
+    "billDepthMm": null,
+    "flipperLengthMm": null,
+    "bodyMassG": null,
+    "sex": null
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 46.8,
+    "billDepthMm": 14.3,
+    "flipperLengthMm": 215.0,
+    "bodyMassG": 4850.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 50.4,
+    "billDepthMm": 15.7,
+    "flipperLengthMm": 222.0,
+    "bodyMassG": 5750.0,
+    "sex": "male"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 45.2,
+    "billDepthMm": 14.8,
+    "flipperLengthMm": 212.0,
+    "bodyMassG": 5200.0,
+    "sex": "female"
+  },
+  {
+    "species": "Gentoo",
+    "island": "Biscoe",
+    "billLengthMm": 49.9,
+    "billDepthMm": 16.1,
+    "flipperLengthMm": 213.0,
+    "bodyMassG": 5400.0,
+    "sex": "male"
+  }
+]

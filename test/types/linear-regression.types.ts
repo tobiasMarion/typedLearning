@@ -68,3 +68,15 @@ ml.linearRegression({})
 
 // @ts-expect-error — learningRate doesn't apply to the normal equation
 ml.linearRegression({ solver: 'normal-equation', learningRate: 0.01 })
+
+ml.linearRegression({
+  solver: 'gradient-descent',
+  learningRate: 0.01,
+  epochs: 100
+})
+
+// @ts-expect-error — gradient descent has no default step or number of epochs
+ml.linearRegression({ solver: 'gradient-descent' })
+
+// @ts-expect-error — epochs has no default either
+ml.linearRegression({ solver: 'gradient-descent', learningRate: 0.01 })

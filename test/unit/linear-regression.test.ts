@@ -78,6 +78,50 @@ describe('ml.linearRegression', () => {
     }
   })
 
+  test('matches scikit-learn on the same data', () => {
+    // LinearRegression().fit(X, y) in scikit-learn 1.9 on the first ten rows
+    const schema = ml
+      .features({
+        flipper: ml.number(),
+        male: ml.boolean(),
+        dream: ml.boolean(),
+        mass: ml.number()
+      })
+      .target('mass')
+    const rows = [
+      [181, 1, 0, 3750],
+      [186, 0, 0, 3800],
+      [195, 0, 0, 3250],
+      [193, 0, 0, 3450],
+      [192, 0, 1, 3500],
+      [196, 1, 1, 3900],
+      [193, 1, 1, 3650],
+      [188, 0, 1, 3525],
+      [211, 0, 0, 4500],
+      [230, 1, 0, 5700],
+      [200, 0, 0, 4000]
+    ].map(([flipper, male, dream, mass]) => ({
+      flipper,
+      male: male === 1,
+      dream: dream === 1,
+      mass
+    }))
+    const split = (seed: number) =>
+      ml.dataset(schema, rows).split({ test: 0.05, seed })
+    // The last row is held out, so training has the ten rows above it
+    const seed = Array.from({ length: 50 }, (_, s) => s).find(
+      s => split(s).test.rows[0]?.flipper === 200
+    ) as number
+    const { train } = split(seed)
+    const fitted = model.fit(
+      ml.pipeline(schema).fit(train).transform(train).matrix()
+    )
+    close(fitted.intercept, -3994.8475902787313, 1e-6)
+    close(fitted.weights.flipper, 39.84507300105268, 1e-6)
+    close(fitted.weights.male, 382.1891162066915, 1e-6)
+    close(fitted.weights.dream, -212.71225227699196, 1e-6)
+  })
+
   test('reads each one-hot weight against the reference', () => {
     // Biscoe penguins weigh 4700 g, the others 3700 g
     const schema = ml
@@ -126,11 +170,148 @@ describe('ml.linearRegression', () => {
   })
 })
 
+describe('gradient descent', () => {
+  // y = 3 + 2a - b plus noise, on columns scaled by the pipeline
+  const noisy = ml.dataset(
+    lineSchema,
+    lineRows.map((row, i) => ({ ...row, y: row.y + ((i * 5) % 3) - 1 }))
+  )
+  const { train } = noisy.split({ test: 0.25, seed: 1 })
+  const matrix = ml
+    .pipeline(lineSchema)
+    .scale(['a', 'b'])
+    .fit(train)
+    .transform(train)
+    .matrix()
+  const exact = model.fit(matrix)
+
+  test('agrees with the normal equation once it has run enough epochs', () => {
+    const fitted = ml
+      .linearRegression({
+        solver: 'gradient-descent',
+        learningRate: 0.1,
+        epochs: 2000
+      })
+      .fit(matrix)
+    close(fitted.intercept, exact.intercept, 1e-9)
+    close(fitted.weights.a, exact.weights.a, 1e-9)
+    close(fitted.weights.b, exact.weights.b, 1e-9)
+    close(fitted.mse, exact.mse, 1e-9)
+  })
+
+  test('approaches the normal equation as the epochs grow', () => {
+    const distance = (epochs: number) => {
+      const fitted = ml
+        .linearRegression({
+          solver: 'gradient-descent',
+          learningRate: 0.05,
+          epochs
+        })
+        .fit(matrix)
+      return Math.abs(fitted.weights.a - exact.weights.a)
+    }
+    assert.ok(distance(10) > distance(50))
+    assert.ok(distance(50) > distance(200))
+  })
+
+  test('is deterministic: it starts from zero', () => {
+    const fit = () =>
+      ml
+        .linearRegression({
+          solver: 'gradient-descent',
+          learningRate: 0.1,
+          epochs: 30
+        })
+        .fit(matrix)
+    assert.deepEqual(fit().weights, fit().weights)
+  })
+
+  test('prints the loss before and after training', () => {
+    const fitted = ml
+      .linearRegression({
+        solver: 'gradient-descent',
+        learningRate: 0.1,
+        epochs: 100
+      })
+      .fit(matrix)
+    const text = plain(String(fitted)).split('\n')
+    assert.equal(
+      text[0],
+      'fitted linear regression (gradient descent, learningRate 0.1, 100 epochs)'
+    )
+    assert.match(
+      text.at(-1) ?? '',
+      /^loss \S+ before the first epoch, \S+ after epoch 100$/
+    )
+  })
+
+  test('a step that is too large is an error, not a model', () => {
+    const steep = (epochs: number) =>
+      ml.linearRegression({
+        solver: 'gradient-descent',
+        learningRate: 5,
+        epochs
+      })
+    assert.throws(
+      () => steep(3).fit(matrix),
+      /gradient descent diverged: the loss grew from \S+ to \S+ in 3 epochs\. Lower learningRate \(5\)/
+    )
+    assert.throws(
+      () => steep(5000).fit(matrix),
+      /gradient descent diverged: the loss became Infinity at epoch \d+\. Lower learningRate \(5\)/
+    )
+  })
+
+  test('checks for dependent columns like the normal equation', () => {
+    const comboSchema = ml
+      .features({ a: ml.number(), b: ml.number(), y: ml.number() })
+      .target('y')
+    const { train } = ml
+      .dataset(
+        comboSchema,
+        Array.from({ length: 6 }, (_, i) => ({ a: i, b: 2 * i, y: i }))
+      )
+      .split({ test: 0.2, seed: 1 })
+    assert.throws(
+      () =>
+        ml
+          .linearRegression({
+            solver: 'gradient-descent',
+            learningRate: 0.1,
+            epochs: 10
+          })
+          .fit(ml.pipeline(comboSchema).fit(train).transform(train).matrix()),
+      /column 'b' is a linear combination of 'a'/
+    )
+  })
+
+  test('rejects a learning rate or epochs that make no sense', () => {
+    assert.throws(
+      () =>
+        ml.linearRegression({
+          solver: 'gradient-descent',
+          learningRate: 0,
+          epochs: 10
+        }),
+      /learningRate must be a positive number, received 0/
+    )
+    assert.throws(
+      () =>
+        ml.linearRegression({
+          solver: 'gradient-descent',
+          learningRate: 0.1,
+          epochs: 1.5
+        }),
+      /epochs must be a positive integer, received 1.5/
+    )
+  })
+})
+
 describe('ml.linearRegression errors', () => {
   test('rejects an unknown solver', () => {
     assert.throws(
       () => ml.linearRegression({ solver: 'magic' } as never),
-      /solver must be 'normal-equation', received "magic"/
+      /solver must be 'normal-equation' or 'gradient-descent', received "magic"/
     )
   })
 

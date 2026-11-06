@@ -10,14 +10,27 @@ import {
   firstDependence,
   normalEquation,
   type Rows,
-  solve
+  solve,
+  type Vector
 } from './linear-algebra.ts'
 
 /** How to find the weights. There is no default: the choice is explicit. */
-export type LinearRegressionOptions = {
-  /** The closed-form solution: solves the normal equation `XᵀX β = Xᵀy`. */
-  readonly solver: 'normal-equation'
-}
+export type LinearRegressionOptions =
+  | {
+      /** The closed-form solution: solves the normal equation `XᵀX β = Xᵀy`. */
+      readonly solver: 'normal-equation'
+    }
+  | {
+      /**
+       * Starts every weight at zero and steps against the gradient of the
+       * MSE, over the whole training block, once per epoch.
+       */
+      readonly solver: 'gradient-descent'
+      /** The size of each step. Too high diverges; too low converges slowly. */
+      readonly learningRate: number
+      /** How many steps to take. */
+      readonly epochs: number
+    }
 
 /** The error for a one-hot field with a column for every category. */
 type NeedsReference<F extends string> = F extends string
@@ -60,7 +73,92 @@ export type FittedLinearRegression<C extends string> = {
 }
 
 const solverName = (options: LinearRegressionOptions) =>
-  options.solver.replace('-', ' ')
+  options.solver === 'gradient-descent'
+    ? `gradient descent, learningRate ${options.learningRate}, ${options.epochs} ${options.epochs === 1 ? 'epoch' : 'epochs'}`
+    : 'normal equation'
+
+const checkOptions = (options: LinearRegressionOptions) => {
+  if (
+    options.solver !== 'normal-equation' &&
+    options.solver !== 'gradient-descent'
+  ) {
+    throw new RangeError(
+      `linearRegression(): solver must be 'normal-equation' or 'gradient-descent', received ${JSON.stringify((options as { solver: unknown }).solver)}`
+    )
+  }
+  if (options.solver === 'gradient-descent') {
+    const { learningRate, epochs } = options
+    if (!(Number.isFinite(learningRate) && learningRate > 0)) {
+      throw new RangeError(
+        `linearRegression(): learningRate must be a positive number, received ${learningRate}`
+      )
+    }
+    if (!(Number.isInteger(epochs) && epochs > 0)) {
+      throw new RangeError(
+        `linearRegression(): epochs must be a positive integer, received ${epochs}`
+      )
+    }
+  }
+}
+
+/** The mean squared error of `coefficients` over the rows of `[1 | X]`. */
+const meanSquaredError = (rows: Rows, y: Vector, coefficients: Vector) => {
+  const residuals = rows.map(
+    (row, i) => dot(coefficients, row) - (y[i] as number)
+  )
+  return dot(residuals, residuals) / rows.length
+}
+
+/** The loss before the first step, kept to show how far training went. */
+type Trace = { readonly firstLoss: number }
+
+const normalEquationSolver = (rows: Rows, y: Vector) => {
+  const { gram, moment } = normalEquation(rows, y)
+  return { coefficients: solve(gram, moment), trace: undefined }
+}
+
+/**
+ * Full-batch gradient descent from zero: β ← β − η ∇L, with
+ * ∇L = (2/n) X₁ᵀ (X₁β − y). With a step that is too large the loss grows
+ * instead of shrinking, which is an error rather than a model.
+ */
+const gradientDescentSolver = (
+  rows: Rows,
+  y: Vector,
+  learningRate: number,
+  epochs: number
+): { coefficients: number[]; trace: Trace } => {
+  const n = rows.length
+  const coefficients = new Array<number>(rows[0]?.length ?? 0).fill(0)
+  const firstLoss = meanSquaredError(rows, y, coefficients)
+  for (let epoch = 1; epoch <= epochs; epoch++) {
+    const residuals = rows.map(
+      (row, i) => dot(coefficients, row) - (y[i] as number)
+    )
+    coefficients.forEach((value, j) => {
+      const gradient =
+        (2 / n) *
+        rows.reduce(
+          (sum, row, i) => sum + (row[j] as number) * (residuals[i] as number),
+          0
+        )
+      coefficients[j] = value - learningRate * gradient
+    })
+    const loss = meanSquaredError(rows, y, coefficients)
+    if (!Number.isFinite(loss)) {
+      throw new RangeError(
+        `fit(): gradient descent diverged: the loss became ${loss} at epoch ${epoch}. Lower learningRate (${learningRate}), or scale the columns`
+      )
+    }
+  }
+  const lastLoss = meanSquaredError(rows, y, coefficients)
+  if (lastLoss > firstLoss) {
+    throw new RangeError(
+      `fit(): gradient descent diverged: the loss grew from ${show(firstLoss)} to ${show(lastLoss)} in ${epochs} epochs. Lower learningRate (${learningRate}), or scale the columns`
+    )
+  }
+  return { coefficients, trace: { firstLoss } }
+}
 
 const quoted = (names: readonly string[]) =>
   names.map(name => `'${name}'`).join(', ')
@@ -152,7 +250,8 @@ const describeFitted = (
   options: LinearRegressionOptions,
   names: readonly string[],
   coefficients: readonly number[],
-  mse: number
+  mse: number,
+  trace: Trace | undefined
 ) => {
   const labels = ['intercept', ...names]
   const width = Math.max(...labels.map(label => label.length))
@@ -162,7 +261,12 @@ const describeFitted = (
       (label, i) =>
         `  ${label.padEnd(width)}  ${show(coefficients[i] as number)}`
     ),
-    `training MSE ${show(mse)}`
+    `training MSE ${show(mse)}`,
+    ...(trace === undefined || options.solver !== 'gradient-descent'
+      ? []
+      : [
+          `loss ${show(trace.firstLoss)} before the first epoch, ${show(mse)} after epoch ${options.epochs}`
+        ])
   ].join('\n')
 }
 
@@ -170,7 +274,8 @@ const fitted = (
   options: LinearRegressionOptions,
   names: readonly string[],
   coefficients: readonly number[],
-  mse: number
+  mse: number,
+  trace: Trace | undefined
 ) => {
   const [intercept, ...weights] = coefficients as [number, ...number[]]
   const predictRows = (values: Rows) =>
@@ -198,7 +303,7 @@ const fitted = (
         return Object.freeze(predictRows(matrix.values))
       }
     },
-    () => describeFitted(options, names, coefficients, mse)
+    () => describeFitted(options, names, coefficients, mse, trace)
   )
 }
 
@@ -210,11 +315,7 @@ const fitted = (
 export function linearRegression(
   options: LinearRegressionOptions
 ): LinearRegression {
-  if (options.solver !== 'normal-equation') {
-    throw new RangeError(
-      `linearRegression(): solver must be 'normal-equation', received ${JSON.stringify(options.solver)}`
-    )
-  }
+  checkOptions(options)
   const frozen = Object.freeze({ ...options })
   const model = {
     options: frozen,
@@ -232,17 +333,16 @@ export function linearRegression(
         })()
       if (problem !== undefined) throw new RangeError(`fit(): ${problem}`)
 
-      const { gram, moment } = normalEquation(rows, y)
-      const coefficients = solve(gram, moment)
-      const residuals = rows.map(
-        (row, i) => dot(coefficients, row) - (y[i] as number)
-      )
-      const mse = dot(residuals, residuals) / rows.length
+      const { coefficients, trace } =
+        frozen.solver === 'gradient-descent'
+          ? gradientDescentSolver(rows, y, frozen.learningRate, frozen.epochs)
+          : normalEquationSolver(rows, y)
       return fitted(
         frozen,
         (matrix as Matrix<string, unknown>).columns,
         coefficients,
-        mse
+        meanSquaredError(rows, y, coefficients),
+        trace
       )
     }
   }
