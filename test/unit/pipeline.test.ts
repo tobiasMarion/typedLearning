@@ -135,6 +135,17 @@ describe('matrix', () => {
     assert.match(plain(String(fitted)), /observedAt: left out \(timestamp\)/)
   })
 
+  test('names the one-hot fields with every category', () => {
+    assert.deepEqual(matrix.fullOneHot, ['island'])
+    const referenced = ml
+      .pipeline(penguinSchema)
+      .encode({ island: { reference: 'Dream' } })
+      .fit(train)
+      .transform(train)
+      .matrix()
+    assert.deepEqual(referenced.fullOneHot, [])
+  })
+
   test('prints as a table numbered by position in the data', () => {
     const table = plain(String(matrix)).split('\n')
     assert.equal(table[0], "train matrix: 2 rows, 6 columns, target 'species'")
@@ -191,6 +202,42 @@ describe('encode', () => {
     assert.match(
       plain(String(pipeline.fit(train))),
       /condition: one-hot \(poor, fair, good\)/
+    )
+  })
+
+  test('leaves the column of a reference out', () => {
+    const pipeline = ml
+      .pipeline(reviewSchema)
+      .encode({ condition: { reference: 'fair' } })
+    const matrix = pipeline.fit(train).transform(train).matrix()
+    assert.deepEqual(matrix.columns, [
+      'condition=poor',
+      'condition=good',
+      'rating'
+    ])
+    train.rows.forEach((row, i) => {
+      assert.deepEqual(matrix.values[i]?.slice(0, 2), [
+        row.condition === 'poor' ? 1 : 0,
+        row.condition === 'good' ? 1 : 0
+      ])
+    })
+    assert.equal(
+      plain(String(pipeline)),
+      "pipeline\n  encode   condition: reference 'fair'"
+    )
+    assert.match(
+      plain(String(pipeline.fit(train))),
+      /condition: one-hot \(poor, good; reference fair\)/
+    )
+  })
+
+  test('rejects a reference the schema does not declare', () => {
+    assert.throws(
+      () =>
+        ml
+          .pipeline(reviewSchema)
+          .encode({ condition: { reference: 'great' } } as never),
+      /the reference of 'condition' must be one of 'poor', 'fair', 'good', received 'great'/
     )
   })
 })

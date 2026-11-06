@@ -23,6 +23,17 @@ ml.pipeline(penguinSchema).fit(test)
 // @ts-expect-error — and is built from a schema, not from data
 ml.pipeline(penguins)
 
+// S1: and fitting an estimator on the matrix of the test block
+const massSchema = ml
+  .features({ flipperLengthMm: ml.number(), bodyMassG: ml.number() })
+  .target('bodyMassG')
+const masses = ml.dataset(massSchema, []).split({ test: 0.2, seed: 42 })
+const preparedMasses = ml.pipeline(massSchema).fit(masses.train)
+ml.linearRegression({ solver: 'normal-equation' }).fit(
+  // @ts-expect-error — the matrix keeps the role of its block
+  preparedMasses.transform(masses.test).matrix()
+)
+
 // S2: splitting the test block again
 // @ts-expect-error — only the original data has split
 test.split({ test: 0.5, seed: 42 })

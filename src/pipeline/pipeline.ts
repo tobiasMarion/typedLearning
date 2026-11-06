@@ -21,7 +21,9 @@ import type {
 import {
   columnsOf,
   describeEncoding,
-  encodeStep
+  encodeStep,
+  encodingOf,
+  type Override
 } from '../preprocess/encode.ts'
 import { type MissingPolicy, missingStep } from '../preprocess/missing.ts'
 import { scaleStep } from '../preprocess/scale.ts'
@@ -49,41 +51,108 @@ export type PreparedRow<
 
 /**
  * The column names of the matrix: one per field, or `field=category` for each
- * category of a one-hot field. The target and timestamps aren't columns.
+ * category of a one-hot field. The target and timestamps aren't columns, and
+ * neither is the column of a reference category.
  */
 export type Columns<
   S extends Shape,
   T extends keyof S,
-  OneHot extends keyof S
-> = {
-  [K in keyof S]: K extends T
-    ? never
-    : S[K] extends { readonly kind: 'timestamp' }
+  OneHot extends keyof S,
+  Reference extends string = never
+> = Exclude<
+  {
+    [K in keyof S]: K extends T
       ? never
-      : S[K] extends {
-            readonly kind: 'category'
-            readonly categories: readonly (infer C extends string)[]
-          }
-        ? `${K & string}=${C}`
-        : K extends OneHot
-          ? S[K] extends {
+      : S[K] extends { readonly kind: 'timestamp' }
+        ? never
+        : S[K] extends {
+              readonly kind: 'category'
               readonly categories: readonly (infer C extends string)[]
             }
-            ? `${K & string}=${C}`
-            : never
-          : K
-}[keyof S] &
-  string
+          ? `${K & string}=${C}`
+          : K extends OneHot
+            ? S[K] extends {
+                readonly categories: readonly (infer C extends string)[]
+              }
+              ? `${K & string}=${C}`
+              : never
+            : K
+  }[keyof S] &
+    string,
+  Reference
+>
 
-/** The numbers an estimator consumes, with the target apart. */
-export type Matrix<C extends string, Y> = {
+// Exclude<…, never> changes nothing but keeps editors from printing the union
+// as FullOneHot<{ …the whole schema… }>.
+/**
+ * The one-hot fields with a column for every category: no reference. Next to
+ * an intercept, their columns add up to it.
+ */
+export type FullOneHot<
+  S extends Shape,
+  T extends keyof S,
+  OneHot extends keyof S,
+  Reference extends string
+> = Exclude<
+  {
+    [K in keyof S]: K extends T
+      ? never
+      : S[K] extends { readonly kind: 'category' }
+        ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
+          ? K
+          : never
+        : K extends OneHot
+          ? [Extract<Reference, `${K & string}=${string}`>] extends [never]
+            ? K
+            : never
+          : never
+  }[keyof S] &
+    string,
+  never
+>
+
+/**
+ * The numbers an estimator consumes, with the target apart. It keeps the role
+ * of the block it came from: `R`.
+ */
+export type Matrix<
+  C extends string,
+  Y,
+  R extends Role = Role,
+  F extends string = string
+> = RoleBrand<R> & {
   /** Column names, in the order of each row of `values`. */
   readonly columns: readonly C[]
   /** One row of numbers per record. */
   readonly values: readonly (readonly number[])[]
   /** The target of each record, or undefined for a schema without one. */
   readonly y: Y
+  /**
+   * One-hot fields with a column for every category. Next to an intercept,
+   * their columns are linearly dependent; a reference in `encode` fixes it.
+   */
+  readonly fullOneHot: readonly F[]
 }
+
+/** Where each column of a matrix comes from, for the errors of estimators. */
+export type Layout = {
+  readonly columns: readonly {
+    readonly name: string
+    readonly field: string
+    /** The category of a one-hot column. */
+    readonly category?: string
+  }[]
+  /** The reference category of each field that has one. */
+  readonly references: ReadonlyMap<string, string>
+}
+
+const layouts = new WeakMap<object, Layout>()
+
+/** The layout of a matrix from `matrix()`, or undefined for any other value. */
+export const layoutOf = (matrix: unknown): Layout | undefined =>
+  typeof matrix === 'object' && matrix !== null
+    ? layouts.get(matrix)
+    : undefined
 
 /** A block after preprocessing. It keeps the role of the block it came from. */
 export type Prepared<
@@ -92,31 +161,77 @@ export type Prepared<
   Pending extends keyof S,
   Scaled extends keyof S,
   OneHot extends keyof S,
-  R extends Role
+  R extends Role,
+  Reference extends string = never
 > = RoleBrand<R> & {
   readonly rows: readonly PreparedRow<S, Pending, Scaled>[]
   /** Fields that still need a missing-value policy. `matrix()` needs none. */
   readonly pending: readonly Pending[]
   /** The matrix an estimator would get, once no field is pending. */
   matrix(this: { readonly pending: readonly never[] }): Matrix<
-    Columns<S, T, OneHot>,
-    [T] extends [never] ? undefined : readonly FieldValue<S[T]>[]
+    Columns<S, T, OneHot, Reference>,
+    [T] extends [never] ? undefined : readonly FieldValue<S[T]>[],
+    R,
+    FullOneHot<S, T, OneHot, Reference>
   >
 }
+
+/** The categories of a category field, as a literal union. */
+type CategoryOf<F> = F extends {
+  readonly categories: readonly (infer C extends string)[]
+}
+  ? C
+  : never
+
+/**
+ * The fields `encode` still accepts, with what each one takes: an ordered
+ * category until something uses its position, a category until it has a
+ * reference.
+ */
+type Encodable<
+  S extends Shape,
+  T extends keyof S,
+  Scaled extends keyof S,
+  OneHot extends keyof S,
+  Reference extends string
+> = {
+  readonly [Key in keyof S as Key extends T | Scaled | OneHot
+    ? never
+    : S[Key] extends { readonly kind: 'ordered-category' }
+      ? Key
+      : S[Key] extends { readonly kind: 'category' }
+        ? [Extract<Reference, `${Key & string}=${string}`>] extends [never]
+          ? Key
+          : never
+        : never]: S[Key] extends { readonly kind: 'ordered-category' }
+    ? 'one-hot' | { readonly reference: CategoryOf<S[Key]> }
+    : { readonly reference: CategoryOf<S[Key]> }
+}
+
+/** The columns that the references in `overrides` leave out. */
+type ReferenceColumns<O> = {
+  [Key in keyof O]: O[Key] extends {
+    readonly reference: infer C extends string
+  }
+    ? `${Key & string}=${C}`
+    : never
+}[keyof O]
 
 // Type aliases, not interfaces: see Type quality in docs/principles.md.
 /**
  * Preprocessing for records of a schema. `T` is the target, which no step
  * touches; `Pending` are the fields that still need a missing-value policy;
  * `Scaled` are the fields `scale` standardized; `OneHot` are the ordered
- * categories `encode` made one-hot.
+ * categories `encode` made one-hot; `Reference` are the columns of the
+ * reference categories, which the matrix leaves out.
  */
 export type Pipeline<
   S extends Shape,
   T extends keyof S,
   Pending extends keyof S,
   Scaled extends keyof S,
-  OneHot extends keyof S
+  OneHot extends keyof S,
+  Reference extends string = never
 > = {
   /**
    * Chooses how to fill the missing values of optional fields. Every optional
@@ -167,33 +282,40 @@ export type Pipeline<
                     }[keyof S][]
                   })
         }
-  ): Pipeline<S, T, Exclude<Pending, K>, Scaled, OneHot>
+  ): Pipeline<S, T, Exclude<Pending, K>, Scaled, OneHot, Reference>
   /**
-   * Overrides the default encoding of ordered categories: one-hot columns
-   * instead of their position. Categories are always one-hot.
+   * Overrides the default encoding of a field. An ordered category becomes
+   * one-hot, with every category or without a reference; a category, always
+   * one-hot, gets a reference. A record of the reference has 0 in every
+   * column of its field, which linear models need next to an intercept.
    */
   encode<
-    const K extends {
-      [Key in keyof S]: Key extends T | Scaled | OneHot
-        ? never
-        : S[Key] extends { readonly kind: 'ordered-category' }
+    const O extends Simplify<
+      Partial<Encodable<S, T, Scaled, OneHot, Reference>>
+    >
+  >(
+    // As in missing: a key encode doesn't accept takes nothing
+    overrides: O & {
+      readonly [Key in Exclude<
+        keyof O,
+        keyof Encodable<S, T, Scaled, OneHot, Reference>
+      >]: never
+    }
+  ): Pipeline<
+    S,
+    T,
+    Pending,
+    Scaled,
+    | OneHot
+    | {
+        [Key in keyof O & keyof S]: S[Key] extends {
+          readonly kind: 'ordered-category'
+        }
           ? Key
           : never
-    }[keyof S]
-  >(
-    // As in missing: with no field left to encode, nothing is accepted
-    overrides: [
-      {
-        [Key in keyof S]: Key extends T | Scaled | OneHot
-          ? never
-          : S[Key] extends { readonly kind: 'ordered-category' }
-            ? Key
-            : never
-      }[keyof S]
-    ] extends [never]
-      ? { readonly [key: string]: never }
-      : { readonly [Key in K]: 'one-hot' }
-  ): Pipeline<S, T, Pending, Scaled, OneHot | K>
+      }[keyof O & keyof S],
+    Reference | ReferenceColumns<O>
+  >
   /**
    * Standardizes numbers and ordered positions with the mean and standard
    * deviation of the training block. Missing values are skipped and stay
@@ -209,9 +331,11 @@ export type Pipeline<
           ? Key
           : never
     }[keyof S]
-  >(fields: readonly [K, ...K[]]): Pipeline<S, T, Pending, Scaled | K, OneHot>
+  >(
+    fields: readonly [K, ...K[]]
+  ): Pipeline<S, T, Pending, Scaled | K, OneHot, Reference>
   /** Learns every step's state from a training block. */
-  fit(train: Train<S>): Fitted<S, T, Pending, Scaled, OneHot>
+  fit(train: Train<S>): Fitted<S, T, Pending, Scaled, OneHot, Reference>
 }
 
 /** A pipeline with the state each step learned from a training block. */
@@ -220,14 +344,19 @@ export type Fitted<
   T extends keyof S,
   Pending extends keyof S,
   Scaled extends keyof S,
-  OneHot extends keyof S
+  OneHot extends keyof S,
+  Reference extends string = never
 > = {
   /** Applies the learned state. The prepared block keeps the role of `block`. */
-  transform(block: Train<S>): Prepared<S, T, Pending, Scaled, OneHot, 'train'>
+  transform(
+    block: Train<S>
+  ): Prepared<S, T, Pending, Scaled, OneHot, 'train', Reference>
   transform(
     block: Validation<S>
-  ): Prepared<S, T, Pending, Scaled, OneHot, 'validation'>
-  transform(block: Test<S>): Prepared<S, T, Pending, Scaled, OneHot, 'test'>
+  ): Prepared<S, T, Pending, Scaled, OneHot, 'validation', Reference>
+  transform(
+    block: Test<S>
+  ): Prepared<S, T, Pending, Scaled, OneHot, 'test', Reference>
 }
 
 /** What the builder has declared so far. */
@@ -239,6 +368,8 @@ type Config = {
   readonly pending: readonly string[]
   /** Ordered categories that `encode` turned into one-hot columns. */
   readonly oneHot: ReadonlySet<string>
+  /** The reference category of each field that has one. */
+  readonly references: ReadonlyMap<string, string>
 }
 
 const quoted = (names: readonly string[]) =>
@@ -248,7 +379,11 @@ const describeMatrix = (
   role: Role,
   config: Config,
   rows: readonly Row[],
-  matrix: Matrix<string, readonly unknown[] | undefined>
+  matrix: {
+    readonly columns: readonly string[]
+    readonly values: readonly (readonly number[])[]
+    readonly y: readonly unknown[] | undefined
+  }
 ) => {
   const fields: Record<string, { readonly kind: string }> = {}
   for (const column of matrix.columns) fields[column] = { kind: 'number' }
@@ -306,9 +441,14 @@ const prepare = (
         `matrix(): ${quoted(config.pending)} still need a missing-value policy. Add .missing({ ... }) to the pipeline`
       )
     }
-    const columns = columnsOf(config.fields, config.target, config.oneHot)
+    const columns = columnsOf(
+      config.fields,
+      config.target,
+      config.oneHot,
+      config.references
+    )
     const { target } = config
-    const value: Matrix<string, readonly unknown[] | undefined> = {
+    const value = {
       columns: Object.freeze(columns.map(column => column.name)),
       values: Object.freeze(
         rows.map(row => Object.freeze(columns.map(column => column.value(row))))
@@ -316,9 +456,31 @@ const prepare = (
       y:
         target === undefined
           ? undefined
-          : Object.freeze(rows.map(row => row[target]))
+          : Object.freeze(rows.map(row => row[target])),
+      fullOneHot: Object.freeze(
+        Object.entries(config.fields)
+          .filter(
+            ([key, field]) =>
+              key !== config.target &&
+              encodingOf(field, config.oneHot.has(key)) === 'one-hot' &&
+              !config.references.has(key)
+          )
+          .map(([key]) => key)
+      )
     }
-    return printable(value, () => describeMatrix(role, config, rows, value))
+    const result = markRole(
+      printable(value, () => describeMatrix(role, config, rows, value)),
+      role
+    )
+    layouts.set(result, {
+      columns: Object.freeze(
+        columns.map(({ name, field, category }) =>
+          category === undefined ? { name, field } : { name, field, category }
+        )
+      ),
+      references: config.references
+    })
+    return result
   }
 
   const prepared = printable(
@@ -343,6 +505,7 @@ const describeFitted = (
     config.fields,
     config.target,
     config.oneHot,
+    config.references,
     train
   )
   return [
@@ -385,11 +548,19 @@ const build = (config: Config): object =>
           ...config,
           steps: [...config.steps, scaleStep(config.fields, keys)]
         }),
-      encode: (overrides: Readonly<Record<string, 'one-hot'>>) =>
+      encode: (overrides: Readonly<Record<string, Override>>) =>
         build({
           ...config,
-          steps: [...config.steps, encodeStep(overrides)],
-          oneHot: new Set([...config.oneHot, ...Object.keys(overrides)])
+          steps: [...config.steps, encodeStep(config.fields, overrides)],
+          oneHot: new Set([...config.oneHot, ...Object.keys(overrides)]),
+          references: new Map([
+            ...config.references,
+            ...Object.entries(overrides).flatMap(([key, override]) =>
+              typeof override === 'object'
+                ? [[key, override.reference] as const]
+                : []
+            )
+          ])
         }),
       fit: (train: { readonly rows: readonly Row[] }) => {
         const context: Context = { scales: new Map() }
@@ -435,6 +606,7 @@ export function pipeline(
     target: schema.targetKey,
     steps: [],
     pending: Object.keys(fields).filter(key => fields[key]?.isOptional),
-    oneHot: new Set()
+    oneHot: new Set(),
+    references: new Map()
   })
 }

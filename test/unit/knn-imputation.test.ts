@@ -88,6 +88,35 @@ describe('knn imputation', () => {
     )
   })
 
+  test('measures with every category, even with a reference', () => {
+    // Without the column of A, A would be 1 away from B instead of √2, and
+    // row 3 would take its mass from row 0 instead of row 1
+    const schema = ml.features({
+      id: ml.number(),
+      group: ml.category(['A', 'B', 'C']),
+      length: ml.number(),
+      mass: ml.number().optional()
+    })
+    const { train } = ml
+      .dataset(schema, [
+        { id: 0, group: 'A', length: 0.2, mass: 1 },
+        { id: 1, group: 'C', length: 0, mass: 3 },
+        { id: 2, group: 'C', length: 10, mass: 5 },
+        { id: 3, group: 'B', length: 0 },
+        { id: 4, group: 'B', length: 0 }
+      ])
+      .split({ test: 0.2, seed: 1 })
+    const filled = ml
+      .pipeline(schema)
+      .scale(['length'])
+      .missing({ mass: { knn: 1, using: ['group', 'length'] } })
+      .encode({ group: { reference: 'A' } })
+      .fit(train)
+      .transform(train)
+      .rows.find(row => row.mass !== undefined && row.group === 'B')
+    assert.equal(filled?.mass, 3)
+  })
+
   test('using needs at least one field', () => {
     assert.throws(
       () => ml.pipeline(birdSchema).missing({ mass: { knn: 2, using: [] } }),
