@@ -1,0 +1,1224 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="9076" height="8239" viewBox="0 0 9076 8239" role="img" aria-label="typedLearning: o caminho do tipo, inferências e barreiras"><style>svg { --page: #ffffff; --zone: #f6f8fa; --zone_stroke: #d1d9e0; --card: #ffffff; --card_stroke: #d1d9e0; --title: #1f2328; --sub: #59636e; --code: #393f46; --edge: #818b98; --infer: #0969da; --infer_fill: #ddf4ff; --runtime: #9a6700; --error: #d1242f; --plug: #1a7f37; --plug_fill: #dafbe1; --gap: #8250df; } @media (prefers-color-scheme: dark) { svg { --page: #010409; --zone: #151b23; --zone_stroke: #3d444d; --card: #0d1117; --card_stroke: #3d444d; --title: #f0f6fc; --sub: #9198a1; --code: #d1d7e0; --edge: #656c76; --infer: #58a6ff; --infer_fill: #0c2d6b55; --runtime: #d29922; --error: #f85149; --plug: #3fb950; --plug_fill: #0f291655; --gap: #bc8cff; } } @media print { svg { --page: #ffffff; --zone: #f6f8fa; --zone_stroke: #d1d9e0; --card: #ffffff; --card_stroke: #d1d9e0; --title: #1f2328; --sub: #59636e; --code: #393f46; --edge: #818b98; --infer: #0969da; --infer_fill: #ddf4ff; --runtime: #9a6700; --error: #d1242f; --plug: #1a7f37; --plug_fill: #dafbe1; --gap: #8250df; } }
+      text { font-family: Geist, Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+      .page { fill: var(--page); }
+      .zone { fill: var(--zone); stroke: var(--zone_stroke); }
+      .zone.dashed { fill: none; stroke-dasharray: 4 4; }
+      .zone.plug { fill: var(--plug_fill); stroke: var(--plug); stroke-dasharray: 4 4; }
+      .card { fill: var(--card); stroke: var(--card_stroke); }
+      .card.plug { stroke: var(--plug); }
+      .title { fill: var(--title); font-size: 14px; font-weight: 600; }
+      .h1 { fill: var(--title); font-size: 22px; font-weight: 600; }
+      .sub { fill: var(--sub); font-size: 12px; }
+      .code { fill: var(--code); font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; }
+      .code.dim { fill: var(--sub); }
+      .label { fill: var(--sub); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; }
+      .label.plug { fill: var(--plug); }
+      .sep { stroke: var(--card_stroke); }
+      .edge { stroke: var(--edge); stroke-width: 1.25; fill: none; }
+      .edge.infer { stroke: var(--infer); stroke-dasharray: 5 4; }
+      .edge.plug { stroke: var(--plug); }
+      .tag { font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; }
+      .tag.infer { fill: var(--infer); }
+      .tag.runtime { fill: var(--runtime); }
+      .tag.error { fill: var(--error); }
+      .tag.plug { fill: var(--plug); }
+      .note { fill: var(--infer); font-size: 11px; }
+      .note.runtime { fill: var(--runtime); }
+      .note.error { fill: var(--error); }
+      .note.plug { fill: var(--plug); }
+      .pill { fill: var(--infer_fill); stroke: var(--infer); stroke-width: 0.75; }
+      .elabel { fill: var(--sub); font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 10.5px; }
+      .elabel.infer { fill: var(--infer); }
+      .ebg { fill: var(--page); }
+      .ebg.zone { fill: var(--zone); }
+      .mono { font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .title.mono { font-size: 13px; font-weight: 500; }
+      .dot { fill: var(--infer); }
+      .td { fill: var(--sub); font-size: 12px; }
+      .tdk { fill: var(--title); font-size: 12px; font-weight: 600; }
+      .tdc { fill: var(--code); font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 11.5px; }
+      .tdr { fill: var(--runtime); font-size: 12px; }
+      .row { stroke: var(--card_stroke); stroke-width: 0.75; }
+      .f-infer { fill: var(--infer); opacity: 0.45; }
+      .f-runtime { fill: var(--runtime); opacity: 0.55; }
+      .f-plug { fill: var(--plug); opacity: 0.45; }
+      .f-error { fill: var(--error); opacity: 0.45; }
+      .f-edge { fill: var(--edge); opacity: 0.35; }
+      .axis { stroke: var(--edge); stroke-width: 1; }
+      .tick { fill: var(--title); }
+      .h0 { fill: var(--title); font-size: 120px; font-weight: 700; letter-spacing: -0.02em; }
+      .h0s { fill: var(--sub); font-size: 34px; }
+      .h2 { fill: var(--title); font-size: 44px; font-weight: 700; letter-spacing: -0.01em; }
+      .h2s { fill: var(--sub); font-size: 22px; }
+      .h3 { fill: var(--title); font-size: 26px; font-weight: 700; }
+      .big { fill: var(--title); font-size: 16px; font-weight: 600; }
+      .bigs { fill: var(--sub); font-size: 15px; }
+      .num { fill: var(--title); font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; font-weight: 600; }
+      .st { font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; }
+      .st.COVERED, .st.compile { fill: var(--plug); }
+      .st.PARTIAL, .st.runtime { fill: var(--runtime); }
+      .st.GAP, .st.design { fill: var(--gap); }
+      .st.BREAKS, .st.none, .st.silent { fill: var(--error); }
+      .st.decision { fill: var(--infer); }
+      .f-COVERED { fill: var(--plug); }
+      .f-PARTIAL { fill: var(--runtime); }
+      .f-GAP { fill: var(--gap); }
+      .f-BREAKS { fill: var(--error); }
+      .f-wrong { fill: var(--error); opacity: 0.75; }
+      .f-honest { fill: var(--plug); opacity: 0.75; }
+      .f-track { fill: var(--card_stroke); opacity: 0.45; }
+      .panel { fill: var(--zone); stroke: var(--zone_stroke); }
+      .frame { fill: none; stroke: var(--zone_stroke); stroke-width: 2; }
+      .mast { fill: var(--title); font-size: 220px; font-weight: 700; letter-spacing: -0.03em; }
+      .deck { fill: var(--sub); font-size: 54px; }
+      .chapn { fill: var(--sub); font-size: 96px; font-weight: 700; font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .chap { fill: var(--title); font-size: 96px; font-weight: 700; letter-spacing: -0.015em; }
+      .kick { fill: var(--infer); font-size: 26px; font-weight: 600; letter-spacing: 0.08em; }
+      .lead { fill: var(--title); font-size: 42px; }
+      .prose { fill: var(--title); font-size: 30px; opacity: 0.88; }
+      .cap { fill: var(--sub); font-size: 26px; }
+      .capb { fill: var(--title); font-size: 26px; font-weight: 600; }
+      .trans { fill: var(--infer); font-size: 36px; font-weight: 600; }
+      .spine { stroke: var(--zone_stroke); stroke-width: 4; }
+      .spinedot { fill: var(--infer); }
+      .hk { fill: var(--title); font-size: 30px; font-weight: 600; }
+      .hks { fill: var(--sub); font-size: 24px; }
+      .hkn { fill: var(--title); font-family: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 26px; font-weight: 600; }
+      .hkx { font-size: 44px; font-weight: 700; fill: var(--error); }
+      .hkx.flat { fill: var(--plug); }
+      .stat { fill: var(--title); font-size: 120px; font-weight: 700; }
+      .statl { fill: var(--sub); font-size: 28px; }
+    </style><defs><marker id="a" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1.5 1 L6 4 L1.5 7" fill="none" style="stroke:var(--edge)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker><marker id="ai" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1.5 1 L6 4 L1.5 7" fill="none" style="stroke:var(--infer)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker><marker id="ap" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1.5 1 L6 4 L1.5 7" fill="none" style="stroke:var(--plug)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect class="page" width="9076" height="8239"/>
+<style>:root, svg { --mono: 'Geist Mono', ui-monospace, Menlo, monospace; }
+.mastt { fill: var(--title); font-size: 190px; font-weight: 700; letter-spacing: -0.03em; }
+.thesis { fill: var(--title); font-size: 50px; }
+.thesis.s { fill: var(--sub); font-size: 36px; }
+.act { fill: var(--infer); font-size: 30px; font-weight: 700; letter-spacing: 0.12em; }
+.acth { fill: var(--title); font-size: 78px; font-weight: 700; letter-spacing: -0.015em; }
+.actd { fill: var(--sub); font-size: 36px; }
+.sn { fill: var(--infer); font-family: var(--mono); font-size: 34px; font-weight: 700; }
+.sv { fill: var(--sub); font-size: 26px; font-weight: 700; letter-spacing: 0.14em; }
+.stt { fill: var(--title); font-size: 54px; font-weight: 700; letter-spacing: -0.01em; }
+.sd { fill: var(--sub); font-size: 27px; }
+.bl { fill: var(--title); font-size: 27px; font-weight: 700; letter-spacing: 0.1em; }
+.bls { fill: var(--sub); font-size: 23px; }
+.ty { fill: var(--title); font-family: var(--mono); font-size: 27px; font-weight: 600; }
+.mh { fill: var(--sub); font-size: 22px; font-weight: 700; letter-spacing: 0.08em; }
+.mc { fill: var(--code); font-family: var(--mono); font-size: 23px; }
+.mc.f { fill: var(--gap); }
+.tx { fill: var(--title); font-size: 25px; }
+.txi { fill: var(--infer); font-size: 25px; }
+.tw { fill: var(--title); font-size: 25px; }
+.twm { fill: var(--infer); font-family: var(--mono); font-size: 22px; }
+.bt { fill: var(--title); font-size: 25px; }
+.be { fill: var(--sub); font-family: var(--mono); font-size: 22px; }
+.be.up { fill: var(--error); }
+.be.flat { fill: var(--sub); }
+.stg { font-size: 20px; font-weight: 700; letter-spacing: 0.04em; }
+.stg.hoje { fill: var(--plug); } .stgb.hoje { stroke: var(--plug); }
+.stg.desenho { fill: var(--infer); } .stgb.desenho { stroke: var(--infer); }
+.stg.F { fill: var(--gap); } .stgb.F { stroke: var(--gap); }
+.stg.nada { fill: var(--error); } .stgb.nada { stroke: var(--error); }
+.stgb { fill: var(--card); stroke-width: 1.5; }
+.i-compile { fill: var(--error); }
+.i-design { fill: var(--plug); }
+.i-runtime { fill: var(--runtime); }
+.i-decision { fill: var(--infer); }
+.i-nada { fill: none; stroke: var(--error); stroke-width: 3; }
+.pn { fill: var(--plug); font-family: var(--mono); font-size: 25px; font-weight: 700; }
+.pw { fill: var(--code); font-family: var(--mono); font-size: 22px; }
+.pg { fill: var(--plug); font-size: 24px; }
+.gp { fill: var(--title); font-size: 24px; }
+.gc { fill: var(--sub); font-family: var(--mono); font-size: 21px; }
+.col { fill: var(--card); stroke: var(--card_stroke); stroke-width: 1.5; }
+.col.hl { stroke: var(--plug); stroke-width: 3; }
+.bandln { stroke: var(--card_stroke); stroke-width: 1.5; }
+.track { stroke: var(--title); stroke-width: 5; fill: none; }
+.arc { stroke: var(--infer); stroke-width: 3; fill: none; stroke-dasharray: 10 8; }
+.arcd { fill: var(--infer); }
+.arcl { fill: var(--infer); font-size: 25px; font-weight: 600; }
+.arclb { fill: var(--page); }
+.feed { stroke: var(--plug); stroke-width: 3; fill: none; }
+.code26 { fill: var(--code); font-family: var(--mono); font-size: 27px; }
+.code26.k { fill: var(--plug); font-weight: 700; }
+.vt { fill: var(--title); font-size: 34px; font-weight: 700; }
+.vts { fill: var(--sub); font-size: 25px; }
+.vc { fill: var(--title); font-size: 24px; }
+.vc.m { fill: var(--code); font-family: var(--mono); font-size: 22px; }
+.rn { fill: var(--title); font-size: 34px; font-weight: 700; }
+.rbig { fill: var(--title); font-size: 96px; font-weight: 700; font-family: var(--mono); }
+.rl { fill: var(--sub); font-size: 23px; }
+.rd { fill: var(--title); font-size: 23px; }
+.dot-on { fill: var(--infer); }
+.dot-off { fill: none; stroke: var(--card_stroke); stroke-width: 2; }
+.dotn { fill: var(--page); font-size: 17px; font-weight: 700; font-family: var(--mono); }
+.dotn.off { fill: var(--sub); }
+.lim { fill: var(--runtime); font-size: 27px; }
+.foot { fill: var(--sub); font-size: 24px; }
+.lg { fill: var(--sub); font-size: 26px; }
+.lgk { fill: var(--title); font-size: 26px; font-weight: 600; }
+</style><defs><marker id="at" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1 L8 5 L1 9" fill="none" style="stroke:var(--title)" stroke-width="2"/></marker></defs>
+<text class="mastt" x="110" y="280" xml:space="preserve">typedLearning</text>
+<text class="thesis" x="110" y="380" xml:space="preserve">O tipo nasce no schema e viaja até o relatório. Em cada parada ele ganha informação,</text>
+<text class="thesis" x="110" y="446" xml:space="preserve">e o compilador usa essa informação para inferir o próximo passo e barrar o erro metodológico.</text>
+<text class="thesis s" x="110" y="516" xml:space="preserve">Mapa do desenho futuro, testado contra 12 problemas clássicos resolvidos de verdade: 251 operações conferidas e 65 erros plantados, medidos lado a lado com o protocolo honesto.</text>
+<text class="mh" x="5574" y="150" xml:space="preserve">COMO LER</text>
+<rect class="i-compile" x="5574" y="184" width="20" height="20" rx="3"/>
+<text class="lgk" x="5614" y="202" xml:space="preserve">Erro de compilação</text>
+<text class="lg" x="5904" y="202" xml:space="preserve">o código errado não compila</text>
+<circle class="i-design" cx="5584" cy="238" r="11"/>
+<text class="lgk" x="5614" y="246" xml:space="preserve">Por construção</text>
+<text class="lg" x="5904" y="246" xml:space="preserve">o método errado não existe</text>
+<path class="i-decision" d="M5584 269 L5595 282 L5584 295 L5573 282 Z"/>
+<text class="lgk" x="5614" y="290" xml:space="preserve">Decisão obrigatória</text>
+<text class="lg" x="5904" y="290" xml:space="preserve">sem padrão escondido</text>
+<path class="i-runtime" d="M5584 314 L5595 335 L5573 335 Z"/>
+<text class="lgk" x="5614" y="334" xml:space="preserve">Erro em runtime</text>
+<text class="lg" x="5904" y="334" xml:space="preserve">só os dados revelam, na chamada</text>
+<path class="i-nada" d="M5575 361 L5593 379 M5593 361 L5575 379"/>
+<text class="lgk" x="5614" y="378" xml:space="preserve">Sem barreira</text>
+<text class="lg" x="5904" y="378" xml:space="preserve">identificado, ainda sem plano</text>
+<text class="mh" x="6474" y="150" xml:space="preserve">QUANDO CHEGA</text>
+<rect class="stgb hoje" x="6568" y="180" width="76" height="32" rx="16"/>
+<text class="stg hoje" x="6606" y="203" text-anchor="middle" xml:space="preserve">HOJE</text>
+<text class="lg" x="6664" y="202" xml:space="preserve">já está no main</text>
+<rect class="stgb desenho" x="6555" y="224" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="6600" y="247" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="lg" x="6664" y="246" xml:space="preserve">desenho base, falta implementar</text>
+<rect class="stgb F" x="6594" y="268" width="50" height="32" rx="16"/>
+<text class="stg F" x="6619" y="291" text-anchor="middle" xml:space="preserve">F2</text>
+<text class="lg" x="6664" y="290" xml:space="preserve">fase futura F1–F6 (ver Ato IV)</text>
+<rect class="stgb nada" x="6503" y="312" width="141" height="32" rx="16"/>
+<text class="stg nada" x="6574" y="335" text-anchor="middle" xml:space="preserve">SEM PLANO</text>
+<text class="lg" x="6664" y="334" xml:space="preserve">ainda sem resposta</text>
+<text class="lg" style="fill:var(--gap)" x="6474" y="378" xml:space="preserve">métodos em roxo: planejados</text>
+<text class="be up" x="6474" y="466" xml:space="preserve">↳ honesto → com o erro</text>
+<text class="lg" x="6804" y="466" xml:space="preserve">o quanto o score infla</text>
+<line class="arc" x1="5574" y1="452" x2="5694" y2="452"/>
+<text class="lg" x="5714" y="460" xml:space="preserve">inferência que pula estações</text>
+<line class="track" x1="5574" y1="498" x2="5682" y2="498" marker-end="url(#at)"/>
+<text class="lg" x="5714" y="506" xml:space="preserve">o tipo que viaja</text>
+<text class="act" x="110" y="640" xml:space="preserve">ATO I</text>
+<text class="acth" x="110" y="726" xml:space="preserve">O tipo viaja por sete estações</text>
+<text class="actd" x="110" y="786" xml:space="preserve">Leia cada coluna de cima para baixo: o que existe ali, o que o compilador deduz, por que ele consegue, que erro morre ali e quanto esse erro inflava o score nos casos.</text>
+<path class="arc" d="M1072 1356 L1072 860 L3482 860 L3482 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="1072" cy="1356" r="7"/>
+<rect class="arclb" x="1906" y="840" width="743" height="38" rx="8"/>
+<text class="arcl" x="2277" y="869" text-anchor="middle" xml:space="preserve">entity · time · horizon → opções obrigatórias do split</text>
+<path class="arc" d="M3516 1356 L3516 914 L4706 914 L4706 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="3516" cy="1356" r="7"/>
+<rect class="arclb" x="3832" y="894" width="558" height="38" rx="8"/>
+<text class="arcl" x="4111" y="923" text-anchor="middle" xml:space="preserve">papel Train → único bloco que fit aceita</text>
+<path class="arc" d="M1072 1356 L1072 968 L4714 968 L4714 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="1072" cy="1356" r="7"/>
+<rect class="arclb" x="2548" y="948" width="690" height="38" rx="8"/>
+<text class="arcl" x="2893" y="977" text-anchor="middle" xml:space="preserve">nível e opcionalidade → estado inicial das colunas</text>
+<path class="arc" d="M4738 1356 L4738 1022 L5938 1022 L5938 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="4738" cy="1356" r="7"/>
+<rect class="arclb" x="5033" y="1002" width="611" height="38" rx="8"/>
+<text class="arcl" x="5338" y="1031" text-anchor="middle" xml:space="preserve">fatos por coluna → requires conferido no fit</text>
+<path class="arc" d="M5960 1356 L5960 1076 L7162 1076 L7162 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="5960" cy="1356" r="7"/>
+<rect class="arclb" x="6196" y="1056" width="730" height="38" rx="8"/>
+<text class="arcl" x="6561" y="1085" text-anchor="middle" xml:space="preserve">hyper → espaço de busca · produces → métricas válidas</text>
+<path class="arc" d="M3516 1356 L3516 1130 L7170 1130 L7170 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="3516" cy="1356" r="7"/>
+<rect class="arclb" x="4998" y="1110" width="690" height="38" rx="8"/>
+<text class="arcl" x="5343" y="1139" text-anchor="middle" xml:space="preserve">papel do bloco → evaluate aceita Validation | Test</text>
+<path class="arc" d="M1072 1356 L1072 1184 L5962 1184 L5962 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="1072" cy="1356" r="7"/>
+<rect class="arclb" x="3185" y="1164" width="664" height="38" rx="8"/>
+<text class="arcl" x="3517" y="1193" text-anchor="middle" xml:space="preserve">categorias literais do alvo → retorno de predict</text>
+<path class="arc" d="M5960 1356 L5960 1238 L8402 1238 L8402 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="5960" cy="1356" r="7"/>
+<rect class="arclb" x="6948" y="1218" width="466" height="38" rx="8"/>
+<text class="arcl" x="7181" y="1247" text-anchor="middle" xml:space="preserve">learns → explicadores disponíveis</text>
+<path class="arc" d="M1072 1356 L1072 1292 L8410 1292 L8410 1352" marker-end="url(#ai)"/>
+<circle class="arcd" cx="1072" cy="1356" r="7"/>
+<rect class="arclb" x="4350" y="1272" width="782" height="38" rx="8"/>
+<text class="arcl" x="4741" y="1301" text-anchor="middle" xml:space="preserve">sensitive → grupos tipados · reference → índices externos</text>
+<rect class="zone dashed" x="8002" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="7015" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="6029" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="5042" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="4056" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="3069" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="2083" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="1096" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone" x="110" y="7168" width="964" height="527" rx="18"/>
+<rect class="zone plug" x="110" y="5898" width="8856" height="820" rx="18"/>
+<rect class="col" x="7806" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="6590" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="5374" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="4158" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="2942" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="1726" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="510" y="5310" width="1160" height="228" rx="18"/>
+<rect class="col" x="7806" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="6590" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="5374" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="4158" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="2942" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="1726" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="510" y="5074" width="1160" height="196" rx="18"/>
+<rect class="col" x="510" y="1366" width="1160" height="3368" rx="18"/>
+<rect class="col" x="1726" y="1366" width="1160" height="3368" rx="18"/>
+<rect class="col" x="2942" y="1366" width="1160" height="3368" rx="18"/>
+<rect class="col" x="4158" y="1366" width="1160" height="3368" rx="18"/>
+<rect class="col hl" x="5374" y="1366" width="1160" height="3368" rx="18"/>
+<rect class="col" x="6590" y="1366" width="1160" height="3368" rx="18"/>
+<rect class="col" x="7806" y="1366" width="1160" height="3368" rx="18"/>
+<text class="sn" x="540" y="1422" xml:space="preserve">1</text>
+<text class="sv" x="586" y="1420" xml:space="preserve">DECLARAR</text>
+<text class="stt" x="540" y="1488" xml:space="preserve">Schema</text>
+<text class="sd" x="540" y="1536" xml:space="preserve">Tudo começa como dado literal. Cada inferência adiante sai daqui.</text>
+<text class="sn" x="1756" y="1422" xml:space="preserve">2</text>
+<text class="sv" x="1802" y="1420" xml:space="preserve">VALIDAR</text>
+<text class="stt" x="1756" y="1488" xml:space="preserve">Entrada</text>
+<text class="sd" x="1756" y="1536" xml:space="preserve">Os dados encontram o schema uma única vez. Depois disso, as linhas</text>
+<text class="sd" x="1756" y="1572" xml:space="preserve">carregam marcas.</text>
+<text class="sn" x="2972" y="1422" xml:space="preserve">3</text>
+<text class="sv" x="3018" y="1420" xml:space="preserve">SEPARAR</text>
+<text class="stt" x="2972" y="1488" xml:space="preserve">Divisão</text>
+<text class="sd" x="2972" y="1536" xml:space="preserve">Cada linha recebe um papel. O papel é um tipo, e não sai mais da</text>
+<text class="sd" x="2972" y="1572" xml:space="preserve">linha.</text>
+<text class="sn" x="4188" y="1422" xml:space="preserve">4</text>
+<text class="sv" x="4234" y="1420" xml:space="preserve">TRANSFORMAR</text>
+<text class="stt" x="4188" y="1488" xml:space="preserve">Pipeline</text>
+<text class="sd" x="4188" y="1536" xml:space="preserve">Parte do schema, não dos dados. Cada passo reescreve no tipo os fatos</text>
+<text class="sd" x="4188" y="1572" xml:space="preserve">de cada coluna.</text>
+<text class="sn" x="5404" y="1422" xml:space="preserve">5</text>
+<text class="sv" x="5450" y="1420" xml:space="preserve">APRENDER</text>
+<text class="stt" x="5404" y="1488" xml:space="preserve">Estimador</text>
+<text class="sd" x="5404" y="1536" xml:space="preserve">Um estimador é uma declaração mais a matemática. A declaração alimenta</text>
+<text class="sd" x="5404" y="1572" xml:space="preserve">todo o resto.</text>
+<text class="sn" x="6620" y="1422" xml:space="preserve">6</text>
+<text class="sv" x="6666" y="1420" xml:space="preserve">MEDIR</text>
+<text class="stt" x="6620" y="1488" xml:space="preserve">Avaliação e seleção</text>
+<text class="sd" x="6620" y="1536" xml:space="preserve">Score de seleção e score de generalização são tipos diferentes.</text>
+<text class="sn" x="7836" y="1422" xml:space="preserve">7</text>
+<text class="sv" x="7882" y="1420" xml:space="preserve">EXPLICAR E AUDITAR</text>
+<text class="stt" x="7836" y="1488" xml:space="preserve">Leitura</text>
+<text class="sd" x="7836" y="1536" xml:space="preserve">O que o modelo aprendeu e para quem ele erra, nos nomes do schema.</text>
+<line class="bandln" x1="110" y1="1618" x2="8966" y2="1618"/>
+<text class="bl" x="110" y="1662" xml:space="preserve">O TIPO QUE SAI</text>
+<text class="bls" x="110" y="1698" xml:space="preserve">o que a próxima estação recebe</text>
+<text class="ty" x="540" y="1662" xml:space="preserve">Features&lt;S, R&gt;</text>
+<text class="ty" x="1756" y="1662" xml:space="preserve">Dataset&lt;S, R, O&gt;</text>
+<text class="ty" x="2972" y="1662" xml:space="preserve">Train · Validation · Test</text>
+<text class="ty" x="4188" y="1662" xml:space="preserve">Pipeline&lt;St&gt; → Matrix&lt;St&gt;</text>
+<text class="ty" x="5404" y="1662" xml:space="preserve">Fitted&lt;T, Y, C, P, Learns&gt;</text>
+<text class="ty" x="6620" y="1662" xml:space="preserve">Report&lt;Ms&gt; · Score&lt;R, N&gt;</text>
+<text class="ty" x="7836" y="1662" xml:space="preserve">Explanation&lt;F&gt; · Fairness&lt;G&gt;</text>
+<line class="track" x1="786" y1="1653" x2="1742" y2="1653" marker-end="url(#at)"/>
+<line class="track" x1="2034" y1="1653" x2="2958" y2="1653" marker-end="url(#at)"/>
+<line class="track" x1="3398" y1="1653" x2="4174" y2="1653" marker-end="url(#at)"/>
+<line class="track" x1="4614" y1="1653" x2="5390" y2="1653" marker-end="url(#at)"/>
+<line class="track" x1="5846" y1="1653" x2="6606" y2="1653" marker-end="url(#at)"/>
+<line class="track" x1="7030" y1="1653" x2="7822" y2="1653" marker-end="url(#at)"/>
+<line class="bandln" x1="110" y1="1732" x2="8966" y2="1732"/>
+<text class="bl" x="110" y="1776" xml:space="preserve">MÉTODOS</text>
+<text class="bls" x="110" y="1812" xml:space="preserve">todos os métodos públicos da</text>
+<text class="bls" x="110" y="1842" xml:space="preserve">estação</text>
+<text class="mh" x="540" y="1772" xml:space="preserve">CAMPOS</text>
+<text class="mc" x="540" y="1806" xml:space="preserve">ml.number<tspan class="mh">  ·  </tspan>ml.integer<tspan class="mh">  ·  </tspan>ml.boolean<tspan class="mh">  ·  </tspan>ml.category([...])</text>
+<text class="mc" x="540" y="1839" xml:space="preserve">ml.orderedCategory([...])<tspan class="mh">  ·  </tspan>ml.timestamp</text>
+<text class="mc" x="540" y="1872" xml:space="preserve">ml.itemSet([...])<tspan class="mh">  ·  </tspan>ml.id<tspan class="mh">  ·  </tspan><tspan class="mc f">ml.text</tspan><tspan class="mh">  ·  </tspan><tspan class="mc f">ml.vector(n)</tspan></text>
+<text class="mh" x="540" y="1919" xml:space="preserve">RESTRIÇÕES</text>
+<text class="mc" x="540" y="1953" xml:space="preserve">.optional<tspan class="mh">  ·  </tspan>.min<tspan class="mh">  ·  </tspan>.between</text>
+<text class="mh" x="540" y="2000" xml:space="preserve">PAPÉIS</text>
+<text class="mc" x="540" y="2034" xml:space="preserve">.target<tspan class="mh">  ·  </tspan>.entity<tspan class="mh">  ·  </tspan>.time<tspan class="mh">  ·  </tspan>.sensitive<tspan class="mh">  ·  </tspan>.reference</text>
+<text class="mc" x="540" y="2067" xml:space="preserve">.weight<tspan class="mh">  ·  </tspan>.id<tspan class="mh">  ·  </tspan><tspan class="mc f">.after</tspan><tspan class="mh">  ·  </tspan><tspan class="mc f">.components</tspan></text>
+<text class="mh" x="540" y="2114" xml:space="preserve">PONTE</text>
+<text class="mc" x="540" y="2148" xml:space="preserve">ml.fromSchema(zod | valibot | arktype)</text>
+<text class="mh" x="1756" y="1772" xml:space="preserve">CONSTRUTORES</text>
+<text class="mc" x="1756" y="1806" xml:space="preserve">ml.dataset(schema, rows, { duplicates })</text>
+<text class="mc" x="1756" y="1839" xml:space="preserve">ml.series(schema, rows)<tspan class="mh">  ·  </tspan>ml.transactions(schema, baskets)</text>
+<text class="mh" x="1756" y="1886" xml:space="preserve">POPULAÇÃO</text>
+<text class="mc" x="1756" y="1920" xml:space="preserve"><tspan class="mc f">dataset.where(pred, { reason })</tspan><tspan class="mh">  ·  </tspan>dataset.representation(k)</text>
+<text class="mh" x="1756" y="1967" xml:space="preserve">PROVENIÊNCIA</text>
+<text class="mc" x="1756" y="2001" xml:space="preserve">HeldOutRow&lt;T&gt;<tspan class="mh">  ·  </tspan>WeakMap de registros de Test</text>
+<text class="mh" x="2972" y="1772" xml:space="preserve">HOLDOUT</text>
+<text class="mc" x="2972" y="1806" xml:space="preserve">split({ test, seed, stratify, groups })</text>
+<text class="mc" x="2972" y="1839" xml:space="preserve">split({ testFrom, gap: &#x27;horizon&#x27; })</text>
+<text class="mh" x="2972" y="1886" xml:space="preserve">RESAMPLERS</text>
+<text class="mc" x="2972" y="1920" xml:space="preserve">kFold<tspan class="mh">  ·  </tspan>stratifiedKFold<tspan class="mh">  ·  </tspan>groupKFold</text>
+<text class="mc" x="2972" y="1953" xml:space="preserve"><tspan class="mc f">stratifiedGroupKFold</tspan><tspan class="mh">  ·  </tspan>walkForward<tspan class="mh">  ·  </tspan>purgedKFold</text>
+<text class="mc" x="2972" y="1986" xml:space="preserve">bootstrap<tspan class="mh">  ·  </tspan>repeated<tspan class="mh">  ·  </tspan>nested</text>
+<text class="mh" x="2972" y="2033" xml:space="preserve">CONFERÊNCIA</text>
+<text class="mc" x="2972" y="2067" xml:space="preserve">console.log(cv.folds(train))</text>
+<text class="mh" x="4188" y="1772" xml:space="preserve">AUSENTES</text>
+<text class="mc" x="4188" y="1806" xml:space="preserve">missing(median | mode | constant | knn)<tspan class="mh">  ·  </tspan><tspan class="mc f">indicator</tspan></text>
+<text class="mh" x="4188" y="1853" xml:space="preserve">ESCALA</text>
+<text class="mc" x="4188" y="1887" xml:space="preserve">scale(&#x27;standard&#x27; | &#x27;minmax&#x27; | &#x27;robust&#x27; | &#x27;maxabs&#x27;)<tspan class="mh">  ·  </tspan>clip</text>
+<text class="mc" x="4188" y="1920" xml:space="preserve">transformTarget(&#x27;log1p&#x27; | &#x27;standardize&#x27;)<tspan class="mh">  ·  </tspan><tspan class="mc f">power</tspan></text>
+<text class="mh" x="4188" y="1967" xml:space="preserve">CATEGORIAS</text>
+<text class="mc" x="4188" y="2001" xml:space="preserve">encode({ reference })<tspan class="mh">  ·  </tspan>ordinal<tspan class="mh">  ·  </tspan><tspan class="mc f">targetEncode</tspan><tspan class="mh">  ·  </tspan><tspan class="mc f">rare</tspan></text>
+<text class="mh" x="4188" y="2048" xml:space="preserve">COLUNAS</text>
+<text class="mc" x="4188" y="2082" xml:space="preserve">select(chi2 | mutualInfo | variance)<tspan class="mh">  ·  </tspan>pca({ components })</text>
+<text class="mc" x="4188" y="2115" xml:space="preserve"><tspan class="mc f">derive</tspan><tspan class="mh">  ·  </tspan><tspan class="mc f">text(tfidf)</tspan></text>
+<text class="mh" x="4188" y="2162" xml:space="preserve">LINHAS, SÓ NO FIT</text>
+<text class="mc" x="4188" y="2196" xml:space="preserve">resample(smote | under | over)<tspan class="mh">  ·  </tspan>removeOutliers<tspan class="mh">  ·  </tspan><tspan class="mc f">augment</tspan></text>
+<text class="mh" x="4188" y="2243" xml:space="preserve">TEMPO</text>
+<text class="mc" x="4188" y="2277" xml:space="preserve">lag<tspan class="mh">  ·  </tspan>rolling<tspan class="mh">  ·  </tspan>diff<tspan class="mh">  ·  </tspan>calendar<tspan class="mh">  ·  </tspan>missing({ warmup })</text>
+<text class="mh" x="4188" y="2324" xml:space="preserve">PESOS</text>
+<text class="mc" x="4188" y="2358" xml:space="preserve">reweigh({ by })</text>
+<text class="mh" x="4188" y="2405" xml:space="preserve">EXECUÇÃO</text>
+<text class="mc" x="4188" y="2439" xml:space="preserve">pipeline.fit(train)<tspan class="mh">  ·  </tspan>fitted.transform(block)</text>
+<text class="mh" x="5404" y="1772" xml:space="preserve">SUPERVISIONADOS</text>
+<text class="mc" x="5404" y="1806" xml:space="preserve">knn<tspan class="mh">  ·  </tspan>tree<tspan class="mh">  ·  </tspan>linearRegression<tspan class="mh">  ·  </tspan>logisticRegression</text>
+<text class="mc" x="5404" y="1839" xml:space="preserve">perceptron<tspan class="mh">  ·  </tspan>mlp<tspan class="mh">  ·  </tspan>naiveBayes</text>
+<text class="mh" x="5404" y="1886" xml:space="preserve">ENSEMBLES</text>
+<text class="mc" x="5404" y="1920" xml:space="preserve">bagging<tspan class="mh">  ·  </tspan>randomForest<tspan class="mh">  ·  </tspan>boosting<tspan class="mh">  ·  </tspan>voting</text>
+<text class="mc" x="5404" y="1953" xml:space="preserve">stacking({ bases, meta, cv })</text>
+<text class="mh" x="5404" y="2000" xml:space="preserve">DESCRITIVOS</text>
+<text class="mc" x="5404" y="2034" xml:space="preserve">kmeans<tspan class="mh">  ·  </tspan>agglomerative → Dendrogram.cut<tspan class="mh">  ·  </tspan>apriori</text>
+<text class="mc" x="5404" y="2067" xml:space="preserve">fpGrowth</text>
+<text class="mh" x="5404" y="2114" xml:space="preserve">O QUE CADA UM DECLARA</text>
+<text class="mc" x="5404" y="2148" xml:space="preserve">knn · mlp · kmeans: requires scaled</text>
+<text class="mc" x="5404" y="2181" xml:space="preserve">linear · logistic: when(&#x27;solver&#x27; | &#x27;penalty&#x27;)</text>
+<text class="mc" x="5404" y="2214" xml:space="preserve">tree (poda) · mlp (early stop): needs validation</text>
+<text class="mc" x="5404" y="2247" xml:space="preserve">naiveBayes multinomial: sign non-negative</text>
+<text class="mc" x="5404" y="2280" xml:space="preserve">ensembles: requires = união · tasks = interseção</text>
+<text class="mh" x="6620" y="1772" xml:space="preserve">AVALIAR</text>
+<text class="mc" x="6620" y="1806" xml:space="preserve">fitted.evaluate(block, metrics)<tspan class="mh">  ·  </tspan>crossValidate<tspan class="mh">  ·  </tspan>backtest</text>
+<text class="mh" x="6620" y="1853" xml:space="preserve">CLASSIFICAÇÃO</text>
+<text class="mc" x="6620" y="1887" xml:space="preserve">accuracy<tspan class="mh">  ·  </tspan>precision<tspan class="mh">  ·  </tspan>recall<tspan class="mh">  ·  </tspan>f1({ average })</text>
+<text class="mc" x="6620" y="1920" xml:space="preserve">rocAuc<tspan class="mh">  ·  </tspan>prAuc<tspan class="mh">  ·  </tspan>logLoss<tspan class="mh">  ·  </tspan>brier<tspan class="mh">  ·  </tspan>confusion</text>
+<text class="mh" x="6620" y="1967" xml:space="preserve">REGRESSÃO</text>
+<text class="mc" x="6620" y="2001" xml:space="preserve">mse<tspan class="mh">  ·  </tspan>rmse<tspan class="mh">  ·  </tspan>mae<tspan class="mh">  ·  </tspan>r2<tspan class="mh">  ·  </tspan>rmsle<tspan class="mh">  ·  </tspan>mape</text>
+<text class="mc" x="6620" y="2034" xml:space="preserve">mase({ season })</text>
+<text class="mh" x="6620" y="2081" xml:space="preserve">SELECIONAR</text>
+<text class="mc" x="6620" y="2115" xml:space="preserve">search(grid | random | bayes)<tspan class="mh">  ·  </tspan>compare<tspan class="mh">  ·  </tspan>nested</text>
+<text class="mh" x="6620" y="2162" xml:space="preserve">DECIDIR</text>
+<text class="mc" x="6620" y="2196" xml:space="preserve">chooseThreshold(validation, { cost })<tspan class="mh">  ·  </tspan><tspan class="mc f">calibrate</tspan></text>
+<text class="mh" x="6620" y="2243" xml:space="preserve">CONFIAR</text>
+<text class="mc" x="6620" y="2277" xml:space="preserve">pairedTest<tspan class="mh">  ·  </tspan>bootstrap<tspan class="mh">  ·  </tspan><tspan class="mc f">permutationTest</tspan><tspan class="mh">  ·  </tspan><tspan class="mc f">seeds(n)</tspan></text>
+<text class="mh" x="6620" y="2324" xml:space="preserve">DIAGNOSTICAR</text>
+<text class="mc" x="6620" y="2358" xml:space="preserve">diagnose.gap<tspan class="mh">  ·  </tspan>learningCurve<tspan class="mh">  ·  </tspan>validationCurve</text>
+<text class="mh" x="7836" y="1772" xml:space="preserve">EXPLICAR</text>
+<text class="mc" x="7836" y="1806" xml:space="preserve">coefficients.rank()<tspan class="mh">  ·  </tspan>.unscaled()<tspan class="mh">  ·  </tspan>treeRules</text>
+<text class="mc" x="7836" y="1839" xml:space="preserve">permutationImportance(validation)<tspan class="mh">  ·  </tspan>partialDependence</text>
+<text class="mc" x="7836" y="1872" xml:space="preserve">lime<tspan class="mh">  ·  </tspan>shap</text>
+<text class="mh" x="7836" y="1919" xml:space="preserve">DESCREVER</text>
+<text class="mc" x="7836" y="1953" xml:space="preserve">centroids.describe()<tspan class="mh">  ·  </tspan>transform(test).report()</text>
+<text class="mh" x="7836" y="2000" xml:space="preserve">FAIRNESS</text>
+<text class="mc" x="7836" y="2034" xml:space="preserve">demographicParityDifference<tspan class="mh">  ·  </tspan>equalOpportunity</text>
+<text class="mc" x="7836" y="2067" xml:space="preserve">equalizedOdds<tspan class="mh">  ·  </tspan>groupConfusion</text>
+<text class="mh" x="7836" y="2114" xml:space="preserve">MITIGAR</text>
+<text class="mc" x="7836" y="2148" xml:space="preserve">reweigh({ by })<tspan class="mh">  ·  </tspan>constrained(est, { by })</text>
+<text class="mc" x="7836" y="2181" xml:space="preserve">thresholds({ by, on: validation })</text>
+<line class="bandln" x1="110" y1="2502" x2="8966" y2="2502"/>
+<text class="bl" x="110" y="2546" xml:space="preserve">O QUE É INFERIDO</text>
+<text class="bls" x="110" y="2582" xml:space="preserve">sem nenhuma anotação do</text>
+<text class="bls" x="110" y="2612" xml:space="preserve">usuário</text>
+<circle class="arcd" cx="547" cy="2536" r="6"/>
+<text class="txi" x="568" y="2544" xml:space="preserve">o tipo de cada registro</text>
+<circle class="arcd" cx="547" cy="2578" r="6"/>
+<text class="txi" x="568" y="2586" xml:space="preserve">a tarefa: regressão, binária, multiclasse ou descritiva</text>
+<circle class="arcd" cx="547" cy="2620" r="6"/>
+<text class="txi" x="568" y="2628" xml:space="preserve">as categorias do alvo, que viram o retorno de predict</text>
+<circle class="arcd" cx="547" cy="2662" r="6"/>
+<text class="txi" x="568" y="2670" xml:space="preserve">o nível de medida, que decide quais passos aceitam a coluna</text>
+<circle class="arcd" cx="547" cy="2704" r="6"/>
+<text class="txi" x="568" y="2712" xml:space="preserve">quais campos ficam fora das features: id, entity, sensitive, weight</text>
+<circle class="arcd" cx="1763" cy="2536" r="6"/>
+<text class="txi" x="1784" y="2544" xml:space="preserve">a origem O: &#x27;dataset&#x27; | &#x27;series&#x27; | &#x27;panel&#x27; | &#x27;transactions&#x27;</text>
+<circle class="arcd" cx="1763" cy="2578" r="6"/>
+<text class="txi" x="1784" y="2586" xml:space="preserve">quais opções são obrigatórias na chamada</text>
+<circle class="arcd" cx="1763" cy="2620" r="6"/>
+<text class="txi" x="1784" y="2628" xml:space="preserve">que linhas de Test não podem começar um dataset novo</text>
+<circle class="arcd" cx="2979" cy="2536" r="6"/>
+<text class="txi" x="3000" y="2544" xml:space="preserve">a forma das opções do split, a partir de O e de R</text>
+<circle class="arcd" cx="2979" cy="2578" r="6"/>
+<text class="txi" x="3000" y="2586" xml:space="preserve">o papel de cada bloco e de cada registro</text>
+<circle class="arcd" cx="2979" cy="2620" r="6"/>
+<text class="txi" x="3000" y="2628" xml:space="preserve">quais resamplers aceitam esta origem e o que eles exigem</text>
+<circle class="arcd" cx="4195" cy="2536" r="6"/>
+<text class="txi" x="4216" y="2544" xml:space="preserve">o estado inicial de cada coluna, direto do schema</text>
+<circle class="arcd" cx="4195" cy="2578" r="6"/>
+<text class="txi" x="4216" y="2586" xml:space="preserve">o estado depois de cada passo: complete, encoding, scaled, sign,</text>
+<text class="txi" x="4216" y="2620" xml:space="preserve">bounded</text>
+<circle class="arcd" cx="4195" cy="2654" r="6"/>
+<text class="txi" x="4216" y="2662" xml:space="preserve">nomes e ordem das colunas: &#x27;island=Dream&#x27;, &#x27;pc1&#x27;, &#x27;close_lag5&#x27;</text>
+<circle class="arcd" cx="4195" cy="2696" r="6"/>
+<text class="txi" x="4216" y="2704" xml:space="preserve">que passos de linha nunca rodam em transform nem em predict</text>
+<circle class="arcd" cx="5411" cy="2536" r="6"/>
+<text class="txi" x="5432" y="2544" xml:space="preserve">quais matrizes fit aceita: tasks × tarefa do alvo</text>
+<circle class="arcd" cx="5411" cy="2578" r="6"/>
+<text class="txi" x="5432" y="2586" xml:space="preserve">opções obrigatórias do construtor, de hyper</text>
+<circle class="arcd" cx="5411" cy="2620" r="6"/>
+<text class="txi" x="5432" y="2628" xml:space="preserve">argumentos extras de fit (Validation, seed), de needs</text>
+<circle class="arcd" cx="5411" cy="2662" r="6"/>
+<text class="txi" x="5432" y="2670" xml:space="preserve">predict devolve as categorias do schema; predictProba só se produces</text>
+<text class="txi" x="5432" y="2704" xml:space="preserve">declara</text>
+<circle class="arcd" cx="5411" cy="2738" r="6"/>
+<text class="txi" x="5432" y="2746" xml:space="preserve">quais explicadores existem, de learns</text>
+<circle class="arcd" cx="6627" cy="2536" r="6"/>
+<text class="txi" x="6648" y="2544" xml:space="preserve">quais métricas valem para a tarefa do modelo</text>
+<circle class="arcd" cx="6627" cy="2578" r="6"/>
+<text class="txi" x="6648" y="2586" xml:space="preserve">as chaves do Report: os nomes das métricas</text>
+<circle class="arcd" cx="6627" cy="2620" r="6"/>
+<text class="txi" x="6648" y="2628" xml:space="preserve">o espaço de busca: hyper e parâmetros dos passos (&#x27;scale.method&#x27;)</text>
+<circle class="arcd" cx="6627" cy="2662" r="6"/>
+<text class="txi" x="6648" y="2670" xml:space="preserve">a natureza do score: &#x27;selection&#x27; ou &#x27;generalization&#x27;</text>
+<circle class="arcd" cx="7843" cy="2536" r="6"/>
+<text class="txi" x="7864" y="2544" xml:space="preserve">quais explicadores existem, de learns</text>
+<circle class="arcd" cx="7843" cy="2578" r="6"/>
+<text class="txi" x="7864" y="2586" xml:space="preserve">chaves por campo original: &#x27;island=Dream&#x27; volta a ser &#x27;island&#x27;</text>
+<circle class="arcd" cx="7843" cy="2620" r="6"/>
+<text class="txi" x="7864" y="2628" xml:space="preserve">os grupos: Groups&lt;S, &#x27;sex&#x27;&gt; = &#x27;female&#x27; | &#x27;male&#x27;</text>
+<line class="bandln" x1="110" y1="2800" x2="8966" y2="2800"/>
+<text class="bl" x="110" y="2844" xml:space="preserve">POR QUE É POSSÍVEL</text>
+<text class="bls" x="110" y="2880" xml:space="preserve">o mecanismo do TypeScript e a</text>
+<text class="bls" x="110" y="2910" xml:space="preserve">informação que o alimenta</text>
+<text class="tw" font-weight="700" x="540" y="2842" xml:space="preserve">Categorias ficam literais</text>
+<text class="twm" x="540" y="2874" xml:space="preserve">const type parameters guardam [&#x27;a&#x27;, &#x27;b&#x27;] como união, não string[]</text>
+<text class="tw" font-weight="700" x="540" y="2918" xml:space="preserve">Papéis se acumulam no tipo</text>
+<text class="twm" x="540" y="2950" xml:space="preserve">cada papel devolve Features&lt;S, R &amp; { target: &#x27;species&#x27; }&gt;</text>
+<text class="tw" font-weight="700" x="540" y="2994" xml:space="preserve">A tarefa é calculada</text>
+<text class="twm" x="540" y="3026" xml:space="preserve">conditional type sobre o nível do alvo e a contagem de categorias</text>
+<text class="tw" font-weight="700" x="1756" y="2842" xml:space="preserve">A origem vem dos papéis</text>
+<text class="twm" x="1756" y="2874" xml:space="preserve">conditional type sobre R: com .time, O é &#x27;series&#x27;; com entity,</text>
+<text class="twm" x="1756" y="2904" xml:space="preserve">&#x27;panel&#x27;</text>
+<text class="tw" font-weight="700" x="1756" y="2948" xml:space="preserve">Marcas sobrevivem</text>
+<text class="twm" x="1756" y="2980" xml:space="preserve">são chaves symbol: TS as preserva em spread, map e filter</text>
+<text class="tw" font-weight="700" x="1756" y="3024" xml:space="preserve">Runtime uma vez só</text>
+<text class="twm" x="1756" y="3056" xml:space="preserve">parse dos valores reais acontece aqui; o resto do caminho confia</text>
+<text class="twm" x="1756" y="3086" xml:space="preserve">no tipo</text>
+<text class="tw" font-weight="700" x="2972" y="2842" xml:space="preserve">Opções dependem dos papéis</text>
+<text class="twm" x="2972" y="2874" xml:space="preserve">conditional type: R tem entity, então groups é obrigatório</text>
+<text class="tw" font-weight="700" x="2972" y="2918" xml:space="preserve">O papel é uma marca</text>
+<text class="twm" x="2972" y="2950" xml:space="preserve">brand no bloco e em cada registro; &#x27;&quot;test&quot;&#x27; não é atribuível a</text>
+<text class="twm" x="2972" y="2980" xml:space="preserve">&#x27;&quot;train&quot;&#x27;</text>
+<text class="tw" font-weight="700" x="2972" y="3024" xml:space="preserve">Contrato único de CV</text>
+<text class="twm" x="2972" y="3056" xml:space="preserve">Resampler&lt;A, N&gt;: accepts e needs são tuplas literais conferidas</text>
+<text class="twm" x="2972" y="3086" xml:space="preserve">contra O e R</text>
+<text class="tw" font-weight="700" x="4188" y="2842" xml:space="preserve">Fatos são tipos</text>
+<text class="twm" x="4188" y="2874" xml:space="preserve">ColumnState vive no tipo; cada passo é Apply&lt;St, K, Out&gt;</text>
+<text class="tw" font-weight="700" x="4188" y="2918" xml:space="preserve">Fatos são literais</text>
+<text class="twm" x="4188" y="2950" xml:space="preserve">booleanos e uniões: o tipo filtra as colunas que cada passo aceita</text>
+<text class="tw" font-weight="700" x="4188" y="2994" xml:space="preserve">Nomes são calculados</text>
+<text class="twm" x="4188" y="3026" xml:space="preserve">template literals sobre categorias e números literais</text>
+<text class="tw" font-weight="700" x="4188" y="3070" xml:space="preserve">Só Train entra</text>
+<text class="twm" x="4188" y="3102" xml:space="preserve">a marca do passo 3 é o que fit aceita</text>
+<text class="tw" font-weight="700" x="5404" y="2842" xml:space="preserve">O check vê os nomes</text>
+<text class="twm" x="5404" y="2874" xml:space="preserve">M &amp; Checked&lt;M, Req&gt; roda sobre o M concreto, com colunas literais</text>
+<text class="tw" font-weight="700" x="5404" y="2918" xml:space="preserve">O retorno é literal</text>
+<text class="twm" x="5404" y="2950" xml:space="preserve">Y é a união das categorias; métodos condicionais sobre produces</text>
+<text class="tw" font-weight="700" x="5404" y="2994" xml:space="preserve">Requisito por ramo</text>
+<text class="twm" x="5404" y="3026" xml:space="preserve">when(&#x27;solver&#x27;, {...}) estreita hyper e requires juntos</text>
+<text class="tw" font-weight="700" x="6620" y="2842" xml:space="preserve">Métricas declaram tarefas</text>
+<text class="twm" x="6620" y="2874" xml:space="preserve">o Check falho vira mensagem: &quot;mse is a regression metric&quot;</text>
+<text class="tw" font-weight="700" x="6620" y="2918" xml:space="preserve">Report com nomes</text>
+<text class="twm" x="6620" y="2950" xml:space="preserve">key remapping sobre a tupla const de métricas</text>
+<text class="tw" font-weight="700" x="6620" y="2994" xml:space="preserve">Score não se converte</text>
+<text class="twm" x="6620" y="3026" xml:space="preserve">parâmetro fantasma: selection não é atribuível a generalization</text>
+<text class="tw" font-weight="700" x="7836" y="2842" xml:space="preserve">Capacidade declarada</text>
+<text class="twm" x="7836" y="2874" xml:space="preserve">E[&#x27;needs&#x27;] extends keyof Cap do estimador</text>
+<text class="tw" font-weight="700" x="7836" y="2918" xml:space="preserve">Linhagem por template</text>
+<text class="twm" x="7836" y="2950" xml:space="preserve">FieldOf&lt;`${infer F}=${string}`&gt; devolve o campo do schema</text>
+<text class="tw" font-weight="700" x="7836" y="2994" xml:space="preserve">Grupos literais</text>
+<text class="twm" x="7836" y="3026" xml:space="preserve">as categorias do campo sensitive viram as chaves de byGroup</text>
+<line class="bandln" x1="110" y1="3156" x2="8966" y2="3156"/>
+<text class="bl" x="110" y="3200" xml:space="preserve">BARREIRAS</text>
+<text class="bls" x="110" y="3236" xml:space="preserve">o erro que morre aqui, quando,</text>
+<text class="bls" x="110" y="3266" xml:space="preserve">e o quanto ele inflava nos</text>
+<text class="bls" x="110" y="3296" xml:space="preserve">casos</text>
+<rect class="i-compile" x="540" y="3184" width="20" height="20" rx="3"/>
+<text class="bt" x="580" y="3202" xml:space="preserve">chave inexistente em .target(&#x27;specie&#x27;): a mensagem lista</text>
+<text class="bt" x="580" y="3235" xml:space="preserve">as válidas</text>
+<rect class="stgb hoje" x="1564" y="3180" width="76" height="32" rx="16"/>
+<text class="stg hoje" x="1602" y="3203" text-anchor="middle" xml:space="preserve">HOJE</text>
+<circle class="i-design" cx="550" cy="3276" r="11"/>
+<text class="bt" x="580" y="3284" xml:space="preserve">entity, id e reference ficam fora das features por padrão</text>
+<rect class="stgb desenho" x="1551" y="3262" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="1596" y="3285" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="580" y="3317" xml:space="preserve">↳ clientes: ARI 0.52 → 0.85 com a referência como</text>
+<text class="be up" x="580" y="3347" xml:space="preserve">feature</text>
+<path class="i-decision" d="M550 3372 L561 3385 L550 3398 L539 3385 Z"/>
+<text class="bt" x="580" y="3393" xml:space="preserve">alvo inteiro com poucas classes: task é obrigatória</text>
+<rect class="stgb desenho" x="1551" y="3371" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="1596" y="3394" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<circle class="i-design" cx="550" cy="3434" r="11"/>
+<text class="bt" x="580" y="3442" xml:space="preserve">campo pós-desfecho (.after(&#x27;boat&#x27;)) nunca é feature</text>
+<rect class="stgb F" x="1590" y="3420" width="50" height="32" rx="16"/>
+<text class="stg F" x="1615" y="3443" text-anchor="middle" xml:space="preserve">F2</text>
+<text class="be up" x="580" y="3475" xml:space="preserve">↳ Titanic: AUC 0.887 → 0.990 com boat</text>
+<circle class="i-design" cx="550" cy="3513" r="11"/>
+<text class="bt" x="580" y="3521" xml:space="preserve">partes do alvo (.components) saem das features</text>
+<rect class="stgb F" x="1590" y="3499" width="50" height="32" rx="16"/>
+<text class="stg F" x="1615" y="3522" text-anchor="middle" xml:space="preserve">F2</text>
+<text class="be up" x="580" y="3554" xml:space="preserve">↳ bicicletas: RMSLE 0.267 → 0.019 com casual e</text>
+<text class="be up" x="580" y="3584" xml:space="preserve">registered</text>
+<path class="i-runtime" d="M1766 3182 L1777 3203 L1755 3203 Z"/>
+<text class="bt" x="1796" y="3202" xml:space="preserve">categoria fora da lista, data inválida, valor fora da</text>
+<text class="bt" x="1796" y="3235" xml:space="preserve">faixa</text>
+<rect class="stgb hoje" x="2780" y="3180" width="76" height="32" rx="16"/>
+<text class="stg hoje" x="2818" y="3203" text-anchor="middle" xml:space="preserve">HOJE</text>
+<path class="i-decision" d="M1766 3263 L1777 3276 L1766 3289 L1755 3276 Z"/>
+<text class="bt" x="1796" y="3284" xml:space="preserve">duplicates: &#x27;keep&#x27; | &#x27;drop&#x27; | &#x27;group&#x27;, sem padrão</text>
+<rect class="stgb desenho" x="2767" y="3262" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="2812" y="3285" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="1796" y="3317" xml:space="preserve">↳ S7  spam: F1 0.936 → 0.947 com duplicatas dos dois</text>
+<text class="be up" x="1796" y="3347" xml:space="preserve">lados</text>
+<rect class="i-compile" x="1756" y="3375" width="20" height="20" rx="3"/>
+<text class="bt" x="1796" y="3393" xml:space="preserve">linhas de Test não começam um dataset novo</text>
+<rect class="stgb desenho" x="2767" y="3371" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="2812" y="3394" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<path class="i-runtime" d="M1766 3422 L1777 3443 L1755 3443 Z"/>
+<text class="bt" x="1796" y="3442" xml:space="preserve">série: ordena; tempo repetido por grupo é erro</text>
+<rect class="stgb desenho" x="2767" y="3420" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="2812" y="3443" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be " x="1796" y="3475" xml:space="preserve">↳ T2 T3</text>
+<path class="i-decision" d="M1766 3500 L1777 3513 L1766 3526 L1755 3513 Z"/>
+<text class="bt" x="1796" y="3521" xml:space="preserve">filtro de população registrado com reason</text>
+<rect class="stgb F" x="2806" y="3499" width="50" height="32" rx="16"/>
+<text class="stg F" x="2831" y="3522" text-anchor="middle" xml:space="preserve">F2</text>
+<text class="be up" x="1796" y="3554" xml:space="preserve">↳ D1  cestas: 0 → 3381 regras de não-produto sem o</text>
+<text class="be up" x="1796" y="3584" xml:space="preserve">filtro</text>
+<circle class="i-design" cx="2982" cy="3194" r="11"/>
+<text class="bt" x="3012" y="3202" xml:space="preserve">série não tem split aleatório nem kFold</text>
+<rect class="stgb hoje" x="3996" y="3180" width="76" height="32" rx="16"/>
+<text class="stg hoje" x="4034" y="3203" text-anchor="middle" xml:space="preserve">HOJE</text>
+<text class="be up" x="3012" y="3235" xml:space="preserve">↳ T1  bicicletas: RMSLE 0.490 → 0.356 com k-fold</text>
+<rect class="i-compile" x="2972" y="3263" width="20" height="20" rx="3"/>
+<text class="bt" x="3012" y="3281" xml:space="preserve">R tem entity: o split exige groups</text>
+<rect class="stgb desenho" x="3983" y="3259" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="4028" y="3282" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be flat" x="3012" y="3314" xml:space="preserve">↳ T8  readmissão: 0.238 → 0.240, não inflou</text>
+<rect class="i-compile" x="2972" y="3342" width="20" height="20" rx="3"/>
+<text class="bt" x="3012" y="3360" xml:space="preserve">gap obrigatório; gap: &#x27;horizon&#x27; ≥ h</text>
+<rect class="stgb desenho" x="3983" y="3338" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="4028" y="3361" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be flat" x="3012" y="3393" xml:space="preserve">↳ T4 T5  bicicletas sem gap: não inflou</text>
+<path class="i-runtime" d="M2982 3419 L2993 3440 L2971 3440 Z"/>
+<text class="bt" x="3012" y="3439" xml:space="preserve">folds disjuntos, purga e embargo conferidos</text>
+<rect class="stgb desenho" x="3983" y="3417" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="4028" y="3440" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<circle class="i-design" cx="2982" cy="3480" r="11"/>
+<text class="bt" x="3012" y="3488" xml:space="preserve">tabela com ordem no tempo usa split cronológico</text>
+<rect class="stgb F" x="4022" y="3466" width="50" height="32" rx="16"/>
+<text class="stg F" x="4047" y="3489" text-anchor="middle" xml:space="preserve">F3</text>
+<text class="be flat" x="3012" y="3521" xml:space="preserve">↳ T1  fraude: AP 0.777 honesto, 0.741 com split</text>
+<text class="be flat" x="3012" y="3551" xml:space="preserve">aleatório</text>
+<rect class="i-compile" x="4188" y="3184" width="20" height="20" rx="3"/>
+<text class="bt" x="4228" y="3202" xml:space="preserve">fit só aceita Train: nada aprende do Test</text>
+<rect class="stgb hoje" x="5212" y="3180" width="76" height="32" rx="16"/>
+<text class="stg hoje" x="5250" y="3203" text-anchor="middle" xml:space="preserve">HOJE</text>
+<text class="be up" x="4228" y="3235" xml:space="preserve">↳ S4  dígitos: acurácia 0.925 → 0.929 com escala em tudo</text>
+<rect class="i-compile" x="4188" y="3263" width="20" height="20" rx="3"/>
+<text class="bt" x="4228" y="3281" xml:space="preserve">coluna incompleta: &quot;&#x27;massG&#x27; still needs a missing policy&quot;</text>
+<rect class="stgb hoje" x="5212" y="3259" width="76" height="32" rx="16"/>
+<text class="stg hoje" x="5250" y="3282" text-anchor="middle" xml:space="preserve">HOJE</text>
+<circle class="i-design" cx="4198" cy="3322" r="11"/>
+<text class="bt" x="4228" y="3330" xml:space="preserve">reamostragem é passo do fit, refeita por fold</text>
+<rect class="stgb desenho" x="5199" y="3308" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="5244" y="3331" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="4228" y="3363" xml:space="preserve">↳ S6  fraude: AP 0.741 → 1.000 com oversampling antes do</text>
+<text class="be up" x="4228" y="3393" xml:space="preserve">CV</text>
+<circle class="i-design" cx="4198" cy="3431" r="11"/>
+<text class="bt" x="4228" y="3439" xml:space="preserve">seleção de features é passo do fit, refeita por fold</text>
+<rect class="stgb desenho" x="5199" y="3417" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="5244" y="3440" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="4228" y="3472" xml:space="preserve">↳ S5  leucemia, rótulos embaralhados: 0.509 → 0.837</text>
+<circle class="i-design" cx="4198" cy="3510" r="11"/>
+<text class="bt" x="4228" y="3518" xml:space="preserve">lag e rolling terminam em t − 1</text>
+<rect class="stgb desenho" x="5199" y="3496" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="5244" y="3519" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="4228" y="3551" xml:space="preserve">↳ T7  bicicletas: RMSLE 0.267 → 0.132 sem shift</text>
+<rect class="i-compile" x="4188" y="3579" width="20" height="20" rx="3"/>
+<text class="bt" x="4228" y="3597" xml:space="preserve">passo que lê o alvo devolve OutOfFold</text>
+<rect class="stgb F" x="5238" y="3575" width="50" height="32" rx="16"/>
+<text class="stg F" x="5263" y="3598" text-anchor="middle" xml:space="preserve">F2</text>
+<text class="be up" x="4228" y="3630" xml:space="preserve">↳ S4  readmissão: PR AUC 0.238 → 0.852</text>
+<circle class="i-design" cx="4198" cy="3668" r="11"/>
+<text class="bt" x="4228" y="3676" xml:space="preserve">feature entre entidades só olha para trás</text>
+<rect class="stgb F" x="5238" y="3654" width="50" height="32" rx="16"/>
+<text class="stg F" x="5263" y="3677" text-anchor="middle" xml:space="preserve">F2</text>
+<text class="be up" x="4228" y="3709" xml:space="preserve">↳ T7  ar: MAE 49.2 → 15.1 com a média do instante t + h</text>
+<rect class="i-compile" x="4188" y="3737" width="20" height="20" rx="3"/>
+<text class="bt" x="4228" y="3755" xml:space="preserve">lag menor que o horizonte não compila</text>
+<rect class="stgb F" x="5238" y="3733" width="50" height="32" rx="16"/>
+<text class="stg F" x="5263" y="3756" text-anchor="middle" xml:space="preserve">F3</text>
+<text class="be up" x="4228" y="3788" xml:space="preserve">↳ T7  bicicletas: RMSLE 0.490 → 0.271 com lag 1 em h =</text>
+<text class="be up" x="4228" y="3818" xml:space="preserve">24</text>
+<rect class="i-compile" x="5404" y="3184" width="20" height="20" rx="3"/>
+<text class="bt" x="5444" y="3202" xml:space="preserve">fix before fit: &quot;&#x27;massG&#x27; is not scaled: add .scale&quot;</text>
+<rect class="stgb desenho" x="6415" y="3180" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="6460" y="3203" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be flat" x="5444" y="3235" xml:space="preserve">↳ clientes: ARI 0.52 → −0.03 com k-means sem escala</text>
+<rect class="i-compile" x="5404" y="3263" width="20" height="20" rx="3"/>
+<text class="bt" x="5444" y="3281" xml:space="preserve">needs(&#x27;validation&#x27;) não aceita Test</text>
+<rect class="stgb desenho" x="6415" y="3259" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="6460" y="3282" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="5444" y="3314" xml:space="preserve">↳ S3  dígitos: 0.931 → 0.938 com early stopping no teste</text>
+<rect class="i-compile" x="5404" y="3342" width="20" height="20" rx="3"/>
+<text class="bt" x="5444" y="3360" xml:space="preserve">meta do stacking só aceita OutOfFold</text>
+<rect class="stgb desenho" x="6415" y="3338" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="6460" y="3361" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="5444" y="3393" xml:space="preserve">↳ Ames: RMSLE 0.114 → 0.048 com meta in-sample</text>
+<rect class="i-compile" x="5404" y="3421" width="20" height="20" rx="3"/>
+<text class="bt" x="5444" y="3439" xml:space="preserve">NB multinomial exige sign &#x27;non-negative&#x27;</text>
+<rect class="stgb F" x="6454" y="3417" width="50" height="32" rx="16"/>
+<text class="stg F" x="6479" y="3440" text-anchor="middle" xml:space="preserve">F1</text>
+<text class="be flat" x="5444" y="3472" xml:space="preserve">↳ spam: F1 0.881 → 0.854 com escala antes do NB</text>
+<path class="i-decision" d="M5414 3497 L5425 3510 L5414 3523 L5403 3510 Z"/>
+<text class="bt" x="5444" y="3518" xml:space="preserve">seed obrigatória; ml.seeds(n) relata média e desvio</text>
+<rect class="stgb F" x="6454" y="3496" width="50" height="32" rx="16"/>
+<text class="stg F" x="6479" y="3519" text-anchor="middle" xml:space="preserve">F5</text>
+<text class="be up" x="5444" y="3551" xml:space="preserve">↳ E1  leucemia: 0.947 → 0.960 com a melhor de 30</text>
+<text class="be up" x="5444" y="3581" xml:space="preserve">sementes</text>
+<rect class="i-compile" x="6620" y="3184" width="20" height="20" rx="3"/>
+<text class="bt" x="6660" y="3202" xml:space="preserve">evaluate recusa Train; search só enxerga Train</text>
+<rect class="stgb desenho" x="7631" y="3180" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="7676" y="3203" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="6660" y="3235" xml:space="preserve">↳ S3  spam: F1 0.918 → 0.937 com busca no teste</text>
+<rect class="i-compile" x="6620" y="3263" width="20" height="20" rx="3"/>
+<text class="bt" x="6660" y="3281" xml:space="preserve">o melhor da busca é Score&lt;&#x27;selection&#x27;&gt;</text>
+<rect class="stgb desenho" x="7631" y="3259" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="7676" y="3282" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="6660" y="3314" xml:space="preserve">↳ S3  leucemia: 0.955 → 0.972 com best_score_</text>
+<rect class="i-compile" x="6620" y="3342" width="20" height="20" rx="3"/>
+<text class="bt" x="6660" y="3360" xml:space="preserve">métrica incompatível com a tarefa</text>
+<rect class="stgb desenho" x="7631" y="3338" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="7676" y="3361" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<path class="i-decision" d="M6630 3388 L6641 3401 L6630 3414 L6619 3401 Z"/>
+<text class="bt" x="6660" y="3409" xml:space="preserve">f1 e precision exigem average</text>
+<rect class="stgb desenho" x="7631" y="3387" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="7676" y="3410" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<rect class="i-compile" x="6620" y="3440" width="20" height="20" rx="3"/>
+<text class="bt" x="6660" y="3458" xml:space="preserve">limiar escolhido só na Validation</text>
+<rect class="stgb F" x="7670" y="3436" width="50" height="32" rx="16"/>
+<text class="stg F" x="7695" y="3459" text-anchor="middle" xml:space="preserve">F4</text>
+<text class="be up" x="6660" y="3491" xml:space="preserve">↳ S3  fraude: economia 0.568 → 0.627 com limiar no teste</text>
+<path class="i-nada" d="M6621 3520 L6639 3538 M6639 3520 L6621 3538"/>
+<text class="bt" x="6660" y="3537" xml:space="preserve">Validation filtrada à mão mantém a marca</text>
+<rect class="stgb nada" x="7579" y="3515" width="141" height="32" rx="16"/>
+<text class="stg nada" x="7650" y="3538" text-anchor="middle" xml:space="preserve">SEM PLANO</text>
+<text class="be up" x="6660" y="3570" xml:space="preserve">↳ fraude: AP 0.747 → 0.983 com validação 50/50</text>
+<path class="i-nada" d="M6621 3599 L6639 3617 M6639 3599 L6621 3617"/>
+<text class="bt" x="6660" y="3616" xml:space="preserve">acurácia com 0.17% de positivos não avisa</text>
+<rect class="stgb nada" x="7579" y="3594" width="141" height="32" rx="16"/>
+<text class="stg nada" x="7650" y="3617" text-anchor="middle" xml:space="preserve">SEM PLANO</text>
+<text class="be flat" x="6660" y="3649" xml:space="preserve">↳ fraude: tudo negativo 0.9987 contra 0.9962 do modelo</text>
+<rect class="i-compile" x="7836" y="3184" width="20" height="20" rx="3"/>
+<text class="bt" x="7876" y="3202" xml:space="preserve">.rank() só com todas as colunas escaladas</text>
+<rect class="stgb desenho" x="8847" y="3180" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="8892" y="3203" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<rect class="i-compile" x="7836" y="3233" width="20" height="20" rx="3"/>
+<text class="bt" x="7876" y="3251" xml:space="preserve">importância por permutação recusa Train</text>
+<rect class="stgb desenho" x="8847" y="3229" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="8892" y="3252" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<rect class="i-compile" x="7836" y="3282" width="20" height="20" rx="3"/>
+<text class="bt" x="7876" y="3300" xml:space="preserve">fairness só em Validation ou Test</text>
+<rect class="stgb desenho" x="8847" y="3278" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="8892" y="3301" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="7876" y="3333" xml:space="preserve">↳ Adult: EO 0.50 no teste, 0.25 no treino</text>
+<rect class="i-compile" x="7836" y="3361" width="20" height="20" rx="3"/>
+<text class="bt" x="7876" y="3379" xml:space="preserve">limiares por grupo só na Validation</text>
+<rect class="stgb desenho" x="8847" y="3357" width="89" height="32" rx="16"/>
+<text class="stg desenho" x="8892" y="3380" text-anchor="middle" xml:space="preserve">M4–M6</text>
+<text class="be up" x="7876" y="3412" xml:space="preserve">↳ S3  Adult: DPD 0.251 → 0.013 com limiares no teste</text>
+<path class="i-runtime" d="M7846 3438 L7857 3459 L7835 3459 Z"/>
+<text class="bt" x="7876" y="3458" xml:space="preserve">auditoria de proxies no fit</text>
+<rect class="stgb F" x="8886" y="3436" width="50" height="32" rx="16"/>
+<text class="stg F" x="8911" y="3459" text-anchor="middle" xml:space="preserve">F5</text>
+<text class="be flat" x="7876" y="3491" xml:space="preserve">↳ Adult: tirar sex muda DPD de 0.177 para 0.171</text>
+<line class="bandln" x1="110" y1="3874" x2="8966" y2="3874"/>
+<text class="bl" x="110" y="3918" xml:space="preserve">PONTO DE PLUG-IN</text>
+<text class="bls" x="110" y="3954" xml:space="preserve">o que um autor escreve para</text>
+<text class="bls" x="110" y="3984" xml:space="preserve">entrar aqui e o que recebe</text>
+<text class="bls" x="110" y="4014" xml:space="preserve">pronto</text>
+<text class="pn" x="540" y="3918" xml:space="preserve">ml.defineField</text>
+<text class="pw" x="540" y="3950" xml:space="preserve">escreve: kind, level, check</text>
+<text class="pg" x="540" y="3980" xml:space="preserve">ganha: o campo novo entra no registro, nos papéis e nos passos do seu</text>
+<text class="pg" x="540" y="4012" xml:space="preserve">nível</text>
+<text class="pn" x="1756" y="3918" xml:space="preserve">defineField.check</text>
+<text class="pw" x="1756" y="3950" xml:space="preserve">escreve: check(value)</text>
+<text class="pg" x="1756" y="3980" xml:space="preserve">ganha: a validação do campo novo roda aqui, uma única vez</text>
+<text class="pn" x="2972" y="3918" xml:space="preserve">ml.resampler</text>
+<text class="pw" x="2972" y="3950" xml:space="preserve">escreve: accepts, needs, cut(ctx, options)</text>
+<text class="pg" x="2972" y="3980" xml:space="preserve">ganha: opções tipadas, folds verificados, uso em search</text>
+<text class="pn" x="4188" y="3918" xml:space="preserve">ml.defineStep</text>
+<text class="pw" x="4188" y="3950" xml:space="preserve">escreve: need, params, set, fit, transform</text>
+<text class="pg" x="4188" y="3980" xml:space="preserve">ganha: colunas válidas, só Train, refeito por fold, parâmetros na busca</text>
+<text class="pn" x="5404" y="3918" xml:space="preserve">defineEstimator</text>
+<text class="pw" x="5404" y="3950" xml:space="preserve">escreve: tasks, requires, produces, hyper, needs, learns, fit,</text>
+<text class="pw" x="5404" y="3980" xml:space="preserve">predict</text>
+<text class="pg" x="5404" y="4010" xml:space="preserve">ganha: tudo o que aparece no Ato III, sem código de cola</text>
+<text class="pn" x="5404" y="4056" xml:space="preserve">ml.defineClusterer</text>
+<text class="pw" x="5404" y="4088" xml:space="preserve">escreve: requires, produces, fit</text>
+<text class="pg" x="5404" y="4118" xml:space="preserve">ganha: assign e centroids só existem se declarados</text>
+<text class="pn" x="6620" y="3918" xml:space="preserve">ml.metric</text>
+<text class="pw" x="6620" y="3950" xml:space="preserve">escreve: tasks, needs, direction, compute</text>
+<text class="pg" x="6620" y="3980" xml:space="preserve">ganha: vira chave no Report e critério de search</text>
+<text class="pn" x="6620" y="4026" xml:space="preserve">ml.strategy</text>
+<text class="pw" x="6620" y="4058" xml:space="preserve">escreve: propose(space, history, rng)</text>
+<text class="pg" x="6620" y="4088" xml:space="preserve">ganha: todo estimador já é buscável com ela</text>
+<text class="pn" x="7836" y="3918" xml:space="preserve">ml.defineExplainer</text>
+<text class="pw" x="7836" y="3950" xml:space="preserve">escreve: scope, needs, explain</text>
+<text class="pg" x="7836" y="3980" xml:space="preserve">ganha: resultado por campo original, só com o que o modelo aprende</text>
+<text class="pn" x="7836" y="4026" xml:space="preserve">defineFairnessMetric</text>
+<text class="pw" x="7836" y="4058" xml:space="preserve">escreve: perGroup, aggregate</text>
+<text class="pg" x="7836" y="4088" xml:space="preserve">ganha: grupos tipados, só fora do Train</text>
+<line class="bandln" x1="110" y1="4174" x2="8966" y2="4174"/>
+<text class="bl" x="110" y="4218" xml:space="preserve">LACUNAS</text>
+<text class="bls" x="110" y="4254" xml:space="preserve">o que os casos precisaram e o</text>
+<text class="bls" x="110" y="4284" xml:space="preserve">desenho ainda não tem, com a</text>
+<text class="bls" x="110" y="4314" xml:space="preserve">fase que resolve</text>
+<text class="stg F" x="540" y="4218" xml:space="preserve">F1</text>
+<text class="gp" x="592" y="4218" xml:space="preserve">Milhares de colunas homogêneas (genes, pixels)</text>
+<text class="gc" x="1640" y="4218" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="540" y="4258" xml:space="preserve">F2</text>
+<text class="gp" x="592" y="4258" xml:space="preserve">Campos conhecidos só depois do desfecho</text>
+<text class="gc" x="1640" y="4258" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="540" y="4298" xml:space="preserve">F2</text>
+<text class="gp" x="592" y="4298" xml:space="preserve">Features derivadas de outras colunas</text>
+<text class="gc" x="1640" y="4298" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="540" y="4338" xml:space="preserve">F2</text>
+<text class="gp" x="592" y="4338" xml:space="preserve">Ausente que significa &#x27;não tem&#x27;</text>
+<text class="gc" x="1640" y="4338" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="540" y="4378" xml:space="preserve">F3</text>
+<text class="gp" x="592" y="4378" xml:space="preserve">Entidade como chave e como feature</text>
+<text class="gc" x="1640" y="4378" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="540" y="4418" xml:space="preserve">F3</text>
+<text class="gp" x="592" y="4418" xml:space="preserve">Covariável conhecida antes ou só depois</text>
+<text class="gc" x="1640" y="4418" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="540" y="4458" xml:space="preserve">F5</text>
+<text class="gp" x="592" y="4458" xml:space="preserve">Atributo sensível numérico</text>
+<text class="gc" x="1640" y="4458" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="1756" y="4218" xml:space="preserve">F2</text>
+<text class="gp" x="1808" y="4218" xml:space="preserve">Filtro de população sem registro</text>
+<text class="gc" x="2856" y="4218" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="1756" y="4258" xml:space="preserve">F2</text>
+<text class="gp" x="1808" y="4258" xml:space="preserve">Categorias abertas, raras e novas</text>
+<text class="gc" x="2856" y="4258" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="1756" y="4298" xml:space="preserve">F3</text>
+<text class="gp" x="1808" y="4298" xml:space="preserve">Frequência com buracos</text>
+<text class="gc" x="2856" y="4298" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="1756" y="4338" xml:space="preserve">F3</text>
+<text class="gp" x="1808" y="4338" xml:space="preserve">Dado tabular com ordem no tempo</text>
+<text class="gc" x="2856" y="4338" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="1756" y="4378" xml:space="preserve">F6</text>
+<text class="gp" x="1808" y="4378" xml:space="preserve">De linhas longas para transações</text>
+<text class="gc" x="2856" y="4378" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="1756" y="4418" xml:space="preserve">F6</text>
+<text class="gp" x="1808" y="4418" xml:space="preserve">Universo aberto de itens</text>
+<text class="gc" x="2856" y="4418" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="2972" y="4218" xml:space="preserve">F3</text>
+<text class="gp" x="3024" y="4218" xml:space="preserve">Agrupar e estratificar ao mesmo tempo</text>
+<text class="gc" x="4072" y="4218" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="2972" y="4258" xml:space="preserve">F3</text>
+<text class="gp" x="3024" y="4258" xml:space="preserve">Ordem por entidade sem timestamp</text>
+<text class="gc" x="4072" y="4258" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="4188" y="4218" xml:space="preserve">F2</text>
+<text class="gp" x="4240" y="4218" xml:space="preserve">Passos que leem o alvo (target encoding)</text>
+<text class="gc" x="5288" y="4218" text-anchor="end" xml:space="preserve">4 casos</text>
+<text class="stg F" x="4188" y="4258" xml:space="preserve">F1</text>
+<text class="gp" x="4240" y="4258" xml:space="preserve">Colunas que só existem depois do fit</text>
+<text class="gc" x="5288" y="4258" text-anchor="end" xml:space="preserve">3 casos</text>
+<text class="stg F" x="4188" y="4298" xml:space="preserve">F1</text>
+<text class="gp" x="4240" y="4298" xml:space="preserve">Matriz esparsa</text>
+<text class="gc" x="5288" y="4298" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="4188" y="4338" xml:space="preserve">F2</text>
+<text class="gp" x="4240" y="4338" xml:space="preserve">Features calculadas entre linhas</text>
+<text class="gc" x="5288" y="4338" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="4188" y="4378" xml:space="preserve">F2</text>
+<text class="gp" x="4240" y="4378" xml:space="preserve">Passos que adicionam ou removem linhas</text>
+<text class="gc" x="5288" y="4378" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="4188" y="4418" xml:space="preserve">F2</text>
+<text class="gp" x="4240" y="4418" xml:space="preserve">Transformações de assimetria nas features</text>
+<text class="gc" x="5288" y="4418" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="4188" y="4458" xml:space="preserve">F1</text>
+<text class="gp" x="4240" y="4458" xml:space="preserve">&#x27;scaled&#x27; mistura escala por coluna e por linha</text>
+<text class="gc" x="5288" y="4458" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="4188" y="4498" xml:space="preserve">F2</text>
+<text class="gp" x="4240" y="4498" xml:space="preserve">Inversa da transformação do alvo</text>
+<text class="gc" x="5288" y="4498" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="4188" y="4538" xml:space="preserve">F3</text>
+<text class="gp" x="4240" y="4538" xml:space="preserve">Preencher olhando para a frente</text>
+<text class="gc" x="5288" y="4538" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="4188" y="4578" xml:space="preserve">F3</text>
+<text class="gp" x="4240" y="4578" xml:space="preserve">Lags legais dependem do horizonte</text>
+<text class="gc" x="5288" y="4578" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="4188" y="4618" xml:space="preserve">F3</text>
+<text class="gp" x="4240" y="4618" xml:space="preserve">Agregação de frequência no tempo</text>
+<text class="gc" x="5288" y="4618" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="4188" y="4658" xml:space="preserve">F4</text>
+<text class="gp" x="4240" y="4658" xml:space="preserve">Campo de texto e vocabulário</text>
+<text class="gc" x="5288" y="4658" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="5404" y="4218" xml:space="preserve">F5</text>
+<text class="gp" x="5456" y="4218" xml:space="preserve">Hiperparâmetros estruturais</text>
+<text class="gc" x="6504" y="4218" text-anchor="end" xml:space="preserve">3 casos</text>
+<text class="stg F" x="5404" y="4258" xml:space="preserve">F2</text>
+<text class="gp" x="5456" y="4258" xml:space="preserve">Categoria nunca vista chega no predict</text>
+<text class="gc" x="6504" y="4258" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="5404" y="4298" xml:space="preserve">F5</text>
+<text class="gp" x="5456" y="4298" xml:space="preserve">Peso amostral não é feature</text>
+<text class="gc" x="6504" y="4298" text-anchor="end" xml:space="preserve">2 casos</text>
+<text class="stg F" x="5404" y="4338" xml:space="preserve">F5</text>
+<text class="gp" x="5456" y="4338" xml:space="preserve">Early stopping</text>
+<text class="gc" x="6504" y="4338" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="5404" y="4378" xml:space="preserve">F5</text>
+<text class="gp" x="5456" y="4378" xml:space="preserve">Não determinismo e sementes</text>
+<text class="gc" x="6504" y="4378" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="5404" y="4418" xml:space="preserve">F5</text>
+<text class="gp" x="5456" y="4418" xml:space="preserve">Divergência do treino</text>
+<text class="gc" x="6504" y="4418" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="5404" y="4458" xml:space="preserve">F6</text>
+<text class="gp" x="5456" y="4458" xml:space="preserve">Distância com tipos mistos</text>
+<text class="gc" x="6504" y="4458" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="5404" y="4498" xml:space="preserve">F6</text>
+<text class="gp" x="5456" y="4498" xml:space="preserve">Atribuição suave e ruído</text>
+<text class="gc" x="6504" y="4498" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="6620" y="4218" xml:space="preserve">F4</text>
+<text class="gp" x="6672" y="4218" xml:space="preserve">Calibração, pesos de classe, scores</text>
+<text class="gc" x="7720" y="4218" text-anchor="end" xml:space="preserve">4 casos</text>
+<text class="stg F" x="6620" y="4258" xml:space="preserve">F4</text>
+<text class="gp" x="6672" y="4258" xml:space="preserve">Métrica indefinida no fold, baseline ingênuo</text>
+<text class="gc" x="7720" y="4258" text-anchor="end" xml:space="preserve">3 casos</text>
+<text class="stg F" x="6620" y="4298" xml:space="preserve">F4</text>
+<text class="gp" x="6672" y="4298" xml:space="preserve">Métrica com custo por linha</text>
+<text class="gc" x="7720" y="4298" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="6620" y="4338" xml:space="preserve">F4</text>
+<text class="gp" x="6672" y="4338" xml:space="preserve">Estabilidade do que foi aprendido</text>
+<text class="gc" x="7720" y="4338" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="6620" y="4378" xml:space="preserve">F4</text>
+<text class="gp" x="6672" y="4378" xml:space="preserve">Teste de permutação</text>
+<text class="gc" x="7720" y="4378" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="6620" y="4418" xml:space="preserve">F6</text>
+<text class="gp" x="6672" y="4418" xml:space="preserve">Estabilidade de agrupamentos</text>
+<text class="gc" x="7720" y="4418" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="6620" y="4458" xml:space="preserve">F6</text>
+<text class="gp" x="6672" y="4458" xml:space="preserve">Validar regras fora da amostra</text>
+<text class="gc" x="7720" y="4458" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="7836" y="4218" xml:space="preserve">F5</text>
+<text class="gp" x="7888" y="4218" xml:space="preserve">Grupos interseccionais</text>
+<text class="gc" x="8936" y="4218" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="7836" y="4258" xml:space="preserve">F5</text>
+<text class="gp" x="7888" y="4258" xml:space="preserve">Auditoria de proxies</text>
+<text class="gc" x="8936" y="4258" text-anchor="end" xml:space="preserve">1 caso</text>
+<text class="stg F" x="7836" y="4298" xml:space="preserve">F5</text>
+<text class="gp" x="7888" y="4298" xml:space="preserve">Viés como critério de seleção</text>
+<text class="gc" x="8936" y="4298" text-anchor="end" xml:space="preserve">1 caso</text>
+<line class="bandln" x1="110" y1="4714" x2="8966" y2="4714"/>
+<text class="act" x="110" y="4874" xml:space="preserve">ATO II</text>
+<text class="acth" x="110" y="4960" xml:space="preserve">O mesmo caminho, com tempo ou sem alvo</text>
+<text class="actd" x="110" y="5020" xml:space="preserve">Um papel declarado no schema muda a origem e a tarefa; cada estação ajusta o que oferece e o que exige, sem um segundo conjunto de APIs.</text>
+<text class="vt" x="110" y="5124" xml:space="preserve">Com .time() no schema</text>
+<text class="vts" x="110" y="5164" xml:space="preserve">a origem vira series ou</text>
+<text class="vts" x="110" y="5196" xml:space="preserve">panel, e ela redesenha o</text>
+<text class="vts" x="110" y="5228" xml:space="preserve">caminho inteiro</text>
+<text class="vc m" x="540" y="5124" xml:space="preserve">.time(&#x27;date&#x27;, { every })</text>
+<text class="vc m" x="540" y="5164" xml:space="preserve">.target(k, { horizon })</text>
+<text class="vc" x="540" y="5204" xml:space="preserve">frequência é decisão, sem padrão</text>
+<text class="vc m" x="1756" y="5124" xml:space="preserve">ml.series ordena e numera</text>
+<text class="vc" x="1756" y="5164" xml:space="preserve">tempo repetido por grupo: erro</text>
+<text class="vc" x="1756" y="5204" xml:space="preserve">frequência declarada × datas reais</text>
+<text class="vc m" x="2972" y="5124" xml:space="preserve">split({ testFrom, gap: &#x27;horizon&#x27; })</text>
+<text class="vc m" x="2972" y="5164" xml:space="preserve">walkForward · purgedKFold</text>
+<text class="vc" x="2972" y="5204" xml:space="preserve">kFold e split aleatório não existem</text>
+<text class="vc m" x="4188" y="5124" xml:space="preserve">lag · rolling · diff · calendar</text>
+<text class="vc" x="4188" y="5164" xml:space="preserve">colunas de lag nascem incompletas</text>
+<text class="vc" x="4188" y="5204" xml:space="preserve">painel: by é obrigatório</text>
+<text class="vc" x="5404" y="5124" xml:space="preserve">fit descarta as h linhas sem rótulo</text>
+<text class="vc" x="5404" y="5164" xml:space="preserve">vários horizontes: &#x27;direct&#x27; | &#x27;recursive&#x27;</text>
+<text class="vc" x="6620" y="5124" xml:space="preserve">backtest com datas por fold</text>
+<text class="vc" x="6620" y="5164" xml:space="preserve">mase; mape recusada com zeros</text>
+<text class="vc" x="6620" y="5204" xml:space="preserve">Score&lt;&#x27;selection&#x27;&gt; por fold</text>
+<text class="vc m" x="7836" y="5124" xml:space="preserve">predict(history): exige o lookback</text>
+<text class="vc" x="7836" y="5164" xml:space="preserve">o alvo volta à escala original</text>
+<line class="track" x1="1674" y1="5114" x2="1720" y2="5114" marker-end="url(#at)"/>
+<line class="track" x1="2890" y1="5114" x2="2936" y2="5114" marker-end="url(#at)"/>
+<line class="track" x1="4106" y1="5114" x2="4152" y2="5114" marker-end="url(#at)"/>
+<line class="track" x1="5322" y1="5114" x2="5368" y2="5114" marker-end="url(#at)"/>
+<line class="track" x1="6538" y1="5114" x2="6584" y2="5114" marker-end="url(#at)"/>
+<line class="track" x1="7754" y1="5114" x2="7800" y2="5114" marker-end="url(#at)"/>
+<text class="vt" x="110" y="5360" xml:space="preserve">Sem .target() no schema</text>
+<text class="vts" x="110" y="5400" xml:space="preserve">a tarefa é &#x27;descriptive&#x27;:</text>
+<text class="vts" x="110" y="5432" xml:space="preserve">outro estimador, outras</text>
+<text class="vts" x="110" y="5464" xml:space="preserve">métricas, a mesma</text>
+<text class="vts" x="110" y="5496" xml:space="preserve">disciplina</text>
+<text class="vc" x="540" y="5360" xml:space="preserve">tarefa &#x27;descriptive&#x27;</text>
+<text class="vc m" x="540" y="5400" xml:space="preserve">.reference(k) para índices externos</text>
+<text class="vc m" x="540" y="5440" xml:space="preserve">ml.itemSet para cestas</text>
+<text class="vc m" x="1756" y="5360" xml:space="preserve">ml.transactions(schema, baskets)</text>
+<text class="vc" style="fill:var(--gap)" x="1756" y="5400" xml:space="preserve">a unidade da transação é decisão</text>
+<text class="vc" x="2972" y="5360" xml:space="preserve">holdout para medir regras</text>
+<text class="vc" x="2972" y="5400" xml:space="preserve">reference nunca é feature</text>
+<text class="vc" x="4188" y="5360" xml:space="preserve">kmeans e pca exigem scaled</text>
+<text class="vc" x="4188" y="5400" xml:space="preserve">cluster como feature: passo do fit</text>
+<text class="vc m" x="5404" y="5360" xml:space="preserve">kmeans · agglomerative · apriori · fpGrowth</text>
+<text class="vc" x="5404" y="5400" xml:space="preserve">assign só se produces declara</text>
+<text class="vc" x="5404" y="5440" xml:space="preserve">Rule&lt;I&gt; com itens literais</text>
+<text class="vc m" x="6620" y="5360" xml:space="preserve">silhouette · sse · daviesBouldin: Score</text>
+<text class="vc m" x="6620" y="5400" xml:space="preserve">rand · adjustedRand: Ref</text>
+<text class="vc m" x="6620" y="5440" xml:space="preserve">elbow · gap: KChoice, não Score</text>
+<text class="vc m" x="7836" y="5360" xml:space="preserve">centroids.describe() na unidade original</text>
+<text class="vc" style="fill:var(--gap)" x="7836" y="5400" xml:space="preserve">lift contra cestas embaralhadas</text>
+<line class="track" x1="1674" y1="5350" x2="1720" y2="5350" marker-end="url(#at)"/>
+<line class="track" x1="2890" y1="5350" x2="2936" y2="5350" marker-end="url(#at)"/>
+<line class="track" x1="4106" y1="5350" x2="4152" y2="5350" marker-end="url(#at)"/>
+<line class="track" x1="5322" y1="5350" x2="5368" y2="5350" marker-end="url(#at)"/>
+<line class="track" x1="6538" y1="5350" x2="6584" y2="5350" marker-end="url(#at)"/>
+<line class="track" x1="7754" y1="5350" x2="7800" y2="5350" marker-end="url(#at)"/>
+<text class="act" x="110" y="5688" xml:space="preserve">ATO III</text>
+<text class="acth" x="110" y="5774" xml:space="preserve">Amanhã surge um algoritmo novo</text>
+<text class="actd" x="110" y="5834" xml:space="preserve">O autor escreve uma declaração e a matemática. Cada linha da declaração alimenta uma estação: é dali que vêm as inferências e as mensagens de erro, sem código de cola.</text>
+<text class="code26 k" x="140" y="5958" xml:space="preserve">export const myModel = defineEstimator({</text>
+<text class="code26" x="140" y="6034" xml:space="preserve">  tasks: [&#x27;binary&#x27;, &#x27;multiclass&#x27;],</text>
+<path class="feed" d="M714 6025 L5364 6025" marker-end="url(#ap)"/>
+<circle class="i-design" cx="714" cy="6025" r="6"/>
+<text class="sn" x="5384" y="6033" xml:space="preserve">5</text>
+<text class="tx" x="5426" y="6034" xml:space="preserve">fit aceita a matriz se a tarefa inferida do alvo está aqui</text>
+<text class="code26" x="140" y="6110" xml:space="preserve">  requires: [&#x27;complete&#x27;, &#x27;scaled&#x27;],</text>
+<path class="feed" d="M730 6101 L4148 6101" marker-end="url(#ap)"/>
+<circle class="i-design" cx="730" cy="6101" r="6"/>
+<text class="sn" x="4168" y="6109" xml:space="preserve">4</text>
+<text class="tx" x="4210" y="6110" xml:space="preserve">conferido contra os fatos; o erro nomeia a coluna e o passo que falta</text>
+<text class="code26" x="140" y="6186" xml:space="preserve">  produces: { binary: [&#x27;label&#x27;, &#x27;proba&#x27;] },</text>
+<path class="feed" d="M861 6177 L6580 6177" marker-end="url(#ap)"/>
+<circle class="i-design" cx="861" cy="6177" r="6"/>
+<text class="sn" x="6600" y="6185" xml:space="preserve">6</text>
+<text class="tx" x="6642" y="6186" xml:space="preserve">predictProba existe; rocAuc e logLoss passam a valer</text>
+<text class="code26" x="140" y="6262" xml:space="preserve">  hyper: { k: int({ min: 1 }), ... },</text>
+<path class="feed" d="M763 6253 L5364 6253" marker-end="url(#ap)"/>
+<circle class="i-design" cx="763" cy="6253" r="6"/>
+<text class="sn" x="5384" y="6261" xml:space="preserve">5</text>
+<text class="tx" x="5426" y="6262" xml:space="preserve">opções obrigatórias do construtor</text>
+<path class="feed" d="M5872 6253 L6580 6253" marker-end="url(#ap)"/>
+<circle class="i-design" cx="5872" cy="6253" r="6"/>
+<text class="sn" x="6600" y="6261" xml:space="preserve">6</text>
+<text class="tx" x="6642" y="6262" xml:space="preserve">espaço de ml.search, chaves conferidas</text>
+<text class="code26" x="140" y="6338" xml:space="preserve">  needs: [&#x27;validation&#x27;, &#x27;seed&#x27;],</text>
+<path class="feed" d="M682 6329 L2932 6329" marker-end="url(#ap)"/>
+<circle class="i-design" cx="682" cy="6329" r="6"/>
+<text class="sn" x="2952" y="6337" xml:space="preserve">3</text>
+<text class="tx" x="2994" y="6338" xml:space="preserve">fit pede um bloco Validation; Test não é atribuível</text>
+<text class="code26" x="140" y="6414" xml:space="preserve">  learns: { coefficients: &#x27;per-column&#x27; },</text>
+<path class="feed" d="M828 6405 L7796 6405" marker-end="url(#ap)"/>
+<circle class="i-design" cx="828" cy="6405" r="6"/>
+<text class="sn" x="7816" y="6413" xml:space="preserve">7</text>
+<text class="tx" x="7858" y="6414" xml:space="preserve">explain(ml.coefficients) com chaves por campo</text>
+<text class="code26" x="140" y="6490" xml:space="preserve">  fit: (x: TrainX&lt;C&gt;, y, h, ctx) =&gt; ...,</text>
+<path class="feed" d="M812 6481 L4148 6481" marker-end="url(#ap)"/>
+<circle class="i-design" cx="812" cy="6481" r="6"/>
+<text class="sn" x="4168" y="6489" xml:space="preserve">4</text>
+<text class="tx" x="4210" y="6490" xml:space="preserve">nunca vê Validation nem Test; refeito por fold sem código extra</text>
+<text class="code26" x="140" y="6566" xml:space="preserve">  predict: (state, x: FeatureX&lt;C&gt;) =&gt; ...</text>
+<path class="feed" d="M828 6557 L5364 6557" marker-end="url(#ap)"/>
+<circle class="i-design" cx="828" cy="6557" r="6"/>
+<text class="sn" x="5384" y="6565" xml:space="preserve">5</text>
+<text class="tx" x="5426" y="6566" xml:space="preserve">nunca vê o alvo; devolve as categorias do schema</text>
+<text class="code26 k" x="140" y="6642" xml:space="preserve">})</text>
+<text class="actd" x="110" y="6778" xml:space="preserve">O mesmo vale para os outros contratos, um por estação: defineField · resampler · defineStep · defineClusterer · metric · strategy · defineExplainer · defineFairnessMetric (faixa PONTO DE PLUG-IN).</text>
+<text class="act" x="110" y="6958" xml:space="preserve">ATO IV</text>
+<text class="acth" x="110" y="7044" xml:space="preserve">Do hoje ao F6: quando cada barreira chega</text>
+<text class="actd" x="110" y="7104" xml:space="preserve">Cada um dos 65 erros plantados foi classificado pela etapa que o barra. As estações marcadas mostram onde cada etapa mexe no caminho do tipo.</text>
+<text class="rn" x="134" y="7222" xml:space="preserve">Hoje, no main</text>
+<text class="rd" x="134" y="7272" xml:space="preserve">a barreira já existe no código: tipo, erro em runtime ou decisão obrigatória</text>
+<text class="rn" x="1120" y="7222" xml:space="preserve">Desenho base · M4–M6</text>
+<text class="rd" x="1120" y="7272" xml:space="preserve">já está no mapa A–C; falta implementar estimador, avaliação e busca</text>
+<text class="rn" x="2107" y="7222" xml:space="preserve">F1 · Matriz</text>
+<text class="rd" x="2107" y="7272" xml:space="preserve">Blocos de colunas (literais ou aprendidas), campos vetoriais, layout denso ou</text>
+<text class="rd" x="2107" y="7303" xml:space="preserve">esparso e tipos de escala explícitos. É a fundação: sem ela texto, genes,</text>
+<text class="rd" x="2107" y="7334" xml:space="preserve">pixels e seleção de features não têm onde morar.</text>
+<text class="rn" x="3093" y="7222" xml:space="preserve">F2 · Dados e passos</text>
+<text class="rd" x="3093" y="7272" xml:space="preserve">Campos derivados, papéis pós-desfecho, categorias abertas e raras, ausência com</text>
+<text class="rd" x="3093" y="7303" xml:space="preserve">significado, filtro de população, duplicatas, passos que leem o alvo com</text>
+<text class="rd" x="3093" y="7334" xml:space="preserve">out-of-fold, passos que mudam linhas só no fit.</text>
+<text class="rn" x="4080" y="7222" xml:space="preserve">F3 · Tempo e entidade</text>
+<text class="rd" x="4080" y="7272" xml:space="preserve">Ordem sem timestamp, frequência com buracos, horizonte no tipo do pipeline,</text>
+<text class="rd" x="4080" y="7303" xml:space="preserve">covariáveis conhecidas antes, estatística por entidade e grupos estratificados.</text>
+<text class="rn" x="5066" y="7222" xml:space="preserve">F4 · Avaliação</text>
+<text class="rd" x="5066" y="7272" xml:space="preserve">Previsões out-of-fold, calibração, limiar, métricas com pré-condições e</text>
+<text class="rd" x="5066" y="7303" xml:space="preserve">agregação, custo por linha, estabilidade, teste de permutação e baselines</text>
+<text class="rd" x="5066" y="7334" xml:space="preserve">ingênuos.</text>
+<text class="rn" x="6053" y="7222" xml:space="preserve">F5 · Vieses e treino</text>
+<text class="rd" x="6053" y="7272" xml:space="preserve">Pesos amostrais, grupos interseccionais, auditoria de proxies, sensível no</text>
+<text class="rd" x="6053" y="7303" xml:space="preserve">predict, early stopping, sementes, divergência e hiperparâmetros estruturais.</text>
+<text class="rn" x="7039" y="7222" xml:space="preserve">F6 · Descritivo</text>
+<text class="rd" x="7039" y="7272" xml:space="preserve">Transações a partir de linhas longas, universo aberto de itens, validação de</text>
+<text class="rd" x="7039" y="7303" xml:space="preserve">regras fora da amostra, estabilidade de clusters, distância mista e atribuição</text>
+<text class="rd" x="7039" y="7334" xml:space="preserve">suave.</text>
+<text class="rn" x="8026" y="7222" xml:space="preserve">Sem plano ainda</text>
+<text class="rd" x="8026" y="7272" xml:space="preserve">o problema foi identificado e medido, mas nenhuma parte do desenho o barra</text>
+<text class="rbig" x="134" y="7475" xml:space="preserve">6</text>
+<text class="rl" x="208" y="7465" xml:space="preserve">erros barrados</text>
+<circle class="dot-on" cx="150" cy="7535" r="17"/>
+<text class="dotn" x="150" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-on" cx="194" cy="7535" r="17"/>
+<text class="dotn" x="194" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-on" cx="238" cy="7535" r="17"/>
+<text class="dotn" x="238" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-on" cx="282" cy="7535" r="17"/>
+<text class="dotn" x="282" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-off" cx="326" cy="7535" r="17"/>
+<text class="dotn off" x="326" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-off" cx="370" cy="7535" r="17"/>
+<text class="dotn off" x="370" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="414" cy="7535" r="17"/>
+<text class="dotn off" x="414" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="134" y="7595" xml:space="preserve">k-fold numa série: RMSLE 0.490 → 0.356</text>
+<line class="track" x1="1076" y1="7208" x2="1092" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="1120" y="7475" xml:space="preserve">24</text>
+<text class="rl" x="1252" y="7465" xml:space="preserve">erros barrados</text>
+<circle class="dot-on" cx="1136" cy="7535" r="17"/>
+<text class="dotn" x="1136" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-on" cx="1180" cy="7535" r="17"/>
+<text class="dotn" x="1180" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-on" cx="1224" cy="7535" r="17"/>
+<text class="dotn" x="1224" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-on" cx="1268" cy="7535" r="17"/>
+<text class="dotn" x="1268" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-on" cx="1312" cy="7535" r="17"/>
+<text class="dotn" x="1312" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-on" cx="1356" cy="7535" r="17"/>
+<text class="dotn" x="1356" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-on" cx="1400" cy="7535" r="17"/>
+<text class="dotn" x="1400" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="1120" y="7595" xml:space="preserve">oversampling antes do CV: AP 0.741 → 1.000</text>
+<line class="track" x1="2063" y1="7208" x2="2079" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="2107" y="7475" xml:space="preserve">2</text>
+<text class="rl" x="2181" y="7465" xml:space="preserve">erros barrados</text>
+<text class="rl" x="2181" y="7495" xml:space="preserve">4 lacunas</text>
+<circle class="dot-on" cx="2123" cy="7535" r="17"/>
+<text class="dotn" x="2123" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-off" cx="2167" cy="7535" r="17"/>
+<text class="dotn off" x="2167" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-off" cx="2211" cy="7535" r="17"/>
+<text class="dotn off" x="2211" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-on" cx="2255" cy="7535" r="17"/>
+<text class="dotn" x="2255" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-on" cx="2299" cy="7535" r="17"/>
+<text class="dotn" x="2299" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-off" cx="2343" cy="7535" r="17"/>
+<text class="dotn off" x="2343" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="2387" cy="7535" r="17"/>
+<text class="dotn off" x="2387" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be" x="2107" y="7595" xml:space="preserve">texto, genes e pixels ganham onde morar</text>
+<line class="track" x1="3049" y1="7208" x2="3065" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="3093" y="7475" xml:space="preserve">14</text>
+<text class="rl" x="3225" y="7465" xml:space="preserve">erros barrados</text>
+<text class="rl" x="3225" y="7495" xml:space="preserve">11 lacunas</text>
+<circle class="dot-on" cx="3109" cy="7535" r="17"/>
+<text class="dotn" x="3109" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-on" cx="3153" cy="7535" r="17"/>
+<text class="dotn" x="3153" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-off" cx="3197" cy="7535" r="17"/>
+<text class="dotn off" x="3197" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-on" cx="3241" cy="7535" r="17"/>
+<text class="dotn" x="3241" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-on" cx="3285" cy="7535" r="17"/>
+<text class="dotn" x="3285" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-off" cx="3329" cy="7535" r="17"/>
+<text class="dotn off" x="3329" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="3373" cy="7535" r="17"/>
+<text class="dotn off" x="3373" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="3093" y="7595" xml:space="preserve">target encoding em todas as linhas: PR AUC 0.238 → 0.852</text>
+<line class="track" x1="4036" y1="7208" x2="4052" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="4080" y="7475" xml:space="preserve">4</text>
+<text class="rl" x="4154" y="7465" xml:space="preserve">erros barrados</text>
+<text class="rl" x="4154" y="7495" xml:space="preserve">9 lacunas</text>
+<circle class="dot-on" cx="4096" cy="7535" r="17"/>
+<text class="dotn" x="4096" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-on" cx="4140" cy="7535" r="17"/>
+<text class="dotn" x="4140" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-on" cx="4184" cy="7535" r="17"/>
+<text class="dotn" x="4184" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-on" cx="4228" cy="7535" r="17"/>
+<text class="dotn" x="4228" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-off" cx="4272" cy="7535" r="17"/>
+<text class="dotn off" x="4272" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-off" cx="4316" cy="7535" r="17"/>
+<text class="dotn off" x="4316" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="4360" cy="7535" r="17"/>
+<text class="dotn off" x="4360" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="4080" y="7595" xml:space="preserve">lag menor que o horizonte: RMSLE 0.490 → 0.271</text>
+<line class="track" x1="5022" y1="7208" x2="5038" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="5066" y="7475" xml:space="preserve">1</text>
+<text class="rl" x="5140" y="7465" xml:space="preserve">erros barrados</text>
+<text class="rl" x="5140" y="7495" xml:space="preserve">6 lacunas</text>
+<circle class="dot-off" cx="5082" cy="7535" r="17"/>
+<text class="dotn off" x="5082" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-off" cx="5126" cy="7535" r="17"/>
+<text class="dotn off" x="5126" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-off" cx="5170" cy="7535" r="17"/>
+<text class="dotn off" x="5170" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-on" cx="5214" cy="7535" r="17"/>
+<text class="dotn" x="5214" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-off" cx="5258" cy="7535" r="17"/>
+<text class="dotn off" x="5258" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-on" cx="5302" cy="7535" r="17"/>
+<text class="dotn" x="5302" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="5346" cy="7535" r="17"/>
+<text class="dotn off" x="5346" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="5066" y="7595" xml:space="preserve">limiar escolhido no teste: economia 0.568 → 0.627</text>
+<line class="track" x1="6009" y1="7208" x2="6025" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="6053" y="7475" xml:space="preserve">5</text>
+<text class="rl" x="6127" y="7465" xml:space="preserve">erros barrados</text>
+<text class="rl" x="6127" y="7495" xml:space="preserve">9 lacunas</text>
+<circle class="dot-on" cx="6069" cy="7535" r="17"/>
+<text class="dotn" x="6069" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-off" cx="6113" cy="7535" r="17"/>
+<text class="dotn off" x="6113" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-off" cx="6157" cy="7535" r="17"/>
+<text class="dotn off" x="6157" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-off" cx="6201" cy="7535" r="17"/>
+<text class="dotn off" x="6201" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-on" cx="6245" cy="7535" r="17"/>
+<text class="dotn" x="6245" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-off" cx="6289" cy="7535" r="17"/>
+<text class="dotn off" x="6289" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-on" cx="6333" cy="7535" r="17"/>
+<text class="dotn" x="6333" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="6053" y="7595" xml:space="preserve">melhor de 30 sementes: 0.947 → 0.960</text>
+<line class="track" x1="6995" y1="7208" x2="7011" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="7039" y="7475" xml:space="preserve">6</text>
+<text class="rl" x="7113" y="7465" xml:space="preserve">erros barrados</text>
+<text class="rl" x="7113" y="7495" xml:space="preserve">6 lacunas</text>
+<circle class="dot-off" cx="7055" cy="7535" r="17"/>
+<text class="dotn off" x="7055" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-on" cx="7099" cy="7535" r="17"/>
+<text class="dotn" x="7099" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-off" cx="7143" cy="7535" r="17"/>
+<text class="dotn off" x="7143" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-off" cx="7187" cy="7535" r="17"/>
+<text class="dotn off" x="7187" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-on" cx="7231" cy="7535" r="17"/>
+<text class="dotn" x="7231" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-on" cx="7275" cy="7535" r="17"/>
+<text class="dotn" x="7275" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="7319" cy="7535" r="17"/>
+<text class="dotn off" x="7319" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="7039" y="7595" xml:space="preserve">lift medido onde a regra foi minerada: 76 → 115</text>
+<line class="track" x1="7982" y1="7208" x2="7998" y2="7208" marker-end="url(#at)"/>
+<text class="rbig" x="8026" y="7475" xml:space="preserve">3</text>
+<text class="rl" x="8100" y="7465" xml:space="preserve">erros barrados</text>
+<circle class="dot-off" cx="8042" cy="7535" r="17"/>
+<text class="dotn off" x="8042" y="7541" text-anchor="middle" xml:space="preserve">1</text>
+<circle class="dot-off" cx="8086" cy="7535" r="17"/>
+<text class="dotn off" x="8086" y="7541" text-anchor="middle" xml:space="preserve">2</text>
+<circle class="dot-off" cx="8130" cy="7535" r="17"/>
+<text class="dotn off" x="8130" y="7541" text-anchor="middle" xml:space="preserve">3</text>
+<circle class="dot-off" cx="8174" cy="7535" r="17"/>
+<text class="dotn off" x="8174" y="7541" text-anchor="middle" xml:space="preserve">4</text>
+<circle class="dot-off" cx="8218" cy="7535" r="17"/>
+<text class="dotn off" x="8218" y="7541" text-anchor="middle" xml:space="preserve">5</text>
+<circle class="dot-on" cx="8262" cy="7535" r="17"/>
+<text class="dotn" x="8262" y="7541" text-anchor="middle" xml:space="preserve">6</text>
+<circle class="dot-off" cx="8306" cy="7535" r="17"/>
+<text class="dotn off" x="8306" y="7541" text-anchor="middle" xml:space="preserve">7</text>
+<text class="be up" x="8026" y="7595" xml:space="preserve">metadados dentro do texto: macro-F1 0.751 → 0.886</text>
+<text class="act" x="110" y="7815" xml:space="preserve">O QUE O TIPO NUNCA VAI PEGAR</text>
+<text class="lim" x="110" y="7871" xml:space="preserve">▲ Custo do compilador: schemas com centenas de colunas e ensembles aninhados.</text>
+<text class="lim" x="110" y="7913" xml:space="preserve">▲ Hovers: o estado do pipeline aparece expandido na primeira linha do erro.</text>
+<text class="lim" x="110" y="7955" xml:space="preserve">▲ Lavagem: cópia campo a campo e `as` escapam dos tipos e do WeakMap.</text>
+<text class="lim" x="110" y="7997" xml:space="preserve">▲ &quot;Test usado uma vez&quot; vale por processo, não entre execuções.</text>
+<text class="lim" x="4538" y="7871" xml:space="preserve">▲ Nomes de coluna que dependem dos dados alargam para string.</text>
+<text class="lim" x="4538" y="7913" xml:space="preserve">▲ Um autor pode declarar requires errado: só um kit de conformidade pega.</text>
+<text class="lim" x="4538" y="7955" xml:space="preserve">▲ Fatos estatísticos (proxies, convergência) nunca serão tipos.</text>
+<text class="foot" x="110" y="8099" xml:space="preserve">Casos: Adult · fairness por sexo, raça e idade · Ar de Pequim · painel de 12 estações · Ames · regressão de preço de casas · Bike Sharing · previsão horária · Wholesale · segmentação de clientes · MNIST · MLP à mão e scikit-learn · Fraude em cartão · desbalanceamento · Leucemia · p ≫ n (72</text>
+<text class="foot" x="110" y="8135" xml:space="preserve">× 7129) · Online Retail · regras de associação · Readmissão · linhas por paciente · SMS spam · classificação de texto · Titanic · classificação tabular. Cada um tem solve.py com sementes fixas e números reais; os status de cobertura foram dados pelos próprios agentes, e a etapa de cada</text>
+<text class="foot" x="110" y="8171" xml:space="preserve">erro é a leitura deste mapa, não uma decisão.</text></svg>
