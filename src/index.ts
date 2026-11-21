@@ -83,10 +83,13 @@ export type { Metric } from './metrics/index.ts'
 export type {
   Columns,
   Fitted,
+  FittedModel,
   FullOneHot,
   Matrix,
+  Model,
   Pipeline,
   Prepared,
-  PreparedRow
+  PreparedRow,
+  Unlabeled
 } from './pipeline/index.ts'
 export type { StandardSchemaV1 } from './standard-schema.ts'

@@ -11,9 +11,15 @@ import {
   type Train,
   type Validation
 } from '../dataset/roles.ts'
+import type {
+  FittedLinearRegression,
+  LinearRegression,
+  NeedsReference
+} from '../estimators/linear-regression.ts'
 import type { Features, Targeted } from '../features/features.ts'
 import type {
   FieldValue,
+  InferShape,
   OptionalKeys,
   Shape,
   Simplify
@@ -334,8 +340,82 @@ export type Pipeline<
   >(
     fields: readonly [K, ...K[]]
   ): Pipeline<S, T, Pending, Scaled | K, OneHot, Reference>
+  /** Optional fields that still need a missing-value policy. */
+  readonly pending: readonly Pending[]
+  /**
+   * Joins the estimator that learns from the matrix. Every optional field
+   * needs a missing-value policy first, the target has to be a number, and
+   * every one-hot field needs a reference category.
+   */
+  estimator(
+    estimator: [Pending] extends [never]
+      ? EstimatorFor<S, T, OneHot, Reference>
+      : NeedsPolicy<Pending & string>
+  ): Model<S, T, Scaled, OneHot, Reference>
   /** Learns every step's state from a training block. */
   fit(train: Train<S>): Fitted<S, T, Pending, Scaled, OneHot, Reference>
+}
+
+/** The error for an optional field without a missing-value policy. */
+type NeedsPolicy<K extends string> = K extends string
+  ? `'${K}' still needs a missing-value policy: add .missing({ ${K}: ... }) to the pipeline`
+  : never
+
+/**
+ * What `.estimator()` takes: a linear regression, or the reason it can't take
+ * one yet, which the compiler prints.
+ */
+type EstimatorFor<
+  S extends Shape,
+  T extends keyof S,
+  OneHot extends keyof S,
+  Reference extends string
+> = [T] extends [never]
+  ? 'a linear regression needs a target: mark it in the schema with .target(field)'
+  : S[T] extends { readonly kind: 'number' }
+    ? [FullOneHot<S, T, OneHot, Reference>] extends [never]
+      ? LinearRegression
+      : NeedsReference<FullOneHot<S, T, OneHot, Reference>>
+    : `a linear regression predicts a number, and '${T & string}' is a ${S[T]['kind']}`
+
+/** A record to predict: every field of the schema but the target. */
+export type Unlabeled<S extends Shape, T extends keyof S> = Simplify<
+  Omit<InferShape<S>, T>
+>
+
+/** A pipeline with its estimator, before training. */
+export type Model<
+  S extends Shape,
+  T extends keyof S,
+  Scaled extends keyof S,
+  OneHot extends keyof S,
+  Reference extends string = never
+> = {
+  /**
+   * Fits the preprocessing on a training block, then the estimator on its
+   * matrix.
+   */
+  fit(train: Train<S>): FittedModel<S, T, Scaled, OneHot, Reference>
+}
+
+/** A pipeline and its estimator, both with what they learned from training. */
+export type FittedModel<
+  S extends Shape,
+  T extends keyof S,
+  Scaled extends keyof S,
+  OneHot extends keyof S,
+  Reference extends string = never
+> = {
+  /** The fitted preprocessing, to inspect a block step by step. */
+  readonly pipeline: Fitted<S, T, never, Scaled, OneHot, Reference>
+  /** The fitted estimator, with its weights. */
+  readonly estimator: FittedLinearRegression<Columns<S, T, OneHot, Reference>>
+  /**
+   * Prepares records without the target as the training block was, and
+   * predicts one number per record, in order. The records aren't validated
+   * again: parse external data at the boundary.
+   */
+  predict(records: readonly Unlabeled<S, T>[]): readonly number[]
 }
 
 /** A pipeline with the state each step learned from a training block. */
@@ -531,9 +611,89 @@ const describePipeline = (config: Config) =>
       : [dim(`pending: ${quoted(config.pending)} need a missing-value policy`)])
   ].join('\n')
 
+/** Fits every step on the training rows, each on the output of the one before. */
+const fitSteps = (config: Config, train: { readonly rows: readonly Row[] }) => {
+  const context: Context = { scales: new Map() }
+  const at = train.rows.map(row => positionOf(row))
+  let rows = train.rows
+  const steps = config.steps.map(step => {
+    const fitted = step.fit(rows, at, context)
+    rows = fitted.transform(rows, at)
+    return fitted
+  })
+  const learned = rows
+  const fitted = printable(
+    {
+      transform: (block: { readonly rows: readonly Row[] }) =>
+        prepare(config, steps, block)
+    },
+    () => describeFitted(config, steps, learned)
+  )
+  return { steps, fitted }
+}
+
+type Predictor = {
+  predict(matrix: {
+    readonly columns: readonly string[]
+    readonly values: readonly (readonly number[])[]
+  }): readonly number[]
+}
+
+/** The matrix columns of records that went through the fitted steps. */
+const valuesOf = (config: Config, rows: readonly Row[]) => {
+  const columns = columnsOf(
+    config.fields,
+    config.target,
+    config.oneHot,
+    config.references
+  )
+  return {
+    columns: columns.map(column => column.name),
+    values: rows.map(row => columns.map(column => column.value(row)))
+  }
+}
+
+const model = (
+  config: Config,
+  estimator: { fit(matrix: unknown): Predictor }
+) =>
+  printable(
+    {
+      fit: (train: { readonly rows: readonly Row[] }) => {
+        const { steps, fitted } = fitSteps(config, train)
+        const prepared = fitted.transform(train) as {
+          matrix(): unknown
+        }
+        const predictor = estimator.fit(prepared.matrix())
+        const predict = (records: readonly Row[]) => {
+          const at = records.map(() => undefined)
+          const rows = steps.reduce(
+            (rows: readonly Row[], step) => step.transform(rows, at),
+            records
+          )
+          return predictor.predict(valuesOf(config, rows))
+        }
+        return printable(
+          { pipeline: fitted, estimator: predictor, predict },
+          () => `${String(fitted)}\n\n${String(predictor)}`
+        )
+      }
+    },
+    () => `${describePipeline(config)}\n  ${String(estimator)}`
+  )
+
 const build = (config: Config): object =>
   printable(
     {
+      pending: Object.freeze([...config.pending]),
+      estimator: (estimator: { fit(matrix: unknown): Predictor }) => {
+        if (config.pending.length > 0) {
+          throw new TypeError(
+            `estimator(): ${quoted(config.pending)} still need a missing-value policy. Add .missing({ ... }) to the pipeline`
+          )
+        }
+        return model(config, estimator)
+      },
       missing: (policies: Readonly<Record<string, MissingPolicy>>) =>
         build({
           ...config,
@@ -562,24 +722,8 @@ const build = (config: Config): object =>
             )
           ])
         }),
-      fit: (train: { readonly rows: readonly Row[] }) => {
-        const context: Context = { scales: new Map() }
-        const at = train.rows.map(row => positionOf(row))
-        let rows = train.rows
-        const steps = config.steps.map(step => {
-          const fitted = step.fit(rows, at, context)
-          rows = fitted.transform(rows, at)
-          return fitted
-        })
-        const learned = rows
-        return printable(
-          {
-            transform: (block: { readonly rows: readonly Row[] }) =>
-              prepare(config, steps, block)
-          },
-          () => describeFitted(config, steps, learned)
-        )
-      }
+      fit: (train: { readonly rows: readonly Row[] }) =>
+        fitSteps(config, train).fitted
     },
     () => describePipeline(config)
   )
