@@ -136,6 +136,7 @@ After the MVP: purged/embargoed k-fold, group k-fold and nested cross-validation
 | Document                                     | Contents                                                                      |
 | -------------------------------------------- | ----------------------------------------------------------------------------- |
 | [Methodological errors](docs/methodology.md) | The errors TL tries to prevent, and the status of each one                    |
+| [API reference](docs/reference.md)           | What TL exports today, in one page, for people and agents                     |
 | [Design principles](docs/principles.md)      | Explicit decisions, time series from the start, static + runtime typing       |
 | [Feature DSL](docs/features.md)              | Field types, inference, validation, Zod compatibility through Standard Schema |
 | [Dataset and validation](docs/dataset.md)    | Splits, cross-validation, branded types, leakage prevention                   |
