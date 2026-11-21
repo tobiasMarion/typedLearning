@@ -24,9 +24,30 @@ schema ─► pipeline ─► missing / encode / scale ─► estimator ─► f
 3. fits the estimator;
 4. stores the learned states.
 
-M3 ships the builder without `.estimator()`: `pipeline.fit(train)` returns the fitted transformers, and their `transform` gives the prepared rows and the matrix (see [Preprocessing](preprocessing.md)).
+Without `.estimator()`, `pipeline.fit(train)` returns the fitted transformers, and their `transform` gives the prepared rows and the matrix (see [Preprocessing](preprocessing.md)). That is still how to inspect a pipeline step by step.
 
-`predict` takes a record that is already typed, without the target, reapplies the same transformations, and only then predicts. It doesn't validate the record again: external data is validated at the boundary, with `parse` or with the project's own schema (Zod, for example), and from then on the type carries the guarantee. A category the schema doesn't declare can't get past that boundary; missing values follow the policies chosen in the pipeline.
+`predict` takes records that are already typed, without the target, reapplies the same transformations, and only then predicts, one number per record in order. It doesn't validate the records again: external data is validated at the boundary, with `parse` or with the project's own schema (Zod, for example), and from then on the type carries the guarantee. A category the schema doesn't declare can't get past that boundary; missing values follow the policies chosen in the pipeline.
+
+## Evaluation
+
+`evaluate(block, metrics)` predicts a held-out block and scores the predictions against its target, with each [metric](metrics.md) in the list. It returns one number per metric, by name:
+
+```ts
+const fitted = model.fit(train)
+fitted.evaluate(validation, [ml.mse, ml.r2]) // { mse: 1520.3, r2: 0.81 }
+fitted.evaluate(test, [ml.mse, ml.r2])
+
+// @ts-expect-error — the training block isn't held out
+fitted.evaluate(train, [ml.mse])
+```
+
+- It takes a `Validation<F>` or a `Test<F>`, never a `Train<F>`: a score on the rows the model was fitted on says nothing about new rows. A cast that gets past the types meets the same check at runtime.
+- **A test block is evaluated once.** Choosing between models by their test score turns the test block into a validation block, and its score stops being honest (S3 in [Methodological errors](methodology.md)). The second `evaluate` of a test block throws, and so does a test block that shares a record with one already evaluated, such as the test block of another split with a different seed. Validation blocks can be evaluated as often as needed. The check lives in the process: running the script again starts over, so it catches a loop that compares models on the test block, not a person who reruns the program.
+- The metrics have to match the target: they all score numbers today, the only target an estimator predicts.
+
+## The first slice of M5
+
+The first [experiment](../README.md#how-we-test-it) needs a model that trains, predicts and evaluates end to end, so M5 starts with `.estimator()`, `fit`, `predict` and `evaluate` with MSE, MAE and R² ([Metrics](metrics.md)). `.estimator()` takes a `ml.linearRegression`, the only estimator; it doesn't compile while a field has a pending decision, while the target isn't a number, or while a one-hot field has no reference category. The fitted model exposes the fitted transformers as `pipeline` and the fitted estimator as `estimator`, so both still print and can be read. Lag and rolling features, the target horizon and `backtest` come later in M5.
 
 ## Pending decisions
 
