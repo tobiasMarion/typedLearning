@@ -39,7 +39,7 @@ The educational implementation is central to the project, not a throwaway protot
 
 ## Fitting on the matrix
 
-In M4 an estimator stands on its own: it fits the [matrix](preprocessing.md#output) of a prepared block, and `.estimator()` joins it to the pipeline in M5. Predicting the body mass of the penguins, a number, so regression:
+An estimator can stand on its own: it fits the [matrix](preprocessing.md#output) of a prepared block. `.estimator()` joins it to the pipeline (see [Pipeline](pipeline.md)), which is what most code wants. Predicting the body mass of the penguins, a number, so regression:
 
 ```ts
 const massSchema = ml
@@ -75,7 +75,7 @@ model.fit(prepared.transform(test).matrix())
 model.fit(speciesTrainMatrix) // the training matrix of a schema with .target('species')
 ```
 
-MSE is the loss here, reported on the training block. Scoring validation and test blocks belongs to `evaluate` in [M5](../README.md#milestones).
+MSE is the loss here, reported on the training block. Scoring validation and test blocks belongs to [`evaluate`](pipeline.md#evaluation) on the fitted pipeline.
 
 ## Open questions
 

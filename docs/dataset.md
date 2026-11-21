@@ -226,5 +226,5 @@ M2 provides `kFold` and `walkForward`, and `folds` to cut a `Train<F>` with them
 
 ## Open questions
 
-- Whether `Test<F>` gets its own final-evaluation API instead of sharing `evaluate` with `Validation<F>`, to make "evaluate on test once, at the end" explicit.
+- Whether `Test<F>` gets its own final-evaluation API instead of sharing `evaluate` with `Validation<F>`. M5 makes "once" a runtime check of `evaluate` (see [Evaluation](pipeline.md#evaluation)); "at the end" is still only a convention.
 - Whether `stratify` should be a required decision for classification targets.
