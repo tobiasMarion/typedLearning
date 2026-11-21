@@ -24,6 +24,7 @@ import type {
   Shape,
   Simplify
 } from '../features/infer.ts'
+import type { Metric } from '../metrics/regression.ts'
 import {
   columnsOf,
   describeEncoding,
@@ -416,6 +417,20 @@ export type FittedModel<
    * again: parse external data at the boundary.
    */
   predict(records: readonly Unlabeled<S, T>[]): readonly number[]
+  /**
+   * Predicts a held-out block and scores it with each metric, by name. A
+   * training block isn't held out, and a test block is evaluated once: to
+   * compare models, evaluate a validation block.
+   */
+  evaluate<
+    const M extends readonly [
+      Metric<string, number>,
+      ...Metric<string, number>[]
+    ]
+  >(
+    block: Validation<S> | Test<S>,
+    metrics: M
+  ): { readonly [K in M[number] as K['name']]: number }
 }
 
 /** A pipeline with the state each step learned from a training block. */
@@ -632,6 +647,63 @@ const fitSteps = (config: Config, train: { readonly rows: readonly Row[] }) => {
   return { steps, fitted }
 }
 
+// Every record of a test block that was evaluated, in this process. Any model:
+// comparing two models on the same test block is choosing by its score.
+const evaluated = new WeakSet<object>()
+
+const ONCE =
+  'Choosing between models by their test score makes that score optimistic. Compare them on a validation block or with cross-validation, and evaluate the test block once, at the end'
+
+const score = (
+  role: Role | undefined,
+  block: { readonly rows: readonly Row[] },
+  matrix: { readonly y: readonly unknown[] | undefined },
+  predictions: readonly number[],
+  metrics: readonly ((
+    yTrue: readonly number[],
+    yPred: readonly number[]
+  ) => number)[]
+) => {
+  const scores: Record<string, number> = {}
+  for (const metric of metrics) {
+    scores[metric.name] = metric(matrix.y as readonly number[], predictions)
+  }
+  if (role === 'test') {
+    for (const row of block.rows) evaluated.add(row)
+  }
+  return Object.freeze(scores)
+}
+
+const checkHeldOut = (
+  block: { readonly rows: readonly Row[] },
+  metrics: readonly unknown[]
+) => {
+  const role = roleOf(block)
+  if (role === undefined) {
+    throw new TypeError(
+      'evaluate() expects a validation or test block from split() or folds()'
+    )
+  }
+  if (role === 'train') {
+    throw new TypeError(
+      'evaluate() takes a validation or test block: the model was fitted on the training block, so its score there says nothing about new records'
+    )
+  }
+  if (!Array.isArray(metrics) || metrics.length === 0) {
+    throw new RangeError('evaluate() needs at least one metric, such as ml.mse')
+  }
+  if (role === 'test') {
+    const seen = block.rows.findIndex(row => evaluated.has(row))
+    if (seen !== -1) {
+      const position = positionOf(block.rows[seen] as object)
+      throw new Error(
+        `evaluate(): ${position === undefined ? 'a record' : `row ${position}`} of this test block was already evaluated as test data in this process. ${ONCE}`
+      )
+    }
+  }
+  return role
+}
+
 type Predictor = {
   predict(matrix: {
     readonly columns: readonly string[]
@@ -673,8 +745,25 @@ const model = (
           )
           return predictor.predict(valuesOf(config, rows))
         }
+        const evaluate = (
+          block: { readonly rows: readonly Row[] },
+          metrics: readonly ((
+            yTrue: readonly number[],
+            yPred: readonly number[]
+          ) => number)[]
+        ) => {
+          const role = checkHeldOut(block, metrics)
+          const matrix = (
+            fitted.transform(block) as { matrix(): unknown }
+          ).matrix() as {
+            readonly columns: readonly string[]
+            readonly values: readonly (readonly number[])[]
+            readonly y: readonly unknown[] | undefined
+          }
+          return score(role, block, matrix, predictor.predict(matrix), metrics)
+        }
         return printable(
-          { pipeline: fitted, estimator: predictor, predict },
+          { pipeline: fitted, estimator: predictor, predict, evaluate },
           () => `${String(fitted)}\n\n${String(predictor)}`
         )
       }

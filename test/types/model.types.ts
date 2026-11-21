@@ -91,3 +91,19 @@ ml.pipeline(speciesSchema).estimator(regression)
 
 // @ts-expect-error — without a target there is nothing to learn
 ml.pipeline(ml.features({ x: ml.number() })).estimator(regression)
+
+// evaluate takes a held-out block and returns one number per metric
+const { validation } = ml
+  .dataset(massSchema, [])
+  .split({ validation: 0.2, test: 0.2, seed: 2 })
+const scores = fitted.evaluate(validation, [ml.mse, ml.r2])
+type _scores = Expect<
+  Equal<typeof scores, { readonly mse: number; readonly r2: number }>
+>
+fitted.evaluate(test, [ml.mae])
+
+// @ts-expect-error — the training block isn't held out
+fitted.evaluate(train, [ml.mse])
+
+// @ts-expect-error — at least one metric
+fitted.evaluate(validation, [])
