@@ -34,6 +34,14 @@ ml.linearRegression({ solver: 'normal-equation' }).fit(
   preparedMasses.transform(masses.test).matrix()
 )
 
+// S1: and evaluating on the training block
+const massModel = ml
+  .pipeline(massSchema)
+  .estimator(ml.linearRegression({ solver: 'normal-equation' }))
+  .fit(masses.train)
+// @ts-expect-error — evaluate takes a Validation or a Test
+massModel.evaluate(masses.train, [ml.mse])
+
 // S2: splitting the test block again
 // @ts-expect-error — only the original data has split
 test.split({ test: 0.5, seed: 42 })

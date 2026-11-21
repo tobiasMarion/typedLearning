@@ -94,3 +94,87 @@ describe('pipeline.estimator()', () => {
     })
   })
 })
+
+describe('fitted.evaluate()', () => {
+  // A dataset validates into new records, so each test gets its own
+  const fresh = () => ml.dataset(schema, rows)
+  const model = pipeline.estimator(regression)
+
+  test('scores a held-out block with each metric, by name', () => {
+    const split = fresh().split({ validation: 0.25, test: 0.25, seed: 3 })
+    const fitted = model.fit(split.train)
+    const matrix = fitted.pipeline.transform(split.validation).matrix()
+    const predictions = fitted.estimator.predict(matrix)
+    const scores = fitted.evaluate(split.validation, [ml.mse, ml.mae])
+    assert.deepEqual(scores, {
+      mse: ml.mse(matrix.y, predictions),
+      mae: ml.mae(matrix.y, predictions)
+    })
+    assert.ok(Object.isFrozen(scores))
+  })
+
+  test('scores a validation block as often as needed', () => {
+    const split = fresh().split({ validation: 0.25, test: 0.25, seed: 4 })
+    const fitted = model.fit(split.train)
+    fitted.evaluate(split.validation, [ml.mse])
+    assert.doesNotThrow(() => fitted.evaluate(split.validation, [ml.mse]))
+  })
+
+  test('evaluates a test block once, whatever the model', () => {
+    const split = fresh().split({ test: 0.25, seed: 5 })
+    const fitted = model.fit(split.train)
+    fitted.evaluate(split.test, [ml.mse])
+    const once =
+      /already evaluated as test data in this process\. Choosing between models by their test score/
+    assert.throws(() => fitted.evaluate(split.test, [ml.mse]), {
+      name: 'Error',
+      message: once
+    })
+    const other = ml
+      .pipeline(schema)
+      .missing({ x: 'median' })
+      .encode({ group: { reference: 'a' } })
+      .estimator(regression)
+      .fit(split.train)
+    assert.throws(() => other.evaluate(split.test, [ml.mse]), { message: once })
+  })
+
+  test('catches a test block that shares records with one already evaluated', () => {
+    const data = fresh()
+    const first = data.split({ test: 0.25, seed: 6 })
+    model.fit(first.train).evaluate(first.test, [ml.mse])
+    const again = data.split({ test: 0.25, seed: 6 })
+    assert.throws(() => model.fit(again.train).evaluate(again.test, [ml.mse]), {
+      message: /^evaluate\(\): row \d+ of this test block/
+    })
+  })
+
+  test('a metric that throws leaves the test block unevaluated', () => {
+    const constant = ml.dataset(
+      schema,
+      rows.map(row => ({ ...row, y: 1 }))
+    )
+    const split = constant.split({ test: 0.25, seed: 7 })
+    const fitted = model.fit(split.train)
+    assert.throws(() => fitted.evaluate(split.test, [ml.r2]), {
+      name: 'RangeError'
+    })
+    assert.doesNotThrow(() => fitted.evaluate(split.test, [ml.mse]))
+  })
+
+  test('refuses the training block and an empty list at runtime', () => {
+    const split = fresh().split({ test: 0.25, seed: 8 })
+    const fitted = model.fit(split.train) as unknown as {
+      evaluate(block: unknown, metrics: unknown): unknown
+    }
+    assert.throws(() => fitted.evaluate(split.train, [ml.mse]), {
+      name: 'TypeError',
+      message:
+        'evaluate() takes a validation or test block: the model was fitted on the training block, so its score there says nothing about new records'
+    })
+    assert.throws(() => fitted.evaluate({ rows: [] }, [ml.mse]), {
+      name: 'TypeError'
+    })
+    assert.throws(() => fitted.evaluate(split.test, []), { name: 'RangeError' })
+  })
+})
