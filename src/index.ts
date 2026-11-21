@@ -9,6 +9,7 @@ import {
   orderedCategory,
   timestamp
 } from './features/index.ts'
+import { mae, mse, r2 } from './metrics/index.ts'
 import { pipeline } from './pipeline/index.ts'
 
 export const ml = Object.freeze({
@@ -24,7 +25,10 @@ export const ml = Object.freeze({
   kFold,
   walkForward,
   pipeline,
-  linearRegression
+  linearRegression,
+  mse,
+  mae,
+  r2
 })
 
 /** The record type described by a `Features` schema. */
@@ -75,6 +79,7 @@ export type {
   TimestampField
 } from './features/index.ts'
 export { FeatureValidationError } from './features/index.ts'
+export type { Metric } from './metrics/index.ts'
 export type {
   Columns,
   Fitted,
