@@ -142,14 +142,26 @@ const stepped = ml
   .fit(trainMatrix)
 console.log(stepped)
 
-// Predictions for the test block, in row order. Scoring them is evaluate's
-// job, in M5.
+// ── M5: Pipeline and metrics ─────────────────────────────────────────────────
+
+// The estimator joins the pipeline: fit learns the preprocessing and then the
+// weights from the training block alone.
+const massModel = massPipeline
+  .estimator(ml.linearRegression({ solver: 'normal-equation' }))
+  .fit(massSplit.train)
+
+// A held-out block, scored by each metric. The test block is evaluated once:
+// a second evaluation, by this model or another, throws.
+console.log(massModel.evaluate(massSplit.test, [ml.mse, ml.mae, ml.r2]))
+
+// New records, without the target, prepared the way the training block was
 console.log(
-  exact.predict(preparedMasses.transform(massSplit.test).matrix()),
-  massSplit.test.rows.map(row => row.bodyMassG)
+  massModel.predict([
+    { island: 'Biscoe', flipperLengthMm: 218, sex: 'male' },
+    { island: 'Dream', sex: 'female' }
+  ])
 )
 
-// ── M5: Pipeline and metrics ─────────────────────────────────────────────────
 // ── M6: Second algorithm ─────────────────────────────────────────────────────
 
 // const model = pipeline.estimator(ml.knn({ k: 5, distance: 'euclidean' }))
