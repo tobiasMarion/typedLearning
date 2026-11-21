@@ -19,19 +19,19 @@ _Today_ is the state of `main`. _Planned_ names the milestone that changes it; a
 
 ## Train and test aren't separate
 
-| ID  | Error                                                                                  | Today                                                                                          | Planned                                                                                  |
-| --- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
-| S1  | Training on the test block, or evaluating on the training block                        | compile (roles)                                                                                | compile at `evaluate` (M5)                                                               |
-| S2  | Splitting the test block again, to carve validation out of it                          | compile                                                                                        | —                                                                                        |
-| S3  | Choosing hyperparameters or models by their test score                                 | silent                                                                                         | runtime: a test block is evaluated once (M5); compile: the search only sees `Train` (M6) |
-| S4  | Fitting preprocessing (imputation, scaling, encoding) on all the data before the split | compile (`pipeline.fit` takes a `Train`, and the pipeline starts from a schema, not from data) | —                                                                                        |
-| S5  | Selecting features with all the data before the split                                  | silent                                                                                         | —                                                                                        |
-| S6  | Oversampling before the split, so copies of a row land in both blocks                  | silent                                                                                         | —                                                                                        |
-| S7  | The same record in train and test                                                      | silent                                                                                         | —                                                                                        |
+| ID  | Error                                                                                  | Today                                                                                          | Planned                                    |
+| --- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------ |
+| S1  | Training on the test block, or evaluating on the training block                        | compile (roles, at `fit` and at `evaluate`)                                                    | —                                          |
+| S2  | Splitting the test block again, to carve validation out of it                          | compile                                                                                        | —                                          |
+| S3  | Choosing hyperparameters or models by their test score                                 | runtime, in part (a test block is evaluated once per process)                                  | compile: the search only sees `Train` (M6) |
+| S4  | Fitting preprocessing (imputation, scaling, encoding) on all the data before the split | compile (`pipeline.fit` takes a `Train`, and the pipeline starts from a schema, not from data) | —                                          |
+| S5  | Selecting features with all the data before the split                                  | silent                                                                                         | —                                          |
+| S6  | Oversampling before the split, so copies of a row land in both blocks                  | silent                                                                                         | —                                          |
+| S7  | The same record in train and test                                                      | silent                                                                                         | —                                          |
 
-S1 is already caught by the types: a `Test` isn't assignable to `Train`, at `fit` of a pipeline and of an estimator, whose matrix keeps the role of its block. `evaluate` (M5) closes the other direction: it takes a `Validation` or a `Test`, never a `Train`.
+S1 is already caught by the types: a `Test` isn't assignable to `Train`, at `fit` of a pipeline and of an estimator, whose matrix keeps the role of its block. `evaluate` closes the other direction: it takes a `Validation` or a `Test`, never a `Train`.
 
-S3 is caught only in part by evaluating a test block once: the check lives in the process, so a loop that compares models on the test block throws, and rerunning the script doesn't.
+S3 is caught only in part, by evaluating a test block once: the check lives in the process, so a loop that compares models on the test block throws, and rerunning the script doesn't.
 
 ## Train and test aren't independent
 

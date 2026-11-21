@@ -92,6 +92,38 @@ describe('time series', () => {
   })
 })
 
+describe('train and test', () => {
+  test('S3: comparing models on the test block throws at the second one', () => {
+    const massSchema = ml
+      .features({ flipperLengthMm: ml.number(), bodyMassG: ml.number() })
+      .target('bodyMassG')
+    const masses = ml.dataset(
+      massSchema,
+      Array.from({ length: 8 }, (_, i) => ({
+        flipperLengthMm: 180 + i,
+        bodyMassG: 3000 + 40 * i + (i % 2) * 15
+      }))
+    )
+    const { train, test } = masses.split({ test: 0.25, seed: 42 })
+    const candidates = [
+      ml.linearRegression({ solver: 'normal-equation' }),
+      ml.linearRegression({
+        solver: 'gradient-descent',
+        learningRate: 0.1,
+        epochs: 100
+      })
+    ]
+    const pipeline = ml.pipeline(massSchema).scale(['flipperLengthMm'])
+    assert.throws(
+      () =>
+        candidates.map(candidate =>
+          pipeline.estimator(candidate).fit(train).evaluate(test, [ml.mse])
+        ),
+      /already evaluated as test data/
+    )
+  })
+})
+
 describe('evaluation', () => {
   test('E1: a random split without a seed throws', () => {
     const penguinSchema = ml.features({ billLengthMm: ml.number() })
