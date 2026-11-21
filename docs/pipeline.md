@@ -51,23 +51,20 @@ The first [experiment](../README.md#how-we-test-it) needs a model that trains, p
 
 ## Pending decisions
 
-The pipeline carries in its type the set of fields that still lack a decision (for example, optional fields without a missing-value policy). `.estimator()` only exists when that set is `never`, the same condition as `matrix()` in [Preprocessing](preprocessing.md#pending-decisions):
+The pipeline carries in its type the set of fields that still lack a decision (for example, optional fields without a missing-value policy). `.estimator()` takes an estimator only when that set is `never`, the same condition as `matrix()` in [Preprocessing](preprocessing.md#pending-decisions). Otherwise its parameter is the error, which names the field:
 
 ```ts
-interface Pipeline<F, Pending extends keyof F> {
-  estimator<E extends Estimator>(
-    this: Pipeline<F, never>,
-    e: E
-  ): ConfiguredModel<F, E>
-}
+ml.pipeline(massSchema).estimator(regression)
+// Argument of type 'LinearRegression' is not assignable to parameter of type
+// "'flipperLengthMm' still needs a missing-value policy: add .missing({ flipperLengthMm: ... }) to the pipeline"
 ```
 
-The error message has to name the pending field. The ergonomics of that message are part of the contract.
+A target that isn't a number and a one-hot field without a reference category are reported the same way. The ergonomics of these messages are part of the contract.
 
 ## Configured vs. fitted model
 
-- `ConfiguredModel`: holds the configuration and has `fit`.
-- `FittedModel`: holds the learned states and has `predict`, `evaluate`, and `describe`.
+- `Model`: holds the configuration and has `fit`.
+- `FittedModel`: holds the learned states (`pipeline` and `estimator`) and has `predict` and `evaluate`. It prints both.
 
 `fit` doesn't mutate the configured model; it returns a new value.
 

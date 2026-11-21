@@ -33,7 +33,7 @@ export type LinearRegressionOptions =
     }
 
 /** The error for a one-hot field with a column for every category. */
-type NeedsReference<F extends string> = F extends string
+export type NeedsReference<F extends string> = F extends string
   ? `'${F}' needs a reference category: add .encode({ ${F}: { reference: ... } }) to the pipeline`
   : never
 
